@@ -4,6 +4,7 @@ import tailwindcss from 'tailwindcss';
 import autoprefixer from 'autoprefixer';
 
 export default defineConfig({
+  base: '/Fitflow_Excercise_Master/',
   plugins: [react()],
   server: {
     host: '0.0.0.0',
