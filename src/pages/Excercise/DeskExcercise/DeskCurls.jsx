@@ -3,7 +3,7 @@ import * as tf from '@tensorflow/tfjs';
 import * as poseDetection from '@tensorflow-models/pose-detection';
 import { Link } from 'react-router-dom';
 
-const curlsGif = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/bicep.gif`;
+const curlsGif = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/desk_curls.gif`;
 
 const Deskcurls = () => {
   const videoRef = useRef(null);

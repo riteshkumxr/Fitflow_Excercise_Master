@@ -3,7 +3,7 @@ import * as tf from '@tensorflow/tfjs';
 import * as poseDetection from '@tensorflow-models/pose-detection';
 import { Link } from 'react-router-dom';
 
-const kneeGif = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/lunges.gif`;
+const kneeGif = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/desk_knee.gif`;
 
 const Kneeraises = () => {
   const videoRef = useRef(null);

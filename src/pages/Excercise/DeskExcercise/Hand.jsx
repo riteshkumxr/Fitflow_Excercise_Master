@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import * as tf from '@tensorflow/tfjs';
 import * as poseDetection from '@tensorflow-models/pose-detection';
 
-const handGif = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/front.gif`;
+const handGif = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/desk_hand.gif`;
 
 const Handraises = () => {
   const videoRef = useRef(null);
