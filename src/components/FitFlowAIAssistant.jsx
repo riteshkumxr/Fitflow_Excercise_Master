@@ -14,53 +14,12 @@ import {
   Shield,
   MessageSquare,
 } from 'lucide-react';
+import { processFitnessQuery } from '../services/fitnessAIEngine';
 
 function generateAIResponse(userText, userInfo = {}) {
-  const q = userText.toLowerCase();
-  const name = userInfo.userFirstName || 'Athlete';
-  const weight = userInfo.userWeight || '75 kg';
-  const target = userInfo.targetWeight || '72 kg';
-  const streak = userInfo.streakDays || 1;
-  const points = userInfo.points || 150;
-
-  if (q.includes('squat')) {
-    return `🏋️ **Squats Form Checklist for ${name}:**\n\n1. **Stance:** Feet shoulder-width apart, toes turned slightly outward (15° to 30°).\n2. **Hips & Knees:** Break at hips and knees simultaneously. Push knees outward in line with toes.\n3. **Depth:** Lower until your hip crease is below the top of your knees (parallel or deep squat).\n4. **Torso:** Keep your chest proud, spine neutral, and gaze forward.\n5. **Prescription:** 3 sets × 15 reps with controlled 2-second descent.\n\n*Tip: Use our AI Squat Trainer in the Workout tab for real-time hip-to-knee depth tracking!*`;
-  }
-
-  if (q.includes('pushup') || q.includes('push up') || q.includes('chest')) {
-    return "💪 **Push-Up Master Guide:**\n\n1. **Hand Placement:** Slightly wider than shoulder-width, fingers spread.\n2. **Elbow Angle:** Keep elbows tucked at 45° to your torso (avoid flaring them into a 'T' shape).\n3. **Core & Glutes:** Keep your body in a rigid plank from head to heels.\n4. **Full Range:** Lower until chest is 2-3 inches from ground, then push up to full extension.\n5. **Prescription:** 3 sets × 12 reps.\n\n*Tip: Launch our AI Pushups module to track elbow flexion angles in real time!*";
-  }
-
-  if (q.includes('diet') || q.includes('macro') || q.includes('calorie') || q.includes('food') || q.includes('weight')) {
-    return `🥗 **Personalized Nutrition Strategy for ${name} (${weight} → ${target} Target):**\n\n• **Daily Calorie Target:** ~1,850 kcal (creates a safe, sustainable ~350 kcal deficit from your 2,200 kcal maintenance).\n• **Protein Target:** 140g - 150g per day (approx. 1.9g per kg of bodyweight to preserve lean muscle).\n• **Carbohydrates:** ~180g (complex carbs: oats, brown rice, sweet potatoes).\n• **Healthy Fats:** ~50g - 55g (avocado, nuts, olive oil).\n• **Hydration:** Aim for 3.0L to 3.5L of water daily.\n\n*Tip: Check your daily macro progress on the FitFlow Diet Plan tab!*`;
-  }
-
-  if (q.includes('pullup') || q.includes('pull up') || q.includes('back')) {
-    return "🧗 **Pull-Up Form Protocol:**\n\n1. **Grip:** Overhand grip slightly wider than shoulders.\n2. **Initiation:** Engage your scapulae (depress shoulders down and back) before pulling with your arms.\n3. **Apex:** Pull elbows down toward your ribs until chin cleanly clears the bar.\n4. **Descent:** Lower with control into a full dead hang to maximize lat stretch.\n5. **Target:** 3 sets of 6-8 reps.";
-  }
-
-  if (q.includes('bicep') || q.includes('curl') || q.includes('arm')) {
-    return "🔥 **Bicep Curls Precision Guide:**\n\n1. **Elbows Pinned:** Glue your elbows to the sides of your ribcage. Do NOT let them drift forward.\n2. **No Momentum:** Avoid swinging your hips or arching your lower back.\n3. **Cadence:** 1 second explosive curl up, 1 second squeeze at peak contraction, 3 seconds slow eccentric descent.\n4. **Target:** 3 sets × 12-15 reps.";
-  }
-
-  if (q.includes('lunge') || q.includes('lunges') || q.includes('leg')) {
-    return "🦵 **Walking Lunges Blueprint:**\n\n1. **Step Distance:** Take an ample step forward so both front and back knees bend to ~90°.\n2. **Knee Alignment:** Front knee should stay centered over your ankle, not shooting far past your toes.\n3. **Torso:** Keep your torso upright and tall to activate glutes and quads.\n4. **Prescription:** 3 sets × 12 reps per leg.";
-  }
-
-  if (q.includes('desk') || q.includes('sitting') || q.includes('neck') || q.includes('posture') || q.includes('pain')) {
-    return "🧘 **3-Minute Ergonomic Desk Relief Session:**\n\n1. **Postural Chin Tucks (10 reps):** Draw your chin straight backward without tilting head, holding for 3 seconds.\n2. **Seated Spinal Twist (30s per side):** Hand on opposite knee, gently rotate torso while breathing deeply.\n3. **Seated Desk Curls & Wrist Flexion (1 min):** Rotate wrists and squeeze shoulder blades back.\n4. **Standing Calf Raises (15 reps):** Stand up to reactivate circulation in lower limbs.\n\n*Tip: Head to AI Exercises → Desk Breaks for guided interactive timers!*";
-  }
-
-  if (q.includes('ai') || q.includes('camera') || q.includes('pose') || q.includes('movenet') || q.includes('track')) {
-    return "🤖 **How FitFlow AI Pose Detection Works:**\n\n1. **Computer Vision:** Runs TensorFlow.js MoveNet SinglePose Lightning locally inside your browser.\n2. **Keypoint Tracking:** Tracks 17 anatomical keypoints (shoulders, elbows, wrists, hips, knees, ankles) at 30+ FPS.\n3. **Biomechanical Analysis:** Computes trigonometric joint angles in real time to verify full depth and rep completion.\n4. **100% Private:** Camera frames are processed on your device GPU via WebGL; nothing is ever recorded or uploaded.\n\n*Tip: Stand 6-8 feet away from your camera with good lighting for best results!*";
-  }
-
-  if (q.includes('hello') || q.includes('hi') || q.includes('hey')) {
-    return `Hello ${name}! Great to see you. You are currently on an active ${streak}-day workout streak with ${points.toLocaleString()} points. What would you like to work on today? Try asking about squats form, pushups, your ${weight} diet plan, or desk breaks!`;
-  }
-
-  return `Great question, ${name}! To support your fitness progression (current: ${weight}, goal: ${target}):\n\n1. **Form First:** Use our AI Pose Trainers to ensure full range of motion without compensating.\n2. **Progressive Overload:** Increase reps or resistance each week.\n3. **Recovery & Nutrition:** Maintain your optimal calorie target with adequate protein for muscle recovery.\n\nFeel free to ask me specifically about any exercise (Squats, Pushups, Curls, Lunges), nutrition goals, or posture corrections!`;
+  return processFitnessQuery(userText, userInfo);
 }
+
 
 export default function FitFlowAIAssistant() {
   const { currentUser } = useAuth();
@@ -100,11 +59,11 @@ export default function FitFlowAIAssistant() {
   }, [userFirstName, userWeight, targetWeight]);
 
   const suggestedPrompts = [
+    'How many calories in 1 samosa?',
     'How do I perfect my Squat form?',
     `What should my daily macros be for ${userWeight} to ${targetWeight}?`,
-    'Give me an Upper Body workout routine',
+    'How to lose belly fat effectively?',
     'Quick 3-minute desk posture exercises',
-    'How does AI pose tracking work?',
   ];
 
   const scrollToBottom = () => {
