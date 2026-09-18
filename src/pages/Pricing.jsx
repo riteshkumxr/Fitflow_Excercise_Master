@@ -11,6 +11,8 @@ import {
   ArrowRight,
   Gift,
   CheckCircle2,
+  Crown,
+  Star,
 } from 'lucide-react';
 import { useTokens, PLANS } from '../context/TokenContext';
 import { useAuth } from '../context/AuthContext';
@@ -122,33 +124,57 @@ export default function Pricing() {
         {/* Plans Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
           {PLANS.map((p) => {
+            const isStarter = p.id === 'starter';
+            const isPro = p.id === 'pro';
+            const isVip = p.id === 'vip';
+
             return (
               <div
                 key={p.id}
-                className={`relative rounded-3xl p-6 sm:p-8 flex flex-col justify-between transition-all duration-300 bg-white dark:bg-slate-900 border ${
-                  p.popular
-                    ? 'border-2 border-indigo-600 shadow-xl shadow-indigo-500/10 scale-100 md:-translate-y-2'
-                    : 'border-slate-200 dark:border-slate-800 shadow-sm hover:border-slate-300 dark:hover:border-slate-700'
+                className={`relative rounded-3xl p-6 sm:p-8 flex flex-col justify-between transition-all duration-300 border-2 ${
+                  isStarter
+                    ? 'border-emerald-400/80 dark:border-emerald-600/70 shadow-lg shadow-emerald-500/10 hover:border-emerald-500 bg-gradient-to-b from-emerald-50/40 via-white to-white dark:from-emerald-950/25 dark:via-slate-900 dark:to-slate-900'
+                    : isPro
+                    ? 'border-indigo-600 shadow-xl shadow-indigo-500/15 scale-100 md:-translate-y-2 bg-gradient-to-b from-indigo-50/40 via-white to-white dark:from-indigo-950/25 dark:via-slate-900 dark:to-slate-900'
+                    : /* Unlimited VIP Elite (Most Expensive Membership) */
+                      'border-amber-400 dark:border-amber-500 shadow-2xl shadow-amber-500/30 ring-2 ring-amber-400/50 scale-100 md:-translate-y-3 bg-gradient-to-b from-amber-50/80 via-yellow-50/20 to-white dark:from-amber-950/45 dark:via-yellow-950/15 dark:to-slate-900'
                 }`}
               >
                 {/* Badge */}
                 {p.badge && (
                   <span
-                    className={`absolute -top-3.5 right-6 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider shadow-sm ${
-                      p.popular
-                        ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white'
-                        : 'bg-indigo-600 text-white'
+                    className={`absolute -top-3.5 right-6 px-3.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider shadow-sm flex items-center gap-1 ${
+                      isStarter
+                        ? 'bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 text-white'
+                        : isPro
+                        ? 'bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 text-white'
+                        : /* VIP Elite Badge */
+                          'bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 text-slate-950 font-black shadow-md shadow-amber-500/30 ring-1 ring-yellow-200/60'
                     }`}
                   >
+                    {isVip && <Crown size={11} className="fill-slate-950" />}
+                    {isStarter && <Zap size={11} className="fill-white" />}
+                    {isPro && <Flame size={11} className="fill-white" />}
                     {p.badge}
                   </span>
                 )}
 
                 <div>
                   <div className="space-y-1">
-                    <h3 className="text-xl font-extrabold text-slate-900 dark:text-white">
-                      {p.name}
-                    </h3>
+                    <div className="flex items-center gap-2">
+                      {isStarter && <Zap size={18} className="text-emerald-500 fill-emerald-500" />}
+                      {isPro && <Flame size={18} className="text-indigo-500 fill-indigo-500" />}
+                      {isVip && <Crown size={20} className="text-amber-500 fill-amber-500 animate-pulse" />}
+                      <h3 className={`text-xl font-extrabold ${
+                        isStarter
+                          ? 'text-emerald-950 dark:text-emerald-200'
+                          : isPro
+                          ? 'text-indigo-950 dark:text-indigo-200'
+                          : 'text-amber-950 dark:text-amber-200 font-black'
+                      }`}>
+                        {p.name}
+                      </h3>
+                    </div>
                     <p className="text-xs text-slate-500 dark:text-slate-400 min-h-[32px]">
                       {p.description}
                     </p>
@@ -156,17 +182,27 @@ export default function Pricing() {
 
                   <div className="my-6 pb-6 border-b border-slate-100 dark:border-slate-800">
                     <div className="flex items-baseline gap-1">
-                      <span className="text-4xl font-black text-slate-900 dark:text-white">
+                      <span className={`text-4xl font-black ${
+                        isStarter
+                          ? 'text-emerald-700 dark:text-emerald-300'
+                          : isPro
+                          ? 'text-indigo-700 dark:text-indigo-300'
+                          : 'text-amber-600 dark:text-amber-400 font-black'
+                      }`}>
                         ₹{p.priceInr}
                       </span>
-                      <span className="text-xs text-slate-400">
+                      <span className="text-xs text-slate-400 font-semibold">
                         {p.isUnlimited ? '/ month' : `(approx. $${p.priceUsd})`}
                       </span>
                     </div>
 
                     {p.bonusTokens ? (
-                      <span className="inline-block mt-2 px-2.5 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 text-xs font-bold border border-emerald-200 dark:border-emerald-800">
+                      <span className="inline-block mt-2 px-2.5 py-1 rounded-lg bg-orange-50 dark:bg-orange-950/40 text-orange-600 dark:text-orange-400 text-xs font-bold border border-orange-200/80">
                         🎁 Includes +{p.bonusTokens} Free Bonus Tokens
+                      </span>
+                    ) : isVip ? (
+                      <span className="inline-block mt-2 px-2.5 py-1 rounded-lg bg-amber-100/70 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 text-xs font-black border border-amber-300/80">
+                        👑 Zero Limits • Unlimited AI & Vision 30 Days
                       </span>
                     ) : (
                       <span className="inline-block mt-2 text-xs font-semibold text-slate-500">
@@ -182,8 +218,14 @@ export default function Pricing() {
                     </p>
                     {p.features.map((feat, i) => (
                       <div key={i} className="flex items-start gap-2.5 text-xs text-slate-700 dark:text-slate-300">
-                        <CheckCircle2 size={16} className="text-indigo-600 dark:text-indigo-400 shrink-0 mt-0.5" />
-                        <span>{feat}</span>
+                        {isVip ? (
+                          <Crown size={15} className="text-amber-500 fill-amber-500/20 shrink-0 mt-0.5" />
+                        ) : isStarter ? (
+                          <CheckCircle2 size={16} className="text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
+                        ) : (
+                          <CheckCircle2 size={16} className="text-indigo-600 dark:text-indigo-400 shrink-0 mt-0.5" />
+                        )}
+                        <span className={isVip ? 'font-medium' : ''}>{feat}</span>
                       </div>
                     ))}
                   </div>
@@ -192,14 +234,17 @@ export default function Pricing() {
                 {/* Checkout Trigger */}
                 <button
                   onClick={() => openPaymentModal(p)}
-                  className={`w-full py-3.5 px-4 rounded-2xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm ${
-                    p.popular
-                      ? 'bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white shadow-indigo-500/25'
-                      : 'bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-900 dark:text-white'
+                  className={`w-full py-3.5 px-4 rounded-2xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md ${
+                    isStarter
+                      ? 'bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-500 hover:to-teal-500 text-white shadow-emerald-500/20'
+                      : isPro
+                      ? 'bg-gradient-to-r from-indigo-600 via-purple-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white shadow-indigo-500/25'
+                      : /* VIP Elite CTA */
+                        'bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 hover:from-amber-300 hover:via-yellow-300 hover:to-amber-400 text-slate-950 font-black shadow-amber-500/35 ring-2 ring-yellow-200/60'
                   }`}
                 >
-                  <Zap size={16} />
-                  <span>{p.isUnlimited ? 'Get Unlimited VIP Access' : `Buy ${p.tokens} Tokens`}</span>
+                  {isVip ? <Crown size={17} className="fill-slate-950" /> : <Zap size={16} />}
+                  <span>{p.isUnlimited ? 'Get Unlimited VIP Elite Access' : `Buy ${p.tokens} Tokens`}</span>
                 </button>
               </div>
             );

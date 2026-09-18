@@ -18,11 +18,15 @@ import {
   Activity,
   HeartPulse,
   Zap,
+  Sun,
+  Moon,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
 
 const Dashboard = () => {
   const { currentUser } = useAuth();
+  const { isDark, toggleTheme } = useTheme();
   const [activeTab, setActiveTab] = useState('overview');
   const [selectedDay, setSelectedDay] = useState('Wed');
 
@@ -280,6 +284,25 @@ const Dashboard = () => {
                 <span>Sign In / Register</span>
               </Link>
             )}
+
+            {/* Dedicated Hero Theme Toggle */}
+            <button
+              onClick={toggleTheme}
+              className="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white text-sm font-bold backdrop-blur-sm border border-white/20 transition-all cursor-pointer shadow-xs group"
+              title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            >
+              {isDark ? (
+                <>
+                  <Sun size={17} className="text-amber-400 fill-amber-400 group-hover:rotate-45 transition-transform" />
+                  <span>Light Mode</span>
+                </>
+              ) : (
+                <>
+                  <Moon size={17} className="text-indigo-300 fill-indigo-300/20 group-hover:-rotate-12 transition-transform" />
+                  <span>Dark Mode</span>
+                </>
+              )}
+            </button>
           </div>
         </div>
       </div>
@@ -659,6 +682,32 @@ const Dashboard = () => {
           ))}
         </div>
       )}
+
+      {/* Quick-Access Floating Dark Mode Switcher on Home Page */}
+      <div className="fixed bottom-5 left-5 sm:bottom-6 sm:left-6 z-40 animate-in fade-in duration-300">
+        <button
+          onClick={toggleTheme}
+          className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-full bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-2 border-indigo-500/60 dark:border-indigo-400/60 shadow-xl shadow-indigo-500/20 text-slate-800 dark:text-slate-100 hover:scale-105 active:scale-95 transition-all cursor-pointer group ring-2 ring-indigo-500/20"
+          title={isDark ? 'Switch to Clean Light Mode' : 'Switch to High-Contrast Dark Mode'}
+          aria-label="Toggle Dark Mode"
+        >
+          <div className={`w-7 h-7 rounded-full flex items-center justify-center transition-transform group-hover:scale-110 ${
+            isDark ? 'bg-amber-400/20 text-amber-400' : 'bg-indigo-600/20 text-indigo-600'
+          }`}>
+            {isDark ? (
+              <Sun size={16} className="fill-amber-400 group-hover:rotate-45 transition-transform" />
+            ) : (
+              <Moon size={16} className="fill-indigo-600/30 group-hover:-rotate-12 transition-transform" />
+            )}
+          </div>
+          <div className="text-left pr-1 hidden sm:block">
+            <p className="text-[10px] text-slate-400 font-semibold leading-none">Appearance</p>
+            <p className="text-xs font-black tracking-tight leading-tight">
+              {isDark ? 'Light Mode ☀️' : 'Dark Mode 🌙'}
+            </p>
+          </div>
+        </button>
+      </div>
     </div>
   );
 };

@@ -30,6 +30,7 @@ import {
   Gift,
   Sun,
   Moon,
+  Crown,
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -49,6 +50,7 @@ const ProfilePage = () => {
     openPaymentModal,
     claimDailyTrialBonus,
     isDailyClaimAvailable,
+    activatePlan,
   } = useTokens();
   const fileInputRef = React.useRef(null);
   const [avatarUrl, setAvatarUrl] = useState(() => {
@@ -243,7 +245,13 @@ const ProfilePage = () => {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors">
       {/* Header with profile summary and custom athlete logo */}
-      <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-purple-950 text-white shadow-xl">
+      <div className={`text-white shadow-xl transition-all duration-300 ${
+        isUnlimited
+          ? 'bg-gradient-to-r from-slate-950 via-amber-950 to-slate-900 border-b-2 border-amber-500/50 shadow-amber-500/10'
+          : plan === 'Starter Booster'
+          ? 'bg-gradient-to-r from-slate-950 via-emerald-950 to-slate-900 border-b-2 border-emerald-500/40 shadow-emerald-500/10'
+          : 'bg-gradient-to-r from-slate-900 via-indigo-950 to-purple-950 border-b-2 border-indigo-500/30'
+      }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
             <div className="flex items-center">
@@ -435,15 +443,31 @@ const ProfilePage = () => {
 
               <div
                 onClick={() => openPaymentModal()}
-                className="bg-white/10 hover:bg-white/20 rounded-2xl p-3.5 backdrop-blur-sm border border-white/10 flex items-center gap-3 cursor-pointer transition-all"
-                title="Click to view tokens & top up"
+                className={`rounded-2xl p-3.5 backdrop-blur-sm border flex items-center gap-3 cursor-pointer transition-all ${
+                  isUnlimited
+                    ? 'bg-gradient-to-r from-amber-500/30 to-yellow-500/20 hover:from-amber-500/40 hover:to-yellow-500/30 border-amber-400/60 shadow-lg shadow-amber-500/20 ring-1 ring-amber-400/40'
+                    : plan === 'Starter Booster'
+                    ? 'bg-emerald-500/20 hover:bg-emerald-500/30 border-emerald-400/40 text-white'
+                    : 'bg-white/10 hover:bg-white/20 border-white/10 text-white'
+                }`}
+                title={isUnlimited ? "Unlimited VIP Elite Active • Click to Manage" : "Click to view tokens & top up"}
               >
-                <div className="h-11 w-11 rounded-xl bg-gradient-to-tr from-cyan-400 to-indigo-500 flex items-center justify-center text-white shadow-xs">
-                  <Zap size={22} className="fill-white" />
+                <div className={`h-11 w-11 rounded-xl flex items-center justify-center text-white shadow-xs ${
+                  isUnlimited
+                    ? 'bg-gradient-to-tr from-amber-400 via-yellow-300 to-amber-500 text-slate-950 font-black'
+                    : plan === 'Starter Booster'
+                    ? 'bg-gradient-to-tr from-emerald-400 to-teal-500'
+                    : 'bg-gradient-to-tr from-cyan-400 to-indigo-500'
+                }`}>
+                  {isUnlimited ? <Crown size={22} className="text-slate-950 fill-slate-950" /> : <Zap size={22} className="fill-white" />}
                 </div>
                 <div>
-                  <p className="text-[11px] text-slate-300 font-medium">AI Tokens</p>
-                  <p className="text-xl font-extrabold text-white">{isUnlimited ? 'VIP Pass' : tokens}</p>
+                  <p className={`text-[11px] font-bold uppercase tracking-wider ${isUnlimited ? 'text-amber-200' : 'text-slate-300'}`}>
+                    {isUnlimited ? 'Active Tier' : 'AI Tokens'}
+                  </p>
+                  <p className={`text-xl font-black ${isUnlimited ? 'text-amber-300 flex items-center gap-1' : 'text-white'}`}>
+                    {isUnlimited ? 'VIP Elite 👑' : `${tokens}`}
+                  </p>
                 </div>
               </div>
             </div>
@@ -641,16 +665,28 @@ const ProfilePage = () => {
         {activeTab === 'tokens' && (
           <div className="space-y-6 animate-in fade-in duration-200">
             {/* Wallet Overview Hero */}
-            <div className="rounded-3xl p-6 sm:p-8 bg-gradient-to-r from-indigo-950 via-slate-900 to-violet-950 text-white shadow-xl border border-indigo-900/40 relative overflow-hidden">
+            <div className={`rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden transition-all duration-300 ${
+              isUnlimited
+                ? 'bg-gradient-to-r from-slate-950 via-amber-950 to-slate-900 border-2 border-amber-500/60 shadow-amber-500/20'
+                : plan === 'Starter Booster'
+                ? 'bg-gradient-to-r from-emerald-950 via-slate-900 to-teal-950 border-2 border-emerald-500/50 shadow-emerald-500/10'
+                : 'bg-gradient-to-r from-indigo-950 via-slate-900 to-violet-950 border-2 border-indigo-500/40 shadow-indigo-500/10'
+            }`}>
               <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
                 <div className="space-y-3">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 text-xs font-bold flex items-center gap-1.5">
-                      <Sparkles size={12} className="text-emerald-400" />
+                    <span className={`px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1.5 border ${
+                      isUnlimited
+                        ? 'bg-amber-400/20 text-amber-300 border-amber-400/40'
+                        : plan === 'Starter Booster'
+                        ? 'bg-emerald-500/20 text-emerald-300 border-emerald-400/40'
+                        : 'bg-indigo-500/20 text-indigo-300 border-indigo-400/40'
+                    }`}>
+                      {isUnlimited ? <Crown size={12} className="text-amber-300 fill-amber-300" /> : <Sparkles size={12} className="text-emerald-400" />}
                       Active Tier: {plan}
                     </span>
                     <span className="px-2.5 py-0.5 rounded-full bg-white/10 text-slate-300 text-xs font-semibold">
-                      {isUnlimited ? '30-Day VIP Pass Active' : 'Free Trial Wallet'}
+                      {isUnlimited ? '👑 30-Day VIP Pass Active' : 'FitFlow Wallet'}
                     </span>
                   </div>
 
@@ -722,46 +758,94 @@ const ProfilePage = () => {
               </div>
             </div>
 
-            {/* Quick Purchase Packs */}
+            {/* Quick Purchase & Tier Switch Packs */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {PLANS.map((p) => (
-                <div
-                  key={p.id}
-                  className="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col justify-between hover:border-indigo-300 dark:hover:border-indigo-700 transition-all"
-                >
-                  <div>
-                    <div className="flex justify-between items-start">
-                      <h4 className="font-extrabold text-slate-900 dark:text-white text-sm">
-                        {p.name}
-                      </h4>
-                      {p.popular && (
-                        <span className="text-[9px] font-black uppercase px-2 py-0.5 rounded-full bg-amber-500 text-white">
-                          Best Value
-                        </span>
-                      )}
-                    </div>
-                    <div className="flex items-baseline gap-1 my-2">
-                      <span className="text-2xl font-black text-slate-900 dark:text-white">
-                        ₹{p.priceInr}
-                      </span>
-                      <span className="text-[10px] text-slate-400">
-                        / {p.isUnlimited ? '30 Days VIP' : `${p.tokens} Tokens`}
-                      </span>
-                    </div>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 min-h-[32px]">
-                      {p.description}
-                    </p>
-                  </div>
+              {PLANS.map((p) => {
+                const isCurrent = plan === p.name;
+                const isStarter = p.id === 'starter';
+                const isPro = p.id === 'pro';
+                const isVip = p.id === 'vip';
 
-                  <button
-                    onClick={() => openPaymentModal(p)}
-                    className="mt-4 w-full py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/60 text-slate-800 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400 text-xs font-bold transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                return (
+                  <div
+                    key={p.id}
+                    className={`rounded-2xl p-5 border-2 transition-all flex flex-col justify-between ${
+                      isStarter
+                        ? 'border-emerald-300 dark:border-emerald-800 bg-emerald-50/20 dark:bg-emerald-950/20'
+                        : isPro
+                        ? 'border-indigo-300 dark:border-indigo-800 bg-indigo-50/20 dark:bg-indigo-950/20'
+                        : 'border-amber-400 dark:border-amber-600 bg-amber-50/30 dark:bg-amber-950/25 shadow-md shadow-amber-500/10'
+                    }`}
                   >
-                    <Zap size={14} />
-                    <span>Pay ₹{p.priceInr} via Gateway</span>
-                  </button>
-                </div>
-              ))}
+                    <div>
+                      <div className="flex justify-between items-start">
+                        <div className="flex items-center gap-1.5">
+                          {isVip && <Crown size={15} className="text-amber-500 fill-amber-500" />}
+                          {isStarter && <Zap size={14} className="text-emerald-500 fill-emerald-500" />}
+                          {isPro && <Flame size={14} className="text-indigo-500 fill-indigo-500" />}
+                          <h4 className={`font-extrabold text-sm ${
+                            isStarter ? 'text-emerald-900 dark:text-emerald-200' : isPro ? 'text-indigo-900 dark:text-indigo-200' : 'text-amber-900 dark:text-amber-200 font-black'
+                          }`}>
+                            {p.name}
+                          </h4>
+                        </div>
+                        {isCurrent ? (
+                          <span className="text-[9px] font-black uppercase px-2 py-0.5 rounded-full bg-emerald-600 text-white shadow-xs">
+                            Active
+                          </span>
+                        ) : p.popular ? (
+                          <span className="text-[9px] font-black uppercase px-2 py-0.5 rounded-full bg-amber-500 text-white">
+                            Best Value
+                          </span>
+                        ) : isVip ? (
+                          <span className="text-[9px] font-black uppercase px-2 py-0.5 rounded-full bg-amber-400 text-slate-950 font-black">
+                            👑 VIP
+                          </span>
+                        ) : null}
+                      </div>
+
+                      <div className="flex items-baseline gap-1 my-2">
+                        <span className={`text-2xl font-black ${
+                          isStarter ? 'text-emerald-700 dark:text-emerald-300' : isPro ? 'text-indigo-700 dark:text-indigo-300' : 'text-amber-600 dark:text-amber-400'
+                        }`}>
+                          ₹{p.priceInr}
+                        </span>
+                        <span className="text-[10px] text-slate-400 font-semibold">
+                          / {p.isUnlimited ? '30 Days VIP' : `${p.tokens} Tokens`}
+                        </span>
+                      </div>
+
+                      <p className="text-xs text-slate-500 dark:text-slate-400 min-h-[32px]">
+                        {p.description}
+                      </p>
+                    </div>
+
+                    <div className="mt-4 space-y-2">
+                      <button
+                        onClick={() => openPaymentModal(p)}
+                        className={`w-full py-2.5 rounded-xl font-bold text-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-xs ${
+                          isStarter
+                            ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white hover:opacity-95'
+                            : isPro
+                            ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white hover:opacity-95'
+                            : 'bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 font-black hover:opacity-95'
+                        }`}
+                      >
+                        {isVip ? <Crown size={13} className="fill-slate-950" /> : <Zap size={13} />}
+                        <span>Pay ₹{p.priceInr} via Gateway</span>
+                      </button>
+
+                      <button
+                        onClick={() => activatePlan(p.id)}
+                        className="w-full py-1.5 rounded-lg text-[11px] font-semibold text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-300 hover:bg-white/60 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+                        title="Instant test switcher to preview this membership theme"
+                      >
+                        ⚡ 1-Click Instant Preview Switch
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
 
             {/* Transaction & Billing Ledger */}

@@ -16,6 +16,7 @@ import {
   LogOut,
   Zap,
   CreditCard,
+  Crown,
 } from 'lucide-react';
 import ExerciseDropdown from './ExerciseDropdown';
 import { useTheme } from '../context/ThemeContext';
@@ -27,7 +28,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { isDark, toggleTheme } = useTheme();
   const { currentUser, isAuthenticated, logout } = useAuth();
-  const { tokens, isUnlimited, openPaymentModal } = useTokens();
+  const { tokens, plan, isUnlimited, openPaymentModal } = useTokens();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState(() => {
     return localStorage.getItem('fitflow_user_avatar') || null;
@@ -154,14 +155,37 @@ const Navbar = () => {
             {/* Token Wallet Pill */}
             <button
               onClick={() => openPaymentModal()}
-              title="FitFlow AI Tokens • Click to Top Up"
-              className="flex items-center gap-1 px-2.5 py-1.5 rounded-full bg-gradient-to-r from-indigo-50 to-violet-50 dark:from-indigo-950/60 dark:to-violet-950/60 border border-indigo-200/80 dark:border-indigo-800/80 text-indigo-700 dark:text-indigo-300 text-xs font-extrabold shadow-xs hover:border-indigo-400 dark:hover:border-indigo-600 hover:shadow-indigo-500/10 transition-all cursor-pointer group shrink-0"
+              title={isUnlimited ? "Unlimited VIP Elite Active • Click to Manage" : `FitFlow AI Tokens (${plan}) • Click to Top Up`}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border transition-all cursor-pointer group shrink-0 ${
+                isUnlimited
+                  ? 'bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 text-slate-950 border-amber-400 font-black shadow-md shadow-amber-500/25 ring-1 ring-amber-300 hover:scale-105'
+                  : plan === 'Starter Booster'
+                  ? 'bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-950/60 dark:to-teal-950/60 border-emerald-300 dark:border-emerald-700 text-emerald-700 dark:text-emerald-300 text-xs font-extrabold shadow-xs hover:border-emerald-400'
+                  : 'bg-gradient-to-r from-indigo-50 to-violet-50 dark:from-indigo-950/60 dark:to-violet-950/60 border-indigo-200/80 dark:border-indigo-800/80 text-indigo-700 dark:text-indigo-300 text-xs font-extrabold shadow-xs hover:border-indigo-400'
+              }`}
             >
-              <Zap size={13} className="text-indigo-600 dark:text-indigo-400 fill-indigo-600 dark:fill-indigo-400 group-hover:scale-110 transition-transform" />
-              <span>{isUnlimited ? 'VIP' : `${tokens}`}</span>
-              <span className="w-3.5 h-3.5 rounded-full bg-indigo-600 text-white flex items-center justify-center text-[9px] font-black group-hover:bg-indigo-500 transition-colors">
-                +
-              </span>
+              {isUnlimited ? (
+                <>
+                  <Crown size={14} className="text-slate-950 fill-slate-950 animate-bounce" />
+                  <span className="tracking-wide">VIP ELITE</span>
+                </>
+              ) : plan === 'Starter Booster' ? (
+                <>
+                  <Zap size={13} className="text-emerald-600 dark:text-emerald-400 fill-emerald-600 dark:fill-emerald-400 group-hover:scale-110 transition-transform" />
+                  <span>{tokens}</span>
+                  <span className="w-3.5 h-3.5 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[9px] font-black group-hover:bg-emerald-500 transition-colors">
+                    +
+                  </span>
+                </>
+              ) : (
+                <>
+                  <Zap size={13} className="text-indigo-600 dark:text-indigo-400 fill-indigo-600 dark:fill-indigo-400 group-hover:scale-110 transition-transform" />
+                  <span>{tokens}</span>
+                  <span className="w-3.5 h-3.5 rounded-full bg-indigo-600 text-white flex items-center justify-center text-[9px] font-black group-hover:bg-indigo-500 transition-colors">
+                    +
+                  </span>
+                </>
+              )}
             </button>
 
             {/* Profile and Sign Out */}
@@ -256,11 +280,26 @@ const Navbar = () => {
             {/* Mobile Token Pill */}
             <button
               onClick={() => openPaymentModal()}
-              className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 text-xs font-extrabold border border-indigo-200 dark:border-indigo-800/60 cursor-pointer shrink-0"
+              className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-extrabold border cursor-pointer shrink-0 ${
+                isUnlimited
+                  ? 'bg-gradient-to-r from-amber-400 to-yellow-400 text-slate-950 border-amber-400 font-black shadow-xs'
+                  : plan === 'Starter Booster'
+                  ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800/60'
+                  : 'bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800/60'
+              }`}
               title="Token Wallet"
             >
-              <Zap size={13} className="text-indigo-600 dark:text-indigo-400 fill-indigo-600" />
-              <span>{isUnlimited ? 'VIP' : tokens}</span>
+              {isUnlimited ? (
+                <>
+                  <Crown size={12} className="fill-slate-950" />
+                  <span>VIP ELITE</span>
+                </>
+              ) : (
+                <>
+                  <Zap size={13} className={plan === 'Starter Booster' ? "text-emerald-600 dark:text-emerald-400 fill-emerald-600" : "text-indigo-600 dark:text-indigo-400 fill-indigo-600"} />
+                  <span>{tokens}</span>
+                </>
+              )}
             </button>
 
             <button

@@ -18,6 +18,8 @@ import {
   Check,
   RefreshCw,
   Gift,
+  Crown,
+  Star,
 } from 'lucide-react';
 import { useTokens, PLANS } from '../context/TokenContext';
 import { useAuth } from '../context/AuthContext';
@@ -189,22 +191,45 @@ export default function PaymentGatewayModal() {
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 bg-slate-950/75 backdrop-blur-md animate-in fade-in duration-200">
       <div className="relative w-full max-w-2xl bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden max-h-[92vh] flex flex-col">
         {/* Top Header Bar */}
-        <div className="relative px-6 py-4 bg-gradient-to-r from-indigo-950 via-slate-900 to-violet-950 text-white flex items-center justify-between border-b border-indigo-900/40">
+        <div className={`relative px-6 py-4 text-white flex items-center justify-between border-b transition-all duration-300 ${
+          currentPlan.id === 'starter'
+            ? 'bg-gradient-to-r from-emerald-950 via-slate-900 to-teal-950 border-emerald-800/40'
+            : currentPlan.id === 'pro'
+            ? 'bg-gradient-to-r from-indigo-950 via-slate-900 to-violet-950 border-indigo-800/40'
+            : /* VIP (Most Expensive Membership) */
+              'bg-gradient-to-r from-slate-950 via-amber-950 to-slate-900 border-amber-500/40 shadow-inner'
+        }`}>
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-violet-500 flex items-center justify-center text-white shadow-md shadow-indigo-500/30">
-              <Zap size={22} className="fill-white" />
+            <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-white shadow-md transition-all ${
+              currentPlan.id === 'starter'
+                ? 'bg-gradient-to-tr from-emerald-500 to-teal-500 shadow-emerald-500/30'
+                : currentPlan.id === 'pro'
+                ? 'bg-gradient-to-tr from-indigo-500 to-violet-500 shadow-indigo-500/30'
+                : 'bg-gradient-to-tr from-amber-400 via-yellow-300 to-amber-500 text-slate-950 font-black shadow-amber-500/40 ring-2 ring-yellow-200/50'
+            }`}>
+              {currentPlan.id === 'vip' ? (
+                <Crown size={22} className="text-slate-950 fill-slate-950 animate-pulse" />
+              ) : currentPlan.id === 'starter' ? (
+                <Zap size={22} className="fill-white" />
+              ) : (
+                <Flame size={22} className="fill-white" />
+              )}
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <h3 className="text-base font-extrabold tracking-tight">
-                  FitFlow Secure Checkout
+                  {currentPlan.id === 'vip' ? 'FitFlow VIP Elite Royal Checkout' : 'FitFlow Secure Checkout'}
                 </h3>
                 <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 flex items-center gap-1">
                   <ShieldCheck size={11} /> 256-Bit SSL
                 </span>
               </div>
               <p className="text-xs text-indigo-200/80">
-                Instant Token Allotment & VIP Activation
+                {currentPlan.id === 'vip'
+                  ? '👑 30-Day Zero Limits VIP Access • Priority Dedicated Server'
+                  : currentPlan.id === 'starter'
+                  ? '⚡ Instant 100 Starter Token Allotment'
+                  : '🔥 500 + 100 Free Bonus Pro Tokens (600 Total)'}
               </p>
             </div>
           </div>
@@ -245,53 +270,117 @@ export default function PaymentGatewayModal() {
                   </span>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {PLANS.map((p) => {
                     const isSelected = currentPlan.id === p.id;
+                    const isStarter = p.id === 'starter';
+                    const isPro = p.id === 'pro';
+                    const isVip = p.id === 'vip';
+
                     return (
                       <div
                         key={p.id}
                         onClick={() => setSelectedPlanForCheckout(p)}
-                        className={`relative p-3.5 rounded-2xl border-2 transition-all cursor-pointer flex flex-col justify-between ${
-                          isSelected
-                            ? 'border-indigo-600 bg-indigo-50/70 dark:bg-indigo-950/40 shadow-md shadow-indigo-500/15 ring-2 ring-indigo-500/20'
-                            : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 bg-slate-50/50 dark:bg-slate-800/30'
+                        className={`relative p-3.5 sm:p-4 rounded-2xl border-2 transition-all duration-200 cursor-pointer flex flex-col justify-between ${
+                          isStarter
+                            ? isSelected
+                              ? 'border-emerald-500 bg-gradient-to-b from-emerald-50/90 to-teal-50/50 dark:from-emerald-950/60 dark:to-teal-950/30 shadow-lg shadow-emerald-500/20 ring-2 ring-emerald-400/50 -translate-y-0.5'
+                              : 'border-emerald-200/90 dark:border-emerald-900/60 hover:border-emerald-400 dark:hover:border-emerald-700 bg-emerald-50/20 dark:bg-emerald-950/15 hover:bg-emerald-50/40'
+                            : isPro
+                            ? isSelected
+                              ? 'border-indigo-600 bg-gradient-to-b from-indigo-50/90 to-violet-50/50 dark:from-indigo-950/60 dark:to-violet-950/30 shadow-lg shadow-indigo-500/25 ring-2 ring-indigo-500/50 -translate-y-0.5'
+                              : 'border-indigo-200/90 dark:border-indigo-900/60 hover:border-indigo-400 dark:hover:border-indigo-700 bg-indigo-50/20 dark:bg-indigo-950/15 hover:bg-indigo-50/40'
+                            : /* VIP Elite - Most Expensive Membership */
+                            isSelected
+                            ? 'border-amber-500 bg-gradient-to-b from-amber-50 via-yellow-50/60 to-amber-100/50 dark:from-amber-950/70 dark:via-yellow-950/30 dark:to-slate-900 shadow-xl shadow-amber-500/35 ring-2 ring-amber-400/80 -translate-y-1'
+                            : 'border-amber-300/90 dark:border-amber-800/80 hover:border-amber-400 dark:hover:border-amber-600 bg-amber-50/30 dark:bg-amber-950/20 hover:bg-amber-50/50 shadow-xs shadow-amber-500/10'
                         }`}
                       >
                         {p.badge && (
                           <span
-                            className={`absolute -top-2.5 right-3 text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full shadow-xs ${
-                              p.popular
-                                ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white'
-                                : 'bg-indigo-600 text-white'
+                            className={`absolute -top-2.5 right-3 text-[9px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-xs flex items-center gap-1 ${
+                              isStarter
+                                ? 'bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 text-white'
+                                : isPro
+                                ? 'bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 text-white'
+                                : /* VIP Elite Badge */
+                                  'bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 text-slate-950 font-black shadow-md shadow-amber-500/30 ring-1 ring-yellow-200/60'
                             }`}
                           >
+                            {isVip && <Crown size={10} className="fill-slate-950" />}
+                            {isStarter && <Zap size={10} className="fill-white" />}
+                            {isPro && <Flame size={10} className="fill-white" />}
                             {p.badge}
                           </span>
                         )}
 
                         <div>
-                          <p className="text-xs font-bold text-slate-700 dark:text-slate-300">
-                            {p.name}
-                          </p>
-                          <div className="flex items-baseline gap-1 mt-1">
-                            <span className="text-xl font-black text-slate-900 dark:text-white">
+                          <div className="flex items-center gap-1.5">
+                            {isStarter && <Zap size={14} className="text-emerald-500 fill-emerald-500" />}
+                            {isPro && <Flame size={14} className="text-indigo-500 fill-indigo-500" />}
+                            {isVip && <Crown size={14} className="text-amber-500 fill-amber-500" />}
+                            <p className={`text-xs font-extrabold ${
+                              isStarter
+                                ? 'text-emerald-950 dark:text-emerald-200'
+                                : isPro
+                                ? 'text-indigo-950 dark:text-indigo-200'
+                                : 'text-amber-950 dark:text-amber-200'
+                            }`}>
+                              {p.name}
+                            </p>
+                          </div>
+
+                          <div className="flex items-baseline gap-1 mt-1.5">
+                            <span className={`text-xl font-black ${
+                              isStarter
+                                ? 'text-emerald-700 dark:text-emerald-300'
+                                : isPro
+                                ? 'text-indigo-700 dark:text-indigo-300'
+                                : 'text-amber-600 dark:text-amber-400'
+                            }`}>
                               ₹{p.priceInr}
                             </span>
-                            <span className="text-[10px] text-slate-400">
+                            <span className="text-[10px] text-slate-400 font-medium">
                               / {p.isUnlimited ? 'month' : `${p.tokens} tokens`}
                             </span>
                           </div>
+
                           {p.bonusTokens && (
-                            <span className="inline-block mt-1 text-[10px] font-extrabold text-emerald-600 dark:text-emerald-400">
+                            <span className="inline-block mt-1 text-[10px] font-extrabold text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-950/40 px-1.5 py-0.5 rounded-md border border-orange-200/60">
                               🎁 +{p.bonusTokens} Free Bonus
+                            </span>
+                          )}
+
+                          {isVip && (
+                            <span className="inline-block mt-1 text-[10px] font-black text-amber-700 dark:text-amber-300 bg-amber-100/70 dark:bg-amber-950/60 px-1.5 py-0.5 rounded-md border border-amber-300/80">
+                              👑 Zero Limits • VIP Pass
                             </span>
                           )}
                         </div>
 
                         <div className="mt-3 pt-2 border-t border-slate-200/60 dark:border-slate-700/60 flex items-center justify-between text-[11px] font-bold">
-                          <span className={isSelected ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400'}>
-                            {isSelected ? '✓ Selected' : 'Tap to Select'}
+                          <span
+                            className={
+                              isSelected
+                                ? isStarter
+                                  ? 'text-emerald-600 dark:text-emerald-400 font-black'
+                                  : isPro
+                                  ? 'text-indigo-600 dark:text-indigo-400 font-black'
+                                  : 'text-amber-600 dark:text-amber-400 font-black flex items-center gap-1'
+                                : isStarter
+                                ? 'text-emerald-600/70 dark:text-emerald-400/70'
+                                : isPro
+                                ? 'text-indigo-600/70 dark:text-indigo-400/70'
+                                : 'text-amber-600/80 dark:text-amber-400/80'
+                            }
+                          >
+                            {isSelected
+                              ? isVip
+                                ? '👑 VIP Elite Selected'
+                                : isPro
+                                ? '✓ Pro Selected'
+                                : '✓ Starter Selected'
+                              : 'Tap to Select'}
                           </span>
                         </div>
                       </div>
@@ -558,9 +647,20 @@ export default function PaymentGatewayModal() {
               </div>
 
               {/* Order Breakdown */}
-              <div className="p-4 rounded-2xl bg-slate-100 dark:bg-slate-800/80 space-y-1.5 text-xs">
-                <div className="flex justify-between text-slate-600 dark:text-slate-400">
-                  <span>{currentPlan.name} ({currentPlan.isUnlimited ? 'Unlimited' : `${currentPlan.tokens} Tokens`})</span>
+              <div className={`p-4 rounded-2xl space-y-1.5 text-xs border transition-all ${
+                currentPlan.id === 'starter'
+                  ? 'bg-emerald-50/70 dark:bg-emerald-950/30 border-emerald-200 dark:border-emerald-800/60'
+                  : currentPlan.id === 'pro'
+                  ? 'bg-indigo-50/70 dark:bg-indigo-950/30 border-indigo-200 dark:border-indigo-800/60'
+                  : 'bg-amber-50/80 dark:bg-amber-950/35 border-amber-300/80 dark:border-amber-800/70 shadow-xs'
+              }`}>
+                <div className="flex justify-between text-slate-700 dark:text-slate-300 font-semibold">
+                  <span className="flex items-center gap-1.5">
+                    {currentPlan.id === 'vip' && <Crown size={13} className="text-amber-500 fill-amber-500" />}
+                    {currentPlan.id === 'starter' && <Zap size={13} className="text-emerald-500 fill-emerald-500" />}
+                    {currentPlan.id === 'pro' && <Flame size={13} className="text-indigo-500 fill-indigo-500" />}
+                    {currentPlan.name} ({currentPlan.isUnlimited ? 'Unlimited 30-Day VIP' : `${currentPlan.tokens} Tokens`})
+                  </span>
                   <span>₹{Math.round(totalAmount / 1.18)}</span>
                 </div>
                 <div className="flex justify-between text-slate-500 dark:text-slate-400 text-[11px]">
@@ -569,7 +669,13 @@ export default function PaymentGatewayModal() {
                 </div>
                 <div className="pt-2 border-t border-slate-200 dark:border-slate-700 flex justify-between font-extrabold text-sm text-slate-900 dark:text-white">
                   <span>Total Amount Payable:</span>
-                  <span className="text-indigo-600 dark:text-indigo-400 text-base">
+                  <span className={
+                    currentPlan.id === 'starter'
+                      ? 'text-emerald-600 dark:text-emerald-400 text-base font-black'
+                      : currentPlan.id === 'pro'
+                      ? 'text-indigo-600 dark:text-indigo-400 text-base font-black'
+                      : 'text-amber-600 dark:text-amber-400 text-base font-black'
+                  }>
                     ₹{totalAmount}
                   </span>
                 </div>
@@ -579,10 +685,22 @@ export default function PaymentGatewayModal() {
               <button
                 type="button"
                 onClick={handleInitiatePayment}
-                className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-indigo-600 via-purple-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-extrabold text-sm shadow-lg shadow-indigo-500/25 flex items-center justify-center gap-2 transition-all transform hover:-translate-y-0.5 cursor-pointer"
+                className={`w-full py-3.5 px-4 rounded-2xl font-extrabold text-sm shadow-lg flex items-center justify-center gap-2 transition-all transform hover:-translate-y-0.5 cursor-pointer ${
+                  currentPlan.id === 'starter'
+                    ? 'bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 hover:from-emerald-500 hover:to-teal-500 text-white shadow-emerald-600/25'
+                    : currentPlan.id === 'pro'
+                    ? 'bg-gradient-to-r from-indigo-600 via-purple-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white shadow-indigo-500/25'
+                    : 'bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 hover:from-amber-300 hover:via-yellow-300 hover:to-amber-400 text-slate-950 font-black shadow-amber-500/35 ring-2 ring-yellow-200/60'
+                }`}
               >
-                <Lock size={16} />
-                <span>Pay ₹{totalAmount} & Activate {currentPlan.isUnlimited ? 'VIP Pass' : `${currentPlan.tokens} Tokens`}</span>
+                {currentPlan.id === 'vip' ? (
+                  <Crown size={17} className="fill-slate-950" />
+                ) : (
+                  <Lock size={16} />
+                )}
+                <span>
+                  Pay ₹{totalAmount} & Activate {currentPlan.isUnlimited ? '30-Day Unlimited VIP Elite' : `${currentPlan.tokens} Tokens`}
+                </span>
                 <ArrowRight size={16} />
               </button>
 

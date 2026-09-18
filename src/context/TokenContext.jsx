@@ -12,6 +12,9 @@ export const PLANS = [
     priceUsd: 1.29,
     badge: 'Quick Top-Up',
     popular: false,
+    theme: 'emerald',
+    themeName: 'Electric Mint & Emerald',
+    accentColor: '#10b981',
     description: 'Perfect for quick workout reviews, diet checks, and AI coaching questions.',
     features: [
       '100 FitFlow AI Tokens',
@@ -30,6 +33,9 @@ export const PLANS = [
     priceUsd: 3.69,
     badge: 'Most Popular',
     popular: true,
+    theme: 'indigo',
+    themeName: 'Royal Indigo & Violet',
+    accentColor: '#6366f1',
     description: 'Our highest value bundle for dedicated athletes training 3-5 days per week.',
     features: [
       '500 + 100 BONUS Tokens (600 Total)',
@@ -49,6 +55,9 @@ export const PLANS = [
     priceUsd: 8.49,
     badge: '30-Day VIP Pass',
     popular: false,
+    theme: 'amber',
+    themeName: 'Royal Cyber-Gold & Obsidian',
+    accentColor: '#f59e0b',
     description: 'Zero limits. Complete VIP access to all AI models, camera vision & personalized coaching.',
     features: [
       'Unlimited AI Tokens for 30 Days',
@@ -320,6 +329,33 @@ export const TokenProvider = ({ children }) => {
     return tokenState.lastDailyClaim !== today;
   };
 
+  // Instant switch / activate membership for testing and preview
+  const activatePlan = (planId) => {
+    const isVip = planId === 'vip';
+    const planObj = PLANS.find((p) => p.id === planId);
+    const planName = planObj ? planObj.name : 'Free Trial';
+
+    setTokenState((prev) => ({
+      ...prev,
+      tokens: isVip ? 999999 : planId === 'pro' ? 600 : planId === 'starter' ? 100 : 50,
+      plan: planName,
+      isUnlimited: isVip,
+      vipExpiresAt: isVip ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString() : null,
+    }));
+
+    if (currentUser) {
+      updateProfile({
+        role: isVip
+          ? '👑 PRO VIP Athlete'
+          : planId === 'pro'
+          ? '🔥 Pro Athlete Member'
+          : planId === 'starter'
+          ? '⚡ Starter Athlete Member'
+          : 'Athlete',
+      });
+    }
+  };
+
   return (
     <TokenContext.Provider
       value={{
@@ -330,6 +366,7 @@ export const TokenProvider = ({ children }) => {
         transactions: tokenState.transactions,
         consumeTokens,
         addTokens,
+        activatePlan,
         claimDailyTrialBonus,
         isDailyClaimAvailable,
         openPaymentModal,
