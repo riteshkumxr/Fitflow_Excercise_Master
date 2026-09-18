@@ -47,13 +47,21 @@ const Navbar = () => {
     };
   }, [currentUser]);
 
-  const navItems = [
+  const desktopNavItems = [
     { name: 'Dashboard', path: '/', icon: LayoutDashboard },
     { name: 'Workouts', path: '/workout', icon: Dumbbell },
     { name: 'Diet Plan', path: '/diet-plan', icon: Apple },
-    { name: 'Profile', path: '/profile', icon: User },
     { name: 'Pricing', path: '/pricing', icon: Zap },
     { name: 'Body Focus', path: '/tutorials', icon: Sparkles },
+  ];
+
+  const mobileNavItems = [
+    { name: 'Dashboard', path: '/', icon: LayoutDashboard },
+    { name: 'Workouts', path: '/workout', icon: Dumbbell },
+    { name: 'Diet Plan', path: '/diet-plan', icon: Apple },
+    { name: 'Pricing', path: '/pricing', icon: Zap },
+    { name: 'Body Focus', path: '/tutorials', icon: Sparkles },
+    { name: 'Profile', path: '/profile', icon: User },
   ];
 
   const isActive = (path) => {
@@ -65,45 +73,45 @@ const Navbar = () => {
   const initial = displayName.charAt(0).toUpperCase();
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/85 dark:bg-slate-900/85 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16 items-center">
+    <nav className="sticky top-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 transition-colors duration-200">
+      <div className="w-full max-w-[1440px] mx-auto px-3 sm:px-4 lg:px-6">
+        <div className="flex justify-between h-16 items-center gap-2">
           {/* Logo & Brand */}
-          <Link to="/" className="flex items-center gap-2.5 group">
-            <div className="h-10 w-10 rounded-xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-cyan-400 flex items-center justify-center text-white shadow-md shadow-indigo-500/25 group-hover:scale-105 transition-transform duration-200">
-              <Activity size={22} className="stroke-[2.5]" />
+          <Link to="/" className="flex items-center gap-2 group shrink-0">
+            <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-cyan-400 flex items-center justify-center text-white shadow-md shadow-indigo-500/25 group-hover:scale-105 transition-transform duration-200 shrink-0">
+              <Activity size={20} className="stroke-[2.5]" />
             </div>
             <div className="flex flex-col">
               <div className="flex items-center gap-1.5">
-                <span className="text-xl font-extrabold bg-gradient-to-r from-slate-900 via-indigo-950 to-indigo-600 dark:from-white dark:via-slate-100 dark:to-indigo-400 bg-clip-text text-transparent tracking-tight">
+                <span className="text-lg lg:text-xl font-extrabold bg-gradient-to-r from-slate-900 via-indigo-950 to-indigo-600 dark:from-white dark:via-slate-100 dark:to-indigo-400 bg-clip-text text-transparent tracking-tight">
                   FitFlow
                 </span>
-                <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded-full bg-indigo-100 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
+                <span className="text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.2 rounded-full bg-indigo-100 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
                   AI
                 </span>
               </div>
-              <span className="text-[10px] text-slate-400 dark:text-slate-500 font-medium -mt-1 tracking-wide">
+              <span className="text-[9px] text-slate-400 dark:text-slate-500 font-medium -mt-1 tracking-wide hidden xl:block">
                 Smart Fitness Coach
               </span>
             </div>
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-1 lg:space-x-2">
-            {navItems.map((item) => {
+          <div className="hidden md:flex items-center gap-1 lg:gap-1.5 min-w-0">
+            {desktopNavItems.map((item) => {
               const Icon = item.icon;
               const active = isActive(item.path);
               return (
                 <Link
                   key={item.name}
                   to={item.path}
-                  className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-semibold transition-all duration-200 ${
+                  className={`flex items-center gap-1.5 px-2.5 xl:px-3 py-1.5 rounded-xl text-xs xl:text-sm font-semibold whitespace-nowrap transition-all duration-200 ${
                     active
                       ? 'bg-indigo-50 text-indigo-600 dark:bg-indigo-950/60 dark:text-indigo-400 shadow-sm shadow-indigo-500/10'
                       : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70 dark:text-slate-300 dark:hover:text-white dark:hover:bg-slate-800/70'
                   }`}
                 >
-                  <Icon size={16} className={active ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400 dark:text-slate-500'} />
+                  <Icon size={15} className={active ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400 dark:text-slate-500'} />
                   <span>{item.name}</span>
                 </Link>
               );
@@ -114,26 +122,26 @@ const Navbar = () => {
           </div>
 
           {/* Right Action / Theme Toggle, Streak & Profile */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-1.5 lg:gap-2 shrink-0">
             {/* Theme Toggle Button */}
             <button
               onClick={toggleTheme}
               title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-              className="p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-all cursor-pointer border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
+              className="p-1.5 sm:p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-all cursor-pointer border border-transparent hover:border-slate-200 dark:hover:border-slate-700 shrink-0"
               aria-label="Toggle Theme"
             >
               {isDark ? (
-                <Sun size={19} className="text-amber-400 hover:rotate-45 transition-transform" />
+                <Sun size={18} className="text-amber-400 hover:rotate-45 transition-transform" />
               ) : (
-                <Moon size={19} className="text-slate-600 hover:-rotate-12 transition-transform" />
+                <Moon size={18} className="text-slate-600 hover:-rotate-12 transition-transform" />
               )}
             </button>
 
             {/* Streak Badge */}
             {currentUser && (
-              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-50 dark:bg-amber-950/40 border border-amber-200/60 dark:border-amber-800/40 text-amber-700 dark:text-amber-300 text-xs font-bold shadow-xs">
-                <Flame size={15} className="text-amber-500 fill-amber-500 animate-pulse" />
-                <span>{currentUser.streakDays || 1} Days</span>
+              <div className="hidden lg:flex items-center gap-1 px-2.5 py-1.5 rounded-full bg-amber-50 dark:bg-amber-950/40 border border-amber-200/60 dark:border-amber-800/40 text-amber-700 dark:text-amber-300 text-xs font-bold shadow-xs shrink-0">
+                <Flame size={14} className="text-amber-500 fill-amber-500 animate-pulse" />
+                <span>{currentUser.streakDays || 1}d</span>
               </div>
             )}
 
@@ -141,27 +149,28 @@ const Navbar = () => {
             <button
               onClick={() => openPaymentModal()}
               title="FitFlow AI Tokens • Click to Top Up"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-indigo-50 to-violet-50 dark:from-indigo-950/60 dark:to-violet-950/60 border border-indigo-200/80 dark:border-indigo-800/80 text-indigo-700 dark:text-indigo-300 text-xs font-extrabold shadow-xs hover:border-indigo-400 dark:hover:border-indigo-600 hover:shadow-indigo-500/10 transition-all cursor-pointer group"
+              className="flex items-center gap-1 px-2.5 py-1.5 rounded-full bg-gradient-to-r from-indigo-50 to-violet-50 dark:from-indigo-950/60 dark:to-violet-950/60 border border-indigo-200/80 dark:border-indigo-800/80 text-indigo-700 dark:text-indigo-300 text-xs font-extrabold shadow-xs hover:border-indigo-400 dark:hover:border-indigo-600 hover:shadow-indigo-500/10 transition-all cursor-pointer group shrink-0"
             >
-              <Zap size={14} className="text-indigo-600 dark:text-indigo-400 fill-indigo-600 dark:fill-indigo-400 group-hover:scale-110 transition-transform" />
-              <span>{isUnlimited ? 'VIP' : `${tokens} Tokens`}</span>
-              <span className="w-4 h-4 rounded-full bg-indigo-600 text-white flex items-center justify-center text-[10px] font-black group-hover:bg-indigo-500 transition-colors">
+              <Zap size={13} className="text-indigo-600 dark:text-indigo-400 fill-indigo-600 dark:fill-indigo-400 group-hover:scale-110 transition-transform" />
+              <span>{isUnlimited ? 'VIP' : `${tokens}`}</span>
+              <span className="w-3.5 h-3.5 rounded-full bg-indigo-600 text-white flex items-center justify-center text-[9px] font-black group-hover:bg-indigo-500 transition-colors">
                 +
               </span>
             </button>
 
-            {/* Profile or Sign In Button */}
+            {/* Profile and Sign Out */}
             {isAuthenticated && currentUser ? (
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-1 shrink-0">
                 <Link
                   to="/profile"
-                  className={`flex items-center gap-2 p-1.5 pr-3 rounded-full border transition-all ${
+                  title={`View Profile: ${displayName}`}
+                  className={`flex items-center gap-1.5 p-1 pr-2.5 rounded-full border transition-all shrink-0 ${
                     location.pathname === '/profile'
-                      ? 'border-indigo-500 bg-indigo-50/50 dark:bg-indigo-950/40 shadow-sm'
+                      ? 'border-indigo-500 bg-indigo-50/50 dark:bg-indigo-950/40 shadow-xs'
                       : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-800/60'
                   }`}
                 >
-                  <div className="relative w-8 h-8 rounded-full overflow-hidden bg-gradient-to-tr from-indigo-500 via-purple-500 to-cyan-400 flex items-center justify-center text-white font-extrabold text-xs shadow-xs border border-indigo-400/40">
+                  <div className="relative w-7 h-7 rounded-full overflow-hidden bg-gradient-to-tr from-indigo-500 via-purple-500 to-cyan-400 flex items-center justify-center text-white font-extrabold text-xs shadow-xs border border-indigo-400/40 shrink-0">
                     {currentUser.avatar || avatarUrl ? (
                       <img
                         src={currentUser.avatar || avatarUrl}
@@ -171,9 +180,9 @@ const Navbar = () => {
                     ) : (
                       <span>{initial}</span>
                     )}
-                    <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-cyan-400 border-2 border-white dark:border-slate-900 z-10" />
+                    <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-cyan-400 border-2 border-white dark:border-slate-900 z-10" />
                   </div>
-                  <span className="text-xs font-bold text-slate-800 dark:text-slate-200 hidden lg:inline max-w-[90px] truncate">
+                  <span className="text-xs font-bold text-slate-800 dark:text-slate-200 max-w-[85px] truncate">
                     {displayName}
                   </span>
                 </Link>
@@ -184,7 +193,7 @@ const Navbar = () => {
                     navigate('/login');
                   }}
                   title="Sign Out"
-                  className="p-2 rounded-xl text-slate-400 hover:text-rose-500 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors cursor-pointer"
+                  className="p-1.5 sm:p-2 rounded-xl text-slate-400 hover:text-rose-500 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors cursor-pointer shrink-0"
                   aria-label="Log Out"
                 >
                   <LogOut size={16} />
@@ -193,9 +202,9 @@ const Navbar = () => {
             ) : (
               <Link
                 to="/login"
-                className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white text-xs font-bold shadow-sm shadow-indigo-500/20 transition-all"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white text-xs font-bold shadow-sm shadow-indigo-500/20 transition-all shrink-0"
               >
-                <LogIn size={14} />
+                <LogIn size={13} />
                 <span>Sign In</span>
               </Link>
             )}
@@ -242,7 +251,7 @@ const Navbar = () => {
       {/* Mobile Drawer */}
       {isMobileMenuOpen && (
         <div className="md:hidden bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 shadow-xl z-50 px-4 py-3 space-y-1 animate-in slide-in-from-top duration-200">
-          {navItems.map((item) => {
+          {mobileNavItems.map((item) => {
             const Icon = item.icon;
             const active = isActive(item.path);
             return (
