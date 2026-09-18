@@ -101,24 +101,39 @@ const ProfilePage = () => {
     window.dispatchEvent(new Event('storage'));
   };
 
-  // Derive dynamic user profile from AuthContext
-  const activeUser = currentUser || {
-    name: 'Ritesh',
-    userId: 'ritesh',
-    email: 'ritesh@fitflow.ai',
-    age: 23,
-    weight: '75 kg',
-    targetWeight: '72 kg',
-    height: '175 cm',
-    bmi: '24.5',
-    role: 'Fitness Athlete & Member',
-    department: 'Technology & Engineering',
-    company: 'FitFlow Pro',
-    joinedDate: 'January 2024',
-    points: 1540,
-    rank: 3,
-    streakDays: 15,
-  };
+  if (!currentUser) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="max-w-md mx-auto text-center bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-xl">
+          <div className="w-16 h-16 rounded-2xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mx-auto mb-4 border border-indigo-200/60 dark:border-indigo-800/60 shadow-sm">
+            <User size={32} />
+          </div>
+          <h2 className="text-2xl font-extrabold text-slate-900 dark:text-white mb-2">
+            No Active Profile Found
+          </h2>
+          <p className="text-sm text-slate-500 dark:text-slate-400 mb-6 leading-relaxed">
+            You are currently not logged in. Sign in to your account or create a new profile to track your workouts, streaks, and personal fitness vitals.
+          </p>
+          <div className="flex flex-col gap-3">
+            <Link
+              to="/login"
+              className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 text-white font-bold text-sm shadow-md shadow-indigo-500/25 hover:from-indigo-500 hover:to-violet-500 transition-all"
+            >
+              Sign In to Your Account
+            </Link>
+            <Link
+              to="/signup"
+              className="w-full py-3 px-4 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold text-sm transition-colors border border-slate-200/60 dark:border-slate-700"
+            >
+              Create New Profile
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const activeUser = currentUser;
 
   const userData = {
     name: activeUser.name || 'Athlete',
@@ -202,7 +217,7 @@ const ProfilePage = () => {
   const leaderboardData = [
     { id: 1, name: 'Mark Williams', department: 'Engineering', points: 1850, rank: 1 },
     { id: 2, name: 'Sarah Chen', department: 'Product', points: 1720, rank: 2 },
-    { id: 3, name: userData.name || 'Ritesh', department: userData.department || 'Technology & Engineering', points: userData.points || 1540, rank: 3, isCurrentUser: true },
+    { id: 3, name: userData.name || 'You', department: userData.department || 'Technology & Engineering', points: userData.points || 1540, rank: 3, isCurrentUser: true },
     { id: 4, name: 'Emma Thompson', department: 'HR', points: 1380, rank: 4 },
     { id: 5, name: 'David Kim', department: 'Finance', points: 1120, rank: 5 },
     { id: 6, name: 'Olivia Martinez', department: 'Customer Support', points: 980, rank: 6 },

@@ -125,10 +125,12 @@ const Navbar = () => {
             </button>
 
             {/* Streak Badge */}
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-50 dark:bg-amber-950/40 border border-amber-200/60 dark:border-amber-800/40 text-amber-700 dark:text-amber-300 text-xs font-bold shadow-xs">
-              <Flame size={15} className="text-amber-500 fill-amber-500 animate-pulse" />
-              <span>{currentUser?.streakDays || 15} Days</span>
-            </div>
+            {currentUser && (
+              <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-50 dark:bg-amber-950/40 border border-amber-200/60 dark:border-amber-800/40 text-amber-700 dark:text-amber-300 text-xs font-bold shadow-xs">
+                <Flame size={15} className="text-amber-500 fill-amber-500 animate-pulse" />
+                <span>{currentUser.streakDays || 1} Days</span>
+              </div>
+            )}
 
             {/* Profile or Sign In Button */}
             {isAuthenticated && currentUser ? (
@@ -191,10 +193,12 @@ const Navbar = () => {
               {isDark ? <Sun size={19} className="text-amber-400" /> : <Moon size={19} />}
             </button>
 
-            <div className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 text-xs font-bold border border-amber-200 dark:border-amber-800/40">
-              <Flame size={14} className="text-amber-500 fill-amber-500" />
-              <span>{currentUser?.streakDays || 15}d</span>
-            </div>
+            {currentUser && (
+              <div className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 text-xs font-bold border border-amber-200 dark:border-amber-800/40">
+                <Flame size={14} className="text-amber-500 fill-amber-500" />
+                <span>{currentUser.streakDays || 1}d</span>
+              </div>
+            )}
 
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}

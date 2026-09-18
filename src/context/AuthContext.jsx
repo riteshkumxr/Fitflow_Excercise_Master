@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
     return [DEFAULT_RITESH];
   });
 
-  // Load current logged-in user from localStorage, defaulting to Ritesh
+  // Load current logged-in user from localStorage, defaulting to null if not logged in
   const [currentUser, setCurrentUser] = useState(() => {
     try {
       const stored = localStorage.getItem('fitflow_current_user');
@@ -47,7 +47,7 @@ export const AuthProvider = ({ children }) => {
     } catch (e) {
       console.error('Failed to parse current user:', e);
     }
-    return DEFAULT_RITESH;
+    return null;
   });
 
   // Sync users to localStorage whenever updated
@@ -154,7 +154,12 @@ export const AuthProvider = ({ children }) => {
   // Logout handler
   const logout = () => {
     setCurrentUser(null);
-    localStorage.removeItem('fitflow_user_avatar');
+    try {
+      localStorage.removeItem('fitflow_current_user');
+      localStorage.removeItem('fitflow_user_avatar');
+    } catch (e) {
+      console.error('Failed to clear current user from storage:', e);
+    }
     window.dispatchEvent(new Event('fitflow-avatar-updated'));
   };
 

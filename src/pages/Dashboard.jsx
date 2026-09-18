@@ -228,13 +228,32 @@ const Dashboard = () => {
               </span>
             </div>
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
-              Ready to crush your goals,{' '}
-              <span className="bg-gradient-to-r from-indigo-400 via-violet-300 to-cyan-300 bg-clip-text text-transparent">
-                {currentUser?.name || 'Ritesh'}?
-              </span>
+              {currentUser ? (
+                <>
+                  Ready to crush your goals,{' '}
+                  <span className="bg-gradient-to-r from-indigo-400 via-violet-300 to-cyan-300 bg-clip-text text-transparent">
+                    {currentUser.name}?
+                  </span>
+                </>
+              ) : (
+                <>
+                  Ready to crush your fitness{' '}
+                  <span className="bg-gradient-to-r from-indigo-400 via-violet-300 to-cyan-300 bg-clip-text text-transparent">
+                    goals?
+                  </span>
+                </>
+              )}
             </h1>
             <p className="mt-2 text-sm sm:text-base text-slate-300 max-w-2xl leading-relaxed">
-              You are on a <strong className="text-white font-bold">{currentUser?.streakDays || 15}-day streak</strong>! Your form score is up 8% this week.
+              {currentUser ? (
+                <>
+                  You are on a <strong className="text-white font-bold">{currentUser.streakDays || 1}-day streak</strong>! Your form score is up 8% this week.
+                </>
+              ) : (
+                <>
+                  Experience real-time AI computer vision rep counting, joint posture correction, and intelligent workout tracking.
+                </>
+              )}
             </p>
           </div>
 
@@ -246,12 +265,21 @@ const Dashboard = () => {
               <Play size={16} className="fill-white" />
               <span>Start Workout</span>
             </Link>
-            <Link
-              to="/diet-plan"
-              className="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-white/10 hover:bg-white/15 text-white text-sm font-semibold backdrop-blur-sm border border-white/10 transition-colors"
-            >
-              <span>Log Diet</span>
-            </Link>
+            {currentUser ? (
+              <Link
+                to="/diet-plan"
+                className="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-white/10 hover:bg-white/15 text-white text-sm font-semibold backdrop-blur-sm border border-white/10 transition-colors"
+              >
+                <span>Log Diet</span>
+              </Link>
+            ) : (
+              <Link
+                to="/login"
+                className="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-white/10 hover:bg-white/15 text-white text-sm font-semibold backdrop-blur-sm border border-white/10 transition-colors"
+              >
+                <span>Sign In / Register</span>
+              </Link>
+            )}
           </div>
         </div>
       </div>
