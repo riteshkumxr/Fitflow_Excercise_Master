@@ -14,7 +14,6 @@ import {
   Moon,
   LogIn,
   LogOut,
-  Download,
 } from 'lucide-react';
 import ExerciseDropdown from './ExerciseDropdown';
 import { useTheme } from '../context/ThemeContext';
@@ -66,15 +65,15 @@ const Navbar = () => {
         <div className="flex justify-between h-16 items-center">
           {/* Logo & Brand */}
           <Link to="/" className="flex items-center gap-2.5 group">
-            <div className="h-10 w-10 rounded-xl bg-gradient-to-tr from-emerald-500 via-teal-500 to-cyan-500 flex items-center justify-center text-white shadow-md shadow-emerald-500/20 group-hover:scale-105 transition-transform duration-200">
+            <div className="h-10 w-10 rounded-xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-cyan-400 flex items-center justify-center text-white shadow-md shadow-indigo-500/25 group-hover:scale-105 transition-transform duration-200">
               <Activity size={22} className="stroke-[2.5]" />
             </div>
             <div className="flex flex-col">
               <div className="flex items-center gap-1.5">
-                <span className="text-xl font-extrabold bg-gradient-to-r from-slate-900 via-slate-800 to-emerald-700 dark:from-white dark:via-slate-100 dark:to-emerald-400 bg-clip-text text-transparent tracking-tight">
+                <span className="text-xl font-extrabold bg-gradient-to-r from-slate-900 via-indigo-950 to-indigo-600 dark:from-white dark:via-slate-100 dark:to-indigo-400 bg-clip-text text-transparent tracking-tight">
                   FitFlow
                 </span>
-                <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded-full bg-indigo-100 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
                   AI
                 </span>
               </div>
@@ -95,11 +94,11 @@ const Navbar = () => {
                   to={item.path}
                   className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-semibold transition-all duration-200 ${
                     active
-                      ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/60 dark:text-emerald-400 shadow-sm shadow-emerald-500/10'
+                      ? 'bg-indigo-50 text-indigo-600 dark:bg-indigo-950/60 dark:text-indigo-400 shadow-sm shadow-indigo-500/10'
                       : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70 dark:text-slate-300 dark:hover:text-white dark:hover:bg-slate-800/70'
                   }`}
                 >
-                  <Icon size={16} className={active ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-400 dark:text-slate-500'} />
+                  <Icon size={16} className={active ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400 dark:text-slate-500'} />
                   <span>{item.name}</span>
                 </Link>
               );
@@ -125,17 +124,6 @@ const Navbar = () => {
               )}
             </button>
 
-            {/* Download Code Button */}
-            <a
-              href="/FitFlow_Excercise.zip"
-              download="FitFlow_Excercise.zip"
-              title="Download Full Project Source Code (.zip)"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 bg-slate-100/80 dark:bg-slate-800/80 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 border border-slate-200 dark:border-slate-700 transition-all cursor-pointer shadow-2xs"
-            >
-              <Download size={14} className="text-emerald-500" />
-              <span className="hidden lg:inline">Download Code</span>
-            </a>
-
             {/* Streak Badge */}
             <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-50 dark:bg-amber-950/40 border border-amber-200/60 dark:border-amber-800/40 text-amber-700 dark:text-amber-300 text-xs font-bold shadow-xs">
               <Flame size={15} className="text-amber-500 fill-amber-500 animate-pulse" />
@@ -149,11 +137,11 @@ const Navbar = () => {
                   to="/profile"
                   className={`flex items-center gap-2 p-1.5 pr-3 rounded-full border transition-all ${
                     location.pathname === '/profile'
-                      ? 'border-emerald-500 bg-emerald-50/50 dark:bg-emerald-950/40 shadow-sm'
+                      ? 'border-indigo-500 bg-indigo-50/50 dark:bg-indigo-950/40 shadow-sm'
                       : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-800/60'
                   }`}
                 >
-                  <div className="relative w-8 h-8 rounded-full overflow-hidden bg-gradient-to-tr from-emerald-500 via-teal-500 to-cyan-500 flex items-center justify-center text-white font-extrabold text-xs shadow-xs border border-emerald-400/40">
+                  <div className="relative w-8 h-8 rounded-full overflow-hidden bg-gradient-to-tr from-indigo-500 via-purple-500 to-cyan-400 flex items-center justify-center text-white font-extrabold text-xs shadow-xs border border-indigo-400/40">
                     {currentUser.avatar || avatarUrl ? (
                       <img
                         src={currentUser.avatar || avatarUrl}
@@ -163,7 +151,7 @@ const Navbar = () => {
                     ) : (
                       <span>{initial}</span>
                     )}
-                    <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-500 border-2 border-white dark:border-slate-900 z-10" />
+                    <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-cyan-400 border-2 border-white dark:border-slate-900 z-10" />
                   </div>
                   <span className="text-xs font-bold text-slate-800 dark:text-slate-200 hidden lg:inline max-w-[90px] truncate">
                     {displayName}
@@ -185,7 +173,7 @@ const Navbar = () => {
             ) : (
               <Link
                 to="/login"
-                className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold shadow-sm shadow-emerald-500/20 transition-all"
+                className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white text-xs font-bold shadow-sm shadow-indigo-500/20 transition-all"
               >
                 <LogIn size={14} />
                 <span>Sign In</span>
@@ -232,11 +220,11 @@ const Navbar = () => {
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`flex items-center gap-3 w-full px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-colors text-left ${
                   active
-                    ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/60 dark:text-emerald-400'
+                    ? 'bg-indigo-50 text-indigo-600 dark:bg-indigo-950/60 dark:text-indigo-400'
                     : 'text-slate-700 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800'
                 }`}
               >
-                <Icon size={18} className={active ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-400 dark:text-slate-500'} />
+                <Icon size={18} className={active ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400 dark:text-slate-500'} />
                 <span>{item.name}</span>
               </Link>
             );
@@ -249,11 +237,11 @@ const Navbar = () => {
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`flex items-center gap-3 w-full px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-colors text-left ${
                   location.pathname === '/profile'
-                    ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/60 dark:text-emerald-400'
+                    ? 'bg-indigo-50 text-indigo-600 dark:bg-indigo-950/60 dark:text-indigo-400'
                     : 'text-slate-700 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800'
                 }`}
               >
-                <div className="w-6 h-6 rounded-full overflow-hidden bg-emerald-500 flex items-center justify-center text-white text-xs font-bold shrink-0">
+                <div className="w-6 h-6 rounded-full overflow-hidden bg-indigo-500 flex items-center justify-center text-white text-xs font-bold shrink-0">
                   {currentUser.avatar || avatarUrl ? (
                     <img src={currentUser.avatar || avatarUrl} alt={displayName} className="w-full h-full object-cover" />
                   ) : (
@@ -279,7 +267,7 @@ const Navbar = () => {
             <Link
               to="/login"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="flex items-center gap-3 w-full px-3.5 py-2.5 rounded-xl text-sm font-semibold bg-emerald-500 text-white transition-colors text-left mt-2"
+              className="flex items-center gap-3 w-full px-3.5 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-indigo-600 to-violet-600 text-white transition-colors text-left mt-2"
             >
               <LogIn size={18} />
               <span>Sign In / Create Profile</span>
@@ -287,16 +275,6 @@ const Navbar = () => {
           )}
 
           <ExerciseDropdown mobile onItemClick={() => setIsMobileMenuOpen(false)} />
-
-          <a
-            href="/FitFlow_Excercise.zip"
-            download="FitFlow_Excercise.zip"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="flex items-center gap-3 w-full px-3.5 py-2.5 rounded-xl text-sm font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/50 transition-colors text-left mt-2"
-          >
-            <Download size={18} />
-            <span>Download Project Code (.zip)</span>
-          </a>
         </div>
       )}
     </nav>

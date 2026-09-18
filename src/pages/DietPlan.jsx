@@ -305,14 +305,14 @@ const DietPlan = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white transition-colors">
-      <div className="bg-gradient-to-r from-slate-950 via-slate-900 to-emerald-950 border-b border-slate-800 text-white">
+      <div className="bg-gradient-to-r from-slate-950 via-slate-900 to-indigo-950 border-b border-slate-800 text-white">
         <div className="max-w-6xl mx-auto px-4 py-6 sm:py-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-semibold backdrop-blur-sm border border-emerald-500/30 mb-2">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-semibold backdrop-blur-sm border border-indigo-500/30 mb-2">
                 <span>Precision Nutrition & Macros</span>
               </div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-300">
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-300">
                 FitFlow Nutrition & Diet Tracker
               </h1>
               <p className="text-slate-400 text-sm mt-1">Calorie counting, macro goals, and smart food logging</p>
@@ -321,7 +321,7 @@ const DietPlan = () => {
             <div className="mt-2 md:mt-0 flex flex-wrap items-center gap-3">
               <button 
                 onClick={() => setShowProfileModal(true)}
-                className="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold text-xs shadow-sm transition-all"
+                className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold text-xs shadow-sm transition-all cursor-pointer"
               >
                 Customize Goals
               </button>
@@ -329,7 +329,7 @@ const DietPlan = () => {
               <div className="inline-flex text-xs rounded-xl overflow-hidden shadow-xs border border-slate-700 bg-slate-800">
                 <button
                   onClick={() => setSelectedDate(new Date(selectedDate.setDate(selectedDate.getDate() - 1)))}
-                  className="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 border-r border-slate-700 transition-colors"
+                  className="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 border-r border-slate-700 transition-colors cursor-pointer"
                 >
                   ←
                 </button>
@@ -338,7 +338,7 @@ const DietPlan = () => {
                 </button>
                 <button
                   onClick={() => setSelectedDate(new Date(selectedDate.setDate(selectedDate.getDate() + 1)))}
-                  className="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 border-l border-slate-700 transition-colors"
+                  className="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 border-l border-slate-700 transition-colors cursor-pointer"
                 >
                   →
                 </button>
@@ -365,7 +365,7 @@ const DietPlan = () => {
                       className={`h-full rounded-full transition-all duration-500 ${
                         dailyTotals.calories > userProfile.calorieGoal 
                           ? 'bg-rose-500' 
-                          : 'bg-emerald-500'
+                          : 'bg-indigo-600'
                       }`}
                       style={{ width: `${Math.min(100, (dailyTotals.calories / userProfile.calorieGoal) * 100)}%` }}
                     />
@@ -501,7 +501,7 @@ const DietPlan = () => {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-sm text-slate-500 dark:text-slate-400">Daily Calories</span>
-                    <span className="text-sm font-bold text-emerald-600 dark:text-emerald-400">{userProfile.calorieGoal} kcal</span>
+                    <span className="text-sm font-bold text-indigo-600 dark:text-indigo-400">{userProfile.calorieGoal} kcal</span>
                   </div>
                 </div>
               </div>
@@ -513,7 +513,7 @@ const DietPlan = () => {
                 <ul className="space-y-3">
                   {recommendations.map((recommendation, index) => (
                     <li key={index} className="flex items-start">
-                      <span className="text-emerald-500 mr-2 font-bold">•</span>
+                      <span className="text-indigo-600 dark:text-indigo-400 mr-2 font-bold">•</span>
                       <span className="text-sm text-slate-600 dark:text-slate-300">{recommendation}</span>
                     </li>
                   ))}
@@ -531,7 +531,7 @@ const DietPlan = () => {
                   <div className="mt-2 sm:mt-0">
                     <button 
                       onClick={() => setShowQuickAdd(!showQuickAdd)}
-                      className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-semibold transition-colors"
+                      className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-semibold transition-colors cursor-pointer"
                     >
                       Quick Add Common Foods
                     </button>
@@ -543,13 +543,13 @@ const DietPlan = () => {
                     <h3 className="font-semibold text-xs text-slate-700 dark:text-slate-300 mb-2">Common Foods</h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {commonFoods.map((food, index) => (
-                        <button 
+                        <button
                           key={index}
-                          onClick={() => handleQuickAdd(food)}
-                          className="text-left p-2.5 hover:bg-slate-100 dark:hover:bg-slate-700/60 rounded-xl transition-colors border border-transparent hover:border-slate-200 dark:hover:border-slate-600"
+                          onClick={() => quickAddFood(food)}
+                          className="text-left p-2 hover:bg-slate-100 dark:hover:bg-slate-700/50 rounded-xl transition-colors border border-slate-100 dark:border-slate-700 cursor-pointer"
                         >
-                          <div className="font-bold text-sm text-slate-800 dark:text-slate-200">{food.name}</div>
-                          <div className="text-xs text-slate-500 dark:text-slate-400">
+                          <div className="font-medium text-xs text-slate-900 dark:text-white">{food.name}</div>
+                          <div className="text-[11px] text-slate-500 dark:text-slate-400">
                             {food.calories} kcal | P: {food.protein}g | C: {food.carbs}g | F: {food.fat}g
                           </div>
                         </button>
@@ -558,9 +558,9 @@ const DietPlan = () => {
                   </div>
                 )}
                 
-                <form onSubmit={handleAddFood}>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                    <div>
+                <form onSubmit={addFoodEntry}>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+                    <div className="sm:col-span-2">
                       <label htmlFor="food-name" className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">
                         Food Name
                       </label>
@@ -569,7 +569,7 @@ const DietPlan = () => {
                         id="food-name"
                         value={newFood.name}
                         onChange={(e) => setNewFood({...newFood, name: e.target.value})}
-                        className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white shadow-xs focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white shadow-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
                         placeholder="e.g. Grilled Chicken Breast"
                         required
                       />
@@ -583,7 +583,7 @@ const DietPlan = () => {
                         id="meal-id"
                         value={newFood.mealId}
                         onChange={(e) => setNewFood({...newFood, mealId: e.target.value})}
-                        className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white shadow-xs focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white shadow-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
                       >
                         {meals.map(meal => (
                           <option key={meal.id} value={meal.id}>
@@ -604,7 +604,7 @@ const DietPlan = () => {
                         id="calories"
                         value={newFood.calories}
                         onChange={(e) => setNewFood({...newFood, calories: e.target.value})}
-                        className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white shadow-xs focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white shadow-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
                         placeholder="kcal"
                         required
                       />
@@ -619,7 +619,7 @@ const DietPlan = () => {
                         id="protein"
                         value={newFood.protein}
                         onChange={(e) => setNewFood({...newFood, protein: e.target.value})}
-                        className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white shadow-xs focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white shadow-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
                         placeholder="g"
                       />
                     </div>
@@ -633,7 +633,7 @@ const DietPlan = () => {
                         id="carbs"
                         value={newFood.carbs}
                         onChange={(e) => setNewFood({...newFood, carbs: e.target.value})}
-                        className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white shadow-xs focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white shadow-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
                         placeholder="g"
                       />
                     </div>
@@ -647,7 +647,7 @@ const DietPlan = () => {
                         id="fat"
                         value={newFood.fat}
                         onChange={(e) => setNewFood({...newFood, fat: e.target.value})}
-                        className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white shadow-xs focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white shadow-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
                         placeholder="g"
                       />
                     </div>
@@ -663,7 +663,7 @@ const DietPlan = () => {
                         step="0.25"
                         value={newFood.quantity}
                         onChange={(e) => setNewFood({...newFood, quantity: e.target.value})}
-                        className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white shadow-xs focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white shadow-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
                       />
                     </div>
                   </div>
@@ -671,7 +671,7 @@ const DietPlan = () => {
                   <div>
                     <button
                       type="submit"
-                      className="w-full px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold text-sm shadow-sm transition-colors"
+                      className="w-full px-4 py-2.5 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white rounded-xl font-bold text-sm shadow-sm transition-colors cursor-pointer"
                     >
                       Add Food Entry
                     </button>
@@ -689,7 +689,7 @@ const DietPlan = () => {
                   >
                     <h2 className="text-base font-bold text-slate-900 dark:text-white">{meal.name}</h2>
                     <div className="flex items-center gap-4">
-                      <div className="text-sm font-bold text-emerald-600 dark:text-emerald-400">
+                      <div className="text-sm font-bold text-indigo-600 dark:text-indigo-400">
                         {meal.foods.reduce((total, food) => total + (food.calories * food.quantity), 0)} kcal
                       </div>
                       <svg 
@@ -771,7 +771,7 @@ const DietPlan = () => {
                         className={`
                           flex items-center justify-center px-3 py-2 border rounded-xl text-xs font-bold cursor-pointer transition-all
                           ${userProfile.goal === goal 
-                            ? 'bg-emerald-600 border-emerald-500 text-white shadow-xs' 
+                            ? 'bg-indigo-600 border-indigo-500 text-white shadow-xs' 
                             : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700'
                           }
                         `}
@@ -801,7 +801,7 @@ const DietPlan = () => {
                         className={`
                           flex items-center justify-center px-2 py-1.5 border rounded-xl text-xs font-bold cursor-pointer transition-all
                           ${userProfile.dietType === dietType 
-                            ? 'bg-emerald-600 border-emerald-500 text-white shadow-xs' 
+                            ? 'bg-indigo-600 border-indigo-500 text-white shadow-xs' 
                             : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700'
                           }
                         `}
@@ -832,7 +832,7 @@ const DietPlan = () => {
                       max="300"
                       value={userProfile.weight}
                       onChange={(e) => setUserProfile({...userProfile, weight: Number(e.target.value)})}
-                      className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white shadow-xs focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                      className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white shadow-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     />
                   </div>
                   
@@ -847,7 +847,7 @@ const DietPlan = () => {
                       max="250"
                       value={userProfile.height}
                       onChange={(e) => setUserProfile({...userProfile, height: Number(e.target.value)})}
-                      className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white shadow-xs focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                      className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white shadow-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     />
                   </div>
                   
@@ -862,7 +862,7 @@ const DietPlan = () => {
                       max="120"
                       value={userProfile.age}
                       onChange={(e) => setUserProfile({...userProfile, age: Number(e.target.value)})}
-                      className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white shadow-xs focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                      className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white shadow-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     />
                   </div>
                   
@@ -877,7 +877,7 @@ const DietPlan = () => {
                           className={`
                             flex items-center justify-center px-3 py-2 border rounded-xl text-xs font-bold cursor-pointer transition-all
                             ${userProfile.gender === gender 
-                              ? 'bg-emerald-600 border-emerald-500 text-white shadow-xs' 
+                              ? 'bg-indigo-600 border-indigo-500 text-white shadow-xs' 
                               : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700'
                             }
                           `}
@@ -904,7 +904,7 @@ const DietPlan = () => {
                   <select
                     value={userProfile.activityLevel}
                     onChange={(e) => setUserProfile({...userProfile, activityLevel: e.target.value})}
-                    className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white shadow-xs focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white shadow-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   >
                     <option value="sedentary">Sedentary (little or no exercise)</option>
                     <option value="light">Light (exercise 1-3 times/week)</option>
@@ -931,7 +931,7 @@ const DietPlan = () => {
                         calorieGoal: value ? Number(value) : userProfile.calorieGoal,
                       });
                     }}
-                    className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white shadow-xs focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white shadow-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   />
                 </div>
               </div>
@@ -940,13 +940,13 @@ const DietPlan = () => {
                 <button
                   type="button"
                   onClick={() => setShowProfileModal(false)}
-                  className="px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-xl font-bold text-xs transition-colors"
+                  className="px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-xl font-bold text-xs transition-colors cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold text-xs shadow-sm transition-colors"
+                  className="px-5 py-2 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white rounded-xl font-bold text-xs shadow-sm transition-colors cursor-pointer"
                 >
                   Save Goals
                 </button>

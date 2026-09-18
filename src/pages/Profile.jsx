@@ -160,7 +160,7 @@ const ProfilePage = () => {
         id: 4,
         name: 'Form Master',
         description: 'Achieved 95%+ pose accuracy in 20 AI sessions',
-        icon: <Zap className="text-emerald-500" />,
+        icon: <Zap className="text-indigo-500" />,
       },
       {
         id: 5,
@@ -211,7 +211,7 @@ const ProfilePage = () => {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors">
       {/* Header with profile summary and custom athlete logo */}
-      <div className="bg-gradient-to-r from-slate-900 via-slate-800 to-emerald-950 text-white shadow-xl">
+      <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-purple-950 text-white shadow-xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
             <div className="flex items-center">
@@ -228,7 +228,7 @@ const ProfilePage = () => {
                 {/* Avatar Display Container */}
                 <div
                   onClick={() => fileInputRef.current?.click()}
-                  className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-3xl overflow-hidden cursor-pointer shadow-xl shadow-emerald-500/25 border-2 border-emerald-400/50 transform group-hover:scale-105 transition-transform duration-300 bg-slate-900"
+                  className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-3xl overflow-hidden cursor-pointer shadow-xl shadow-indigo-500/25 border-2 border-indigo-400/50 transform group-hover:scale-105 transition-transform duration-300 bg-slate-900"
                   title="Click to upload/change your profile picture"
                 >
                   {avatarUrl ? (
@@ -239,14 +239,14 @@ const ProfilePage = () => {
                     />
                   ) : (
                     /* Dynamic Athlete Monogram Emblem */
-                    <div className="w-full h-full bg-gradient-to-tr from-emerald-400 via-teal-500 to-cyan-500 flex flex-col items-center justify-center text-white">
+                    <div className="w-full h-full bg-gradient-to-tr from-indigo-500 via-purple-500 to-cyan-400 flex flex-col items-center justify-center text-white">
                       <div className="flex items-center gap-0.5 -mb-1">
                         <Sparkles size={13} className="text-amber-300 fill-amber-300" />
                       </div>
                       <span className="text-3xl sm:text-4xl font-black tracking-tighter drop-shadow-md">
                         {userData.name ? userData.name.charAt(0).toUpperCase() : 'U'}
                       </span>
-                      <span className="text-[10px] font-extrabold uppercase tracking-widest px-1.5 py-0.2 rounded-full bg-slate-900/40 text-emerald-100">
+                      <span className="text-[10px] font-extrabold uppercase tracking-widest px-1.5 py-0.2 rounded-full bg-slate-900/40 text-indigo-100">
                         {userData.userId === 'ritesh' ? 'PRO' : 'MEMBER'}
                       </span>
                     </div>
@@ -254,7 +254,7 @@ const ProfilePage = () => {
 
                   {/* Hover Camera Overlay */}
                   <div className="absolute inset-0 bg-slate-950/65 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white backdrop-blur-xs">
-                    <Camera size={22} className="text-emerald-300" />
+                    <Camera size={22} className="text-indigo-300" />
                     <span className="text-[10px] font-bold mt-1 text-slate-100">
                       {avatarUrl ? 'Change' : 'Upload'}
                     </span>
@@ -263,7 +263,7 @@ const ProfilePage = () => {
 
                 {/* Verification Checkmark Badge */}
                 <div
-                  className="absolute -bottom-1 -right-1 bg-emerald-500 text-white rounded-full p-1.5 shadow-md border-2 border-slate-900 z-10"
+                  className="absolute -bottom-1 -right-1 bg-indigo-600 text-white rounded-full p-1.5 shadow-md border-2 border-slate-900 z-10"
                   title="Verified FitFlow Athlete"
                 >
                   <CheckCircle2 size={14} className="stroke-[3]" />
@@ -276,8 +276,8 @@ const ProfilePage = () => {
                   <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
                     {userData.name}
                   </h1>
-                  <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 text-xs font-bold flex items-center gap-1">
-                    <Sparkles size={11} className="text-emerald-400" />
+                  <span className="px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 text-xs font-bold flex items-center gap-1">
+                    <Sparkles size={11} className="text-indigo-400" />
                     {userData.userId === 'ritesh' ? 'PRO Athlete' : 'FitFlow Member'}
                   </span>
 
@@ -285,7 +285,7 @@ const ProfilePage = () => {
                   <div className="flex flex-wrap items-center gap-2 ml-1">
                     <button
                       onClick={() => fileInputRef.current?.click()}
-                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-400/30 text-emerald-200 text-xs font-semibold transition-colors cursor-pointer"
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-indigo-500/20 hover:bg-indigo-500/30 border border-indigo-400/30 text-indigo-200 text-xs font-semibold transition-colors cursor-pointer"
                       title="Upload or change profile picture"
                     >
                       <Camera size={13} />
@@ -334,7 +334,7 @@ const ProfilePage = () => {
                 </div>
 
                 {uploadSuccess && (
-                  <div className="mt-1.5 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 text-xs font-medium border border-emerald-400/30 animate-pulse">
+                  <div className="mt-1.5 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-indigo-500/20 text-indigo-300 text-xs font-medium border border-indigo-400/30 animate-pulse">
                     <CheckCircle2 size={12} />
                     <span>Profile photo uploaded and synced with Navbar!</span>
                   </div>
@@ -347,7 +347,7 @@ const ProfilePage = () => {
                 {/* Key Vitals Strip */}
                 <div className="flex flex-wrap items-center gap-2 sm:gap-3 mt-3">
                   <span className="px-2.5 py-1 rounded-lg bg-white/10 text-white text-xs font-semibold backdrop-blur-sm border border-white/10">
-                    Age: <strong className="text-emerald-400 font-bold">{userData.age}</strong> yrs
+                    Age: <strong className="text-indigo-400 font-bold">{userData.age}</strong> yrs
                   </span>
                   <span className="px-2.5 py-1 rounded-lg bg-white/10 text-white text-xs font-semibold backdrop-blur-sm border border-white/10">
                     Weight: <strong className="text-cyan-400 font-bold">{userData.weight}</strong>
@@ -356,7 +356,7 @@ const ProfilePage = () => {
                     Height: <strong className="text-white font-bold">{userData.height}</strong>
                   </span>
                   <span className="px-2.5 py-1 rounded-lg bg-white/10 text-white text-xs font-semibold backdrop-blur-sm border border-white/10">
-                    BMI: <strong className="text-emerald-300 font-bold">{userData.bmi}</strong>
+                    BMI: <strong className="text-indigo-300 font-bold">{userData.bmi}</strong>
                   </span>
                 </div>
               </div>
@@ -402,9 +402,9 @@ const ProfilePage = () => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`px-4 py-2.5 rounded-xl text-sm font-semibold transition-all whitespace-nowrap ${
+                className={`px-4 py-2.5 rounded-xl text-sm font-semibold transition-all whitespace-nowrap cursor-pointer ${
                   activeTab === tab.id
-                    ? 'bg-emerald-500 text-white shadow-sm shadow-emerald-500/20'
+                    ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-sm shadow-indigo-500/20'
                     : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
                 }`}
               >
@@ -423,7 +423,7 @@ const ProfilePage = () => {
             {/* Vitals & Profile Summary */}
             <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-xs">
               <h2 className="text-base font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
-                <Scale size={18} className="text-emerald-500" />
+                <Scale size={18} className="text-indigo-500" />
                 Physical Vitals & Stats
               </h2>
               <div className="divide-y divide-slate-100 dark:divide-slate-800 space-y-2 text-sm">
@@ -433,7 +433,7 @@ const ProfilePage = () => {
                 </div>
                 <div className="flex justify-between py-1.5">
                   <span className="text-slate-500 dark:text-slate-400">Age:</span>
-                  <span className="font-bold text-emerald-600 dark:text-emerald-400">{userData.age} Years</span>
+                  <span className="font-bold text-indigo-600 dark:text-indigo-400">{userData.age} Years</span>
                 </div>
                 <div className="flex justify-between py-1.5">
                   <span className="text-slate-500 dark:text-slate-400">Current Weight:</span>
@@ -449,7 +449,7 @@ const ProfilePage = () => {
                 </div>
                 <div className="flex justify-between py-1.5">
                   <span className="text-slate-500 dark:text-slate-400">Body Mass Index (BMI):</span>
-                  <span className="font-bold text-emerald-600 dark:text-emerald-400">{userData.bmi} (Normal)</span>
+                  <span className="font-bold text-indigo-600 dark:text-indigo-400">{userData.bmi} (Normal)</span>
                 </div>
                 <div className="flex justify-between py-1.5">
                   <span className="text-slate-500 dark:text-slate-400">Total Fitness Points:</span>
@@ -470,7 +470,7 @@ const ProfilePage = () => {
                   Earned Badges
                 </h2>
                 <button
-                  className="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:underline"
+                  className="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline cursor-pointer"
                   onClick={() => setActiveTab('badges')}
                 >
                   View All ({userData.badges.length})
@@ -502,7 +502,7 @@ const ProfilePage = () => {
                   Health Consultations
                 </h2>
                 <button
-                  className="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:underline"
+                  className="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline cursor-pointer"
                   onClick={() => setActiveTab('consult')}
                 >
                   Schedule
@@ -546,7 +546,7 @@ const ProfilePage = () => {
               {userData.badges.map((badge) => (
                 <div
                   key={badge.id}
-                  className="p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40 hover:bg-emerald-50/40 dark:hover:bg-emerald-950/20 hover:border-emerald-200 dark:hover:border-emerald-700 transition-all flex items-start gap-4"
+                  className="p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40 hover:bg-indigo-50/40 dark:hover:bg-indigo-950/20 hover:border-indigo-200 dark:hover:border-indigo-700 transition-all flex items-start gap-4"
                 >
                   <div className="h-12 w-12 bg-white dark:bg-slate-700 rounded-2xl flex items-center justify-center shadow-xs shrink-0">
                     {badge.icon}
@@ -554,7 +554,7 @@ const ProfilePage = () => {
                   <div>
                     <h3 className="font-bold text-slate-900 dark:text-white text-sm">{badge.name}</h3>
                     <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{badge.description}</p>
-                    <span className="inline-block mt-2 text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300">
+                    <span className="inline-block mt-2 text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300">
                       Unlocked
                     </span>
                   </div>
@@ -574,7 +574,7 @@ const ProfilePage = () => {
                   Connect with licensed sports dietitians and physical therapists
                 </p>
               </div>
-              <button className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl shadow-xs transition-colors self-start sm:self-auto">
+              <button className="px-4 py-2 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white text-xs font-bold rounded-xl shadow-xs transition-colors self-start sm:self-auto cursor-pointer">
                 + Book New Appointment
               </button>
             </div>
@@ -588,11 +588,11 @@ const ProfilePage = () => {
                   <div>
                     <div className="flex items-center justify-between mb-2">
                       <span className="font-bold text-base text-slate-900 dark:text-white">{c.doctor}</span>
-                      <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300">
+                      <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300">
                         Confirmed
                       </span>
                     </div>
-                    <p className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 mb-3">{c.specialty}</p>
+                    <p className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 mb-3">{c.specialty}</p>
                     <div className="text-xs text-slate-600 dark:text-slate-300 space-y-1">
                       <p>📅 {c.date}</p>
                       <p>⏰ {c.time}</p>
@@ -601,10 +601,10 @@ const ProfilePage = () => {
                   </div>
 
                   <div className="mt-4 pt-3 border-t border-slate-200 dark:border-slate-700 flex gap-2">
-                    <button className="flex-1 py-2 rounded-xl bg-slate-900 dark:bg-slate-700 text-white text-xs font-bold hover:bg-slate-800 dark:hover:bg-slate-600 transition-colors">
+                    <button className="flex-1 py-2 rounded-xl bg-slate-900 dark:bg-slate-700 text-white text-xs font-bold hover:bg-slate-800 dark:hover:bg-slate-600 transition-colors cursor-pointer">
                       Join Video Call
                     </button>
-                    <button className="px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-bold hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                    <button className="px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-bold hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer">
                       Reschedule
                     </button>
                   </div>
@@ -619,7 +619,7 @@ const ProfilePage = () => {
           <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-xs animate-in fade-in duration-200">
             <div className="max-w-2xl">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+                <div className="w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
                   <Shield size={24} />
                 </div>
                 <div>
@@ -632,17 +632,17 @@ const ProfilePage = () => {
                 </div>
               </div>
 
-              <div className="p-6 rounded-2xl bg-gradient-to-tr from-slate-900 to-emerald-950 text-white shadow-lg mb-6">
+              <div className="p-6 rounded-2xl bg-gradient-to-tr from-slate-900 to-indigo-950 text-white shadow-lg mb-6">
                 <div className="flex justify-between items-start mb-6">
                   <div>
-                    <span className="text-xs uppercase tracking-widest text-emerald-300 font-bold block">
+                    <span className="text-xs uppercase tracking-widest text-indigo-300 font-bold block">
                       {userData.insurance.provider}
                     </span>
                     <h3 className="text-xl font-black mt-1">
                       {userData.insurance.premium} Plan
                     </h3>
                   </div>
-                  <span className="px-3 py-1 rounded-full bg-emerald-500/30 text-emerald-300 text-xs font-bold border border-emerald-400/30">
+                  <span className="px-3 py-1 rounded-full bg-indigo-500/30 text-indigo-300 text-xs font-bold border border-indigo-400/30">
                     {userData.insurance.status}
                   </span>
                 </div>
@@ -687,7 +687,7 @@ const ProfilePage = () => {
                   Points earned from AI pose rep completions and workout consistency
                 </p>
               </div>
-              <span className="text-xs font-bold px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+              <span className="text-xs font-bold px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
                 Your Rank: #3
               </span>
             </div>
@@ -698,7 +698,7 @@ const ProfilePage = () => {
                   key={athlete.id}
                   className={`py-3.5 px-4 rounded-2xl flex items-center justify-between transition-colors ${
                     athlete.isCurrentUser
-                      ? 'bg-emerald-50/80 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 font-bold'
+                      ? 'bg-indigo-50/80 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800 font-bold'
                       : 'hover:bg-slate-50 dark:hover:bg-slate-800/50'
                   }`}
                 >
@@ -723,7 +723,7 @@ const ProfilePage = () => {
                           {athlete.name}
                         </span>
                         {athlete.isCurrentUser && (
-                          <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-600 text-white font-bold">
+                          <span className="text-[10px] px-2 py-0.5 rounded-full bg-indigo-600 text-white font-bold">
                             YOU
                           </span>
                         )}

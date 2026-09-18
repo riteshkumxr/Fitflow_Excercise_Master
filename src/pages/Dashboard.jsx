@@ -33,8 +33,8 @@ const Dashboard = () => {
       change: '+3 this week',
       isPositive: true,
       icon: Dumbbell,
-      color: 'from-emerald-500 to-teal-600',
-      bg: 'bg-emerald-50 text-emerald-600',
+      color: 'from-indigo-500 to-violet-600',
+      bg: 'bg-indigo-50 text-indigo-600 dark:bg-indigo-950/60 dark:text-indigo-400',
     },
     {
       name: 'Calories Burned',
@@ -83,7 +83,7 @@ const Dashboard = () => {
       category: 'Lower Body',
       reps: '15 Reps Goal',
       path: '/lower-body/squats',
-      accent: 'border-l-emerald-500',
+      accent: 'border-l-indigo-500',
     },
     {
       name: 'Pushups Trainer',
@@ -115,7 +115,7 @@ const Dashboard = () => {
       duration: '30 min',
       type: 'Cardio',
       status: 'Ready',
-      tagColor: 'bg-emerald-100 text-emerald-800',
+      tagColor: 'bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-300',
     },
     {
       title: 'Lower Body Mobility & Squats',
@@ -181,7 +181,7 @@ const Dashboard = () => {
       target: 5,
       unit: 'sessions',
       percentage: 80,
-      color: 'bg-emerald-500',
+      color: 'bg-indigo-500',
     },
     {
       title: 'Calorie Burn Target',
@@ -214,13 +214,13 @@ const Dashboard = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
       {/* Hero Welcome Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-slate-800 to-emerald-950 p-6 md:p-8 text-white shadow-xl shadow-slate-900/10 mb-8">
-        <div className="absolute top-0 right-0 -mt-12 -mr-12 w-96 h-96 rounded-full bg-emerald-500/10 blur-3xl pointer-events-none" />
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-950 via-indigo-950 to-purple-950 p-6 md:p-8 text-white shadow-xl shadow-indigo-950/25 mb-8 border border-indigo-900/40">
+        <div className="absolute top-0 right-0 -mt-12 -mr-12 w-96 h-96 rounded-full bg-indigo-500/15 blur-3xl pointer-events-none" />
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div>
             <div className="flex items-center gap-2 mb-2">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-semibold backdrop-blur-sm border border-emerald-500/30">
-                <Sparkles size={13} className="text-emerald-400" />
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-semibold backdrop-blur-sm border border-indigo-500/30">
+                <Sparkles size={13} className="text-indigo-400" />
                 AI Real-Time Coach Active
               </span>
               <span className="text-xs text-slate-400">
@@ -229,7 +229,7 @@ const Dashboard = () => {
             </div>
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight">
               Ready to crush your goals,{' '}
-              <span className="bg-gradient-to-r from-emerald-400 to-cyan-300 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-indigo-400 via-violet-300 to-cyan-300 bg-clip-text text-transparent">
                 {currentUser?.name || 'Ritesh'}?
               </span>
             </h1>
@@ -241,7 +241,7 @@ const Dashboard = () => {
           <div className="flex flex-wrap items-center gap-3">
             <Link
               to="/workout"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white text-sm font-bold shadow-lg shadow-emerald-500/25 hover:from-emerald-600 hover:to-teal-600 hover:scale-[1.02] active:scale-[0.98] transition-all"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-indigo-500 via-indigo-600 to-violet-600 text-white text-sm font-bold shadow-lg shadow-indigo-500/30 hover:from-indigo-600 hover:to-violet-700 hover:scale-[1.02] active:scale-[0.98] transition-all"
             >
               <Play size={16} className="fill-white" />
               <span>Start Workout</span>
@@ -285,7 +285,7 @@ const Dashboard = () => {
                 )}
               </div>
 
-              <div className="mt-2.5 flex items-center gap-1.5 text-xs font-medium text-emerald-600 dark:text-emerald-400">
+              <div className="mt-2.5 flex items-center gap-1.5 text-xs font-medium text-indigo-600 dark:text-indigo-400">
                 <TrendingUp size={13} className="stroke-[2.5]" />
                 <span>{stat.change}</span>
               </div>
@@ -309,7 +309,7 @@ const Dashboard = () => {
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 whitespace-nowrap ${
                 active
-                  ? 'bg-emerald-500 text-white shadow-sm shadow-emerald-500/20'
+                  ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-sm shadow-indigo-500/25'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
               }`}
             >
@@ -337,7 +337,7 @@ const Dashboard = () => {
                     <strong className="text-slate-800 dark:text-slate-200 font-bold">4,430 kcal</strong>
                   </p>
                 </div>
-                <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-100 dark:border-emerald-800 self-start sm:self-auto">
+                <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-100 dark:border-indigo-800 self-start sm:self-auto">
                   Daily Avg: 632 kcal
                 </span>
               </div>
@@ -357,7 +357,7 @@ const Dashboard = () => {
                     >
                       <span
                         className={`text-[11px] font-bold transition-opacity ${
-                          isSelected ? 'text-emerald-600 dark:text-emerald-400 opacity-100' : 'text-slate-400 dark:text-slate-500 opacity-0 group-hover:opacity-100'
+                          isSelected ? 'text-indigo-600 dark:text-indigo-400 opacity-100' : 'text-slate-400 dark:text-slate-500 opacity-0 group-hover:opacity-100'
                         }`}
                       >
                         {item.calories}
@@ -367,14 +367,14 @@ const Dashboard = () => {
                           style={{ height: `${heightPercent}%` }}
                           className={`w-full rounded-lg transition-all duration-500 ${
                             isSelected
-                              ? 'bg-gradient-to-t from-emerald-500 to-teal-400 shadow-md shadow-emerald-500/20'
+                              ? 'bg-gradient-to-t from-indigo-600 to-violet-500 shadow-md shadow-indigo-500/25'
                               : 'bg-slate-300 dark:bg-slate-700 group-hover:bg-slate-400 dark:group-hover:bg-slate-600'
                           }`}
                         />
                       </div>
                       <span
                         className={`text-xs font-semibold ${
-                          isSelected ? 'text-emerald-700 dark:text-emerald-400 font-bold' : 'text-slate-500 dark:text-slate-400'
+                          isSelected ? 'text-indigo-700 dark:text-indigo-400 font-bold' : 'text-slate-500 dark:text-slate-400'
                         }`}
                       >
                         {item.day}
@@ -387,7 +387,7 @@ const Dashboard = () => {
               {/* Selected Day Details Strip */}
               <div className="mt-6 p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-100 dark:border-slate-700/60 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-bold">
+                  <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-600 text-white flex items-center justify-center font-bold shadow-xs">
                     {selectedDayData.day}
                   </div>
                   <div>
@@ -408,7 +408,7 @@ const Dashboard = () => {
                   </div>
                   <Link
                     to="/workout"
-                    className="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-bold hover:underline"
+                    className="inline-flex items-center gap-1 text-indigo-600 dark:text-indigo-400 font-bold hover:underline"
                   >
                     Repeat Session
                     <ChevronRight size={14} />
@@ -422,12 +422,12 @@ const Dashboard = () => {
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                    <Calendar size={18} className="text-emerald-600 dark:text-emerald-400" />
+                    <Calendar size={18} className="text-indigo-600 dark:text-indigo-400" />
                     Upcoming Sessions
                   </h3>
                   <Link
                     to="/workout"
-                    className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 hover:underline"
+                    className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline"
                   >
                     View All
                   </Link>
@@ -437,7 +437,7 @@ const Dashboard = () => {
                   {upcomingWorkouts.map((workout) => (
                     <div
                       key={workout.title}
-                      className="p-4 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-800/60 hover:bg-emerald-50/30 dark:hover:bg-emerald-950/20 transition-colors"
+                      className="p-4 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-800/60 hover:bg-indigo-50/40 dark:hover:bg-indigo-950/20 transition-colors"
                     >
                       <div className="flex items-start justify-between gap-2">
                         <div>
@@ -470,7 +470,7 @@ const Dashboard = () => {
               <div className="mt-6 pt-5 border-t border-slate-100 dark:border-slate-800">
                 <Link
                   to="/workout"
-                  className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white text-xs font-bold transition-colors"
+                  className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 dark:bg-indigo-600 dark:hover:bg-indigo-500 text-white text-xs font-bold transition-colors"
                 >
                   <Play size={14} className="fill-white" />
                   Launch Pose Detector
@@ -492,7 +492,7 @@ const Dashboard = () => {
               </div>
               <Link
                 to="/workout"
-                className="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1"
+                className="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1"
               >
                 All 12 AI Routines
                 <ChevronRight size={14} />
@@ -510,12 +510,12 @@ const Dashboard = () => {
                     <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
                       {item.category}
                     </span>
-                    <h4 className="text-base font-bold text-slate-900 dark:text-white mt-1 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                    <h4 className="text-base font-bold text-slate-900 dark:text-white mt-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
                       {item.name}
                     </h4>
                     <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{item.reps}</p>
                   </div>
-                  <div className="mt-4 flex items-center justify-between text-xs font-bold text-emerald-600 dark:text-emerald-400">
+                  <div className="mt-4 flex items-center justify-between text-xs font-bold text-indigo-600 dark:text-indigo-400">
                     <span>Start Session</span>
                     <ArrowUpRight
                       size={16}
@@ -541,7 +541,7 @@ const Dashboard = () => {
                 Detailed timeline of your AI pose detection sessions
               </p>
             </div>
-            <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-3 py-1 rounded-full">
+            <span className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 px-3 py-1 rounded-full">
               4 Sessions Logged
             </span>
           </div>
@@ -555,7 +555,7 @@ const Dashboard = () => {
                   className="py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-slate-50/50 dark:hover:bg-slate-800/50 px-2 rounded-xl transition-colors"
                 >
                   <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
+                    <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0 mt-0.5">
                       <Icon size={20} />
                     </div>
                     <div>
@@ -578,7 +578,7 @@ const Dashboard = () => {
                       </span>
                       <span className="text-xs text-slate-500 dark:text-slate-400">{act.duration}</span>
                     </div>
-                    <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                    <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
                       {act.accuracy}
                     </span>
                   </div>
@@ -602,7 +602,7 @@ const Dashboard = () => {
                   <h4 className="text-base font-bold text-slate-900 dark:text-white">
                     {goal.title}
                   </h4>
-                  <span className="text-sm font-extrabold text-emerald-600 dark:text-emerald-400">
+                  <span className="text-sm font-extrabold text-indigo-600 dark:text-indigo-400">
                     {goal.percentage}%
                   </span>
                 </div>
@@ -621,7 +621,7 @@ const Dashboard = () => {
               </div>
 
               <div className="mt-6 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 pt-3 border-t border-slate-100 dark:border-slate-800">
-                <span className="flex items-center gap-1 font-semibold text-emerald-600 dark:text-emerald-400">
+                <span className="flex items-center gap-1 font-semibold text-indigo-600 dark:text-indigo-400">
                   <CheckCircle2 size={14} />
                   On track for this week
                 </span>

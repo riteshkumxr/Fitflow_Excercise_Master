@@ -137,10 +137,10 @@ export default function Auth({ defaultMode = 'login' }) {
         {/* Brand Header */}
         <div className="text-center">
           <Link to="/" className="inline-flex items-center gap-2.5 group">
-            <div className="h-12 w-12 rounded-2xl bg-gradient-to-tr from-emerald-500 via-teal-500 to-cyan-500 flex items-center justify-center text-white shadow-lg shadow-emerald-500/25 group-hover:scale-105 transition-transform duration-200">
+            <div className="h-12 w-12 rounded-2xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-cyan-400 flex items-center justify-center text-white shadow-lg shadow-indigo-500/25 group-hover:scale-105 transition-transform duration-200">
               <Activity size={26} className="stroke-[2.5]" />
             </div>
-            <span className="text-2xl font-black bg-gradient-to-r from-slate-900 via-slate-800 to-emerald-700 dark:from-white dark:via-slate-100 dark:to-emerald-400 bg-clip-text text-transparent">
+            <span className="text-2xl font-black bg-gradient-to-r from-slate-900 via-indigo-950 to-indigo-600 dark:from-white dark:via-slate-100 dark:to-indigo-400 bg-clip-text text-transparent">
               FitFlow AI
             </span>
           </Link>
@@ -164,7 +164,7 @@ export default function Auth({ defaultMode = 'login' }) {
             }}
             className={`flex-1 py-2.5 rounded-xl transition-all ${
               isLogin
-                ? 'bg-white dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 shadow-sm'
+                ? 'bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 shadow-sm'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
@@ -178,7 +178,7 @@ export default function Auth({ defaultMode = 'login' }) {
             }}
             className={`flex-1 py-2.5 rounded-xl transition-all ${
               !isLogin
-                ? 'bg-white dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 shadow-sm'
+                ? 'bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 shadow-sm'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
@@ -195,8 +195,8 @@ export default function Auth({ defaultMode = 'login' }) {
         )}
 
         {successMsg && (
-          <div className="p-3.5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900/60 text-emerald-700 dark:text-emerald-300 text-xs flex items-center gap-2 animate-pulse">
-            <CheckCircle2 size={16} className="shrink-0 text-emerald-500" />
+          <div className="p-3.5 rounded-2xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-900/60 text-indigo-700 dark:text-indigo-300 text-xs flex items-center gap-2 animate-pulse">
+            <CheckCircle2 size={16} className="shrink-0 text-indigo-500" />
             <span>{successMsg}</span>
           </div>
         )}
@@ -220,7 +220,7 @@ export default function Auth({ defaultMode = 'login' }) {
                     value={loginId}
                     onChange={(e) => setLoginId(e.target.value)}
                     placeholder="e.g. ritesh or your-id"
-                    className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder-slate-400 text-xs sm:text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-hidden transition-all"
+                    className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder-slate-400 text-xs sm:text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-hidden transition-all"
                   />
                 </div>
               </div>
@@ -239,7 +239,7 @@ export default function Auth({ defaultMode = 'login' }) {
                     value={loginPassword}
                     onChange={(e) => setLoginPassword(e.target.value)}
                     placeholder="Enter password"
-                    className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder-slate-400 text-xs sm:text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-hidden transition-all"
+                    className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder-slate-400 text-xs sm:text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-hidden transition-all"
                   />
                   <button
                     type="button"
@@ -254,7 +254,7 @@ export default function Auth({ defaultMode = 'login' }) {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold text-sm shadow-md shadow-emerald-500/20 hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold text-sm shadow-md shadow-indigo-500/25 hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span>{isLoading ? 'Signing In...' : 'Sign In to FitFlow'}</span>
                 <ArrowRight size={16} />
@@ -290,7 +290,7 @@ export default function Auth({ defaultMode = 'login' }) {
                     value={formData.name}
                     onChange={handleInputChange}
                     placeholder="e.g. Alex Kumar"
-                    className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-xs sm:text-sm focus:ring-2 focus:ring-emerald-500 outline-hidden"
+                    className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-xs sm:text-sm focus:ring-2 focus:ring-indigo-500 outline-hidden"
                   />
                 </div>
 
@@ -305,7 +305,7 @@ export default function Auth({ defaultMode = 'login' }) {
                     value={formData.userId}
                     onChange={handleInputChange}
                     placeholder="e.g. alex24"
-                    className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-xs sm:text-sm focus:ring-2 focus:ring-emerald-500 outline-hidden"
+                    className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-xs sm:text-sm focus:ring-2 focus:ring-indigo-500 outline-hidden"
                   />
                 </div>
               </div>
@@ -320,7 +320,7 @@ export default function Auth({ defaultMode = 'login' }) {
                   value={formData.email}
                   onChange={handleInputChange}
                   placeholder="e.g. alex@example.com"
-                  className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-xs sm:text-sm focus:ring-2 focus:ring-emerald-500 outline-hidden"
+                  className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-xs sm:text-sm focus:ring-2 focus:ring-indigo-500 outline-hidden"
                 />
               </div>
 
@@ -336,7 +336,7 @@ export default function Auth({ defaultMode = 'login' }) {
                     value={formData.password}
                     onChange={handleInputChange}
                     placeholder="Min 4 characters"
-                    className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-xs sm:text-sm focus:ring-2 focus:ring-emerald-500 outline-hidden"
+                    className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-xs sm:text-sm focus:ring-2 focus:ring-indigo-500 outline-hidden"
                   />
                 </div>
 
@@ -351,14 +351,14 @@ export default function Auth({ defaultMode = 'login' }) {
                     value={formData.confirmPassword}
                     onChange={handleInputChange}
                     placeholder="Re-enter password"
-                    className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-xs sm:text-sm focus:ring-2 focus:ring-emerald-500 outline-hidden"
+                    className="w-full px-3.5 py-2 rounded-xl bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-xs sm:text-sm focus:ring-2 focus:ring-indigo-500 outline-hidden"
                   />
                 </div>
               </div>
 
               {/* Physical Vitals Section */}
-              <div className="p-3.5 rounded-2xl bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900/40 space-y-2.5">
-                <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300">
+              <div className="p-3.5 rounded-2xl bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-100 dark:border-indigo-900/40 space-y-2.5">
+                <div className="flex items-center gap-1.5 text-xs font-bold text-indigo-700 dark:text-indigo-300">
                   <Sparkles size={14} />
                   <span>Physical Vitals & Target</span>
                 </div>
@@ -431,7 +431,7 @@ export default function Auth({ defaultMode = 'login' }) {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold text-sm shadow-md shadow-emerald-500/20 hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold text-sm shadow-md shadow-indigo-500/25 hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span>{isLoading ? 'Creating Profile...' : 'Complete Profile & Get Started'}</span>
                 <CheckCircle2 size={16} />
@@ -442,7 +442,7 @@ export default function Auth({ defaultMode = 'login' }) {
 
         {/* Security Note */}
         <div className="flex items-center justify-center gap-2 text-center text-xs text-slate-400">
-          <Shield size={13} className="text-emerald-500" />
+          <Shield size={13} className="text-indigo-500" />
           <span>Locally stored and encrypted in your browser session.</span>
         </div>
       </div>

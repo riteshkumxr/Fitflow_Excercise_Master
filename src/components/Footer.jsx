@@ -10,18 +10,18 @@ const Footer = () => {
           {/* Brand Col */}
           <div className="md:col-span-1">
             <Link to="/" className="flex items-center gap-2 mb-3">
-              <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-emerald-500 to-cyan-500 flex items-center justify-center text-white shadow-sm shadow-emerald-500/20">
+              <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-cyan-400 flex items-center justify-center text-white shadow-sm shadow-indigo-500/20">
                 <Activity size={20} className="stroke-[2.5]" />
               </div>
-              <span className="text-xl font-extrabold bg-gradient-to-r from-slate-900 to-emerald-700 dark:from-white dark:to-emerald-400 bg-clip-text text-transparent">
+              <span className="text-xl font-extrabold bg-gradient-to-r from-slate-900 via-indigo-950 to-indigo-600 dark:from-white dark:via-slate-100 dark:to-indigo-400 bg-clip-text text-transparent">
                 FitFlow
               </span>
             </Link>
             <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-4">
               Your real-time AI fitness coach. Track reps, perfect your form, and achieve your wellness goals anywhere.
             </p>
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-100 dark:border-emerald-800 text-xs font-semibold text-emerald-700 dark:text-emerald-300">
-              <Sparkles size={14} className="text-emerald-500" />
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-100 dark:border-indigo-800 text-xs font-semibold text-indigo-700 dark:text-indigo-300">
+              <Sparkles size={14} className="text-indigo-500" />
               <span>AI Pose Detection Powered</span>
             </div>
           </div>
@@ -33,22 +33,22 @@ const Footer = () => {
             </h4>
             <ul className="space-y-2.5 text-sm">
               <li>
-                <Link to="/lower-body/squats" className="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                <Link to="/lower-body/squats" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
                   Squats Trainer
                 </Link>
               </li>
               <li>
-                <Link to="/upper-body/pushup" className="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                <Link to="/upper-body/pushup" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
                   Pushups Trainer
                 </Link>
               </li>
               <li>
-                <Link to="/upper-body/bicep-curls" className="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                <Link to="/upper-body/bicep-curls" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
                   Bicep Curls
                 </Link>
               </li>
               <li>
-                <Link to="/desk/knee" className="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                <Link to="/desk/knee" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
                   Desk Breaks
                 </Link>
               </li>
@@ -62,44 +62,32 @@ const Footer = () => {
             </h4>
             <ul className="space-y-2.5 text-sm">
               <li>
-                <Link to="/" className="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                <Link to="/" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
                   Dashboard
                 </Link>
               </li>
               <li>
-                <Link to="/tutorials" className="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                <Link to="/tutorials" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
                   Body Focus Guide
                 </Link>
               </li>
               <li>
-                <Link to="/diet-plan" className="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                <Link to="/diet-plan" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
                   Macro & Diet Tracker
                 </Link>
               </li>
               <li>
-                <Link to="/profile" className="text-slate-600 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">
+                <Link to="/profile" className="text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
                   Profile & Badges
                 </Link>
-              </li>
-              <li>
-                <a
-                  href="/FitFlow_Excercise.zip"
-                  download="FitFlow_Excercise.zip"
-                  className="inline-flex items-center gap-1.5 font-semibold text-emerald-600 dark:text-emerald-400 hover:text-emerald-500 transition-colors"
-                >
-                  <span>Download Code (.zip)</span>
-                  <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
-                    ZIP
-                  </span>
-                </a>
               </li>
             </ul>
           </div>
 
           {/* Developer & Socials Watermark Card */}
-          <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-950 p-5 rounded-3xl text-white shadow-md relative overflow-hidden border border-slate-800">
-            <div className="absolute -right-6 -bottom-6 w-24 h-24 bg-emerald-500/10 rounded-full blur-xl pointer-events-none" />
-            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-400 mb-2">
+          <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 p-5 rounded-3xl text-white shadow-md relative overflow-hidden border border-slate-800">
+            <div className="absolute -right-6 -bottom-6 w-24 h-24 bg-indigo-500/10 rounded-full blur-xl pointer-events-none" />
+            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-indigo-400 mb-2">
               <Code2 size={15} />
               <span>Developer Watermark</span>
             </div>
@@ -140,8 +128,8 @@ const Footer = () => {
             <span>© {new Date().getFullYear()} FitFlow AI. All rights reserved.</span>
             <span className="hidden sm:inline text-slate-300 dark:text-slate-700">•</span>
             <span className="inline-flex items-center gap-1 font-semibold text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 px-2.5 py-0.5 rounded-full border border-slate-200 dark:border-slate-700">
-              <Code2 size={12} className="text-emerald-600 dark:text-emerald-400" />
-              Watermark: <strong className="text-emerald-600 dark:text-emerald-400 font-bold">Ritesh</strong>
+              <Code2 size={12} className="text-indigo-600 dark:text-indigo-400" />
+              Watermark: <strong className="text-indigo-600 dark:text-indigo-400 font-bold">Ritesh</strong>
             </span>
           </div>
 
