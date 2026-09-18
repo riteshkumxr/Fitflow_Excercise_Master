@@ -175,11 +175,11 @@ export default function FitFlowAIAssistant() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-40 flex items-center gap-2.5 px-4 py-3.5 rounded-full bg-gradient-to-r from-slate-900 via-indigo-950 to-purple-950 text-white shadow-2xl shadow-indigo-950/40 hover:scale-105 active:scale-95 transition-all duration-200 border border-indigo-500/40 group cursor-pointer"
+          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 flex items-center gap-2 px-3.5 py-2.5 sm:px-4 sm:py-3.5 rounded-full bg-gradient-to-r from-slate-900 via-indigo-950 to-purple-950 text-white shadow-2xl shadow-indigo-950/40 hover:scale-105 active:scale-95 transition-all duration-200 border border-indigo-500/40 group cursor-pointer"
           aria-label="Open FitFlow AI Assistant"
         >
           <div className="relative">
-            <Bot size={20} className="text-indigo-400 group-hover:rotate-12 transition-transform" />
+            <Bot size={18} className="text-indigo-400 group-hover:rotate-12 transition-transform sm:w-5 sm:h-5" />
             <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-indigo-500"></span>
@@ -194,7 +194,7 @@ export default function FitFlowAIAssistant() {
 
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-end sm:justify-center p-0 sm:p-4 bg-slate-950/50 backdrop-blur-xs animate-in fade-in duration-200">
-          <div className="relative w-full sm:max-w-[480px] h-[85vh] sm:h-[620px] bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col border border-slate-200 sm:border-slate-300">
+          <div className="relative w-full sm:max-w-[480px] h-[90dvh] sm:h-[620px] max-h-[100dvh] bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col border border-slate-200 sm:border-slate-300">
             {/* Modal Header */}
             <div className="px-5 py-4 bg-gradient-to-r from-slate-950 via-slate-900 to-indigo-950 text-white flex items-center justify-between shrink-0 border-b border-indigo-900/40">
               <div className="flex items-center gap-3">

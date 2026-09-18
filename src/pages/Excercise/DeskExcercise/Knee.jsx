@@ -420,19 +420,22 @@ const Kneeraises = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-4">
+    <div className="min-h-screen bg-gray-900 text-white p-3 sm:p-4 md:p-6">
       <div className="max-w-6xl mx-auto">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#a148c4] to-[#4848c4] mb-0">
-          Knee raises Trainer
-          </h1>
-          <Link to="/" className="bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-lg font-medium transition-colors">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+          <div>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#a148c4] to-[#4848c4] mb-0">
+              Knee Raises Trainer
+            </h1>
+            <p className="text-xs sm:text-sm text-gray-400 mt-1">Real-time hip flexion & lower body mobility tracking</p>
+          </div>
+          <Link to="/" className="inline-flex items-center justify-center bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-lg font-medium transition-colors w-fit text-sm">
             Back to Menu
           </Link>
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="bg-gray-800 rounded-xl p-4 shadow-lg">
+          <div className="order-2 lg:order-1 bg-gray-800 rounded-xl p-4 shadow-lg">
             <div className="mb-6">
               <h2 className="text-xl font-bold mb-3">Your Workout</h2>
               <div className="bg-gray-700 rounded-lg p-3 text-center">
@@ -444,13 +447,13 @@ const Kneeraises = () => {
             <div className="mb-6">
               <h2 className="text-xl font-bold mb-3">Controls</h2>
               
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col sm:flex-row lg:flex-col gap-3">
                 <button 
                   onClick={toggleTracking}
                   className={`${isTracking 
                     ? 'bg-red-600 hover:bg-red-700' 
                     : 'bg-green-600 hover:bg-green-700'} 
-                    px-4 py-2 rounded-lg font-bold transition-colors`}
+                    px-4 py-2.5 rounded-lg font-bold transition-colors cursor-pointer text-sm sm:text-base flex-1`}
                   disabled={loadingState !== 'ready'}
                 >
                   {isTracking ? 'Stop Tracking' : 'Start Tracking'}
@@ -458,7 +461,7 @@ const Kneeraises = () => {
                 
                 <button 
                   onClick={resetStats}
-                  className="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg font-bold transition-colors"
+                  className="bg-gray-700 hover:bg-gray-600 px-4 py-2.5 rounded-lg font-bold transition-colors cursor-pointer text-sm sm:text-base flex-1"
                 >
                   Reset Counter
                 </button>
@@ -466,7 +469,7 @@ const Kneeraises = () => {
                 {showManualMode && (
                   <button 
                     onClick={handleManualCount}
-                    className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg font-bold transition-colors mt-4"
+                    className="bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-lg font-bold transition-colors mt-2 sm:mt-0 lg:mt-4 cursor-pointer text-sm sm:text-base flex-1"
                   >
                     Count Knee raises Manually
                   </button>
@@ -476,25 +479,23 @@ const Kneeraises = () => {
 
             <div className="mb-6">
               <h2 className="text-xl font-bold mb-3">Form Demonstration</h2>
-              <img src={kneeGif} alt="Knee raises demo" className="rounded-xl w-full object-cover shadow-md" />
+              <img src={kneeGif} alt="Knee raises demo" className="rounded-xl w-full max-h-60 object-contain mx-auto shadow-md" />
             </div>
             
             <div>
-              <h2 className="text-xl font-bold mb-3">Tips for Knee raises</h2>
+              <h2 className="text-xl font-bold mb-3">Tips for Knee Raises</h2>
               <ul className="list-disc pl-5 space-y-2 text-gray-300">
-                <li>Position camera to see your lower body</li>
-                <li>Feet shoulder-width apart</li>
-                <li>Keep chest up and back straight</li>
-                <li>Knees should track over toes</li>
-                <li>Lower until thighs are parallel to ground</li>
-                <li>Keep weight in heels</li>
-                <li>Keep knees behind toes</li>
+                <li>Position camera so your hips and legs are clearly visible</li>
+                <li>Maintain a tall posture with core engaged</li>
+                <li>Lift knees upward with control to hip height</li>
+                <li>Lower smoothly without slamming foot down</li>
+                <li>Breathe steadily throughout the movement</li>
               </ul>
             </div>
           </div>
           
           {/* Middle & Right Column - Camera/Canvas */}
-          <div className="lg:col-span-2">
+          <div className="order-1 lg:order-2 lg:col-span-2">
             <div className="bg-gray-800 rounded-xl p-4 shadow-lg">
               <div className="relative aspect-video bg-black rounded-lg overflow-hidden">
                 <video 

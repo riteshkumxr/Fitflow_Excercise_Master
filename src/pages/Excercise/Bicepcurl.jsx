@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import * as tf from '@tensorflow/tfjs';
 import * as poseDetection from '@tensorflow-models/pose-detection';
 const bcp = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/bicep.gif`;
@@ -355,31 +356,39 @@ const BicepCurl = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-4">
+    <div className="min-h-screen bg-gray-900 text-white p-3 sm:p-4 md:p-6">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-400 mb-6">
-          Bicep Curl Tracker
-        </h1>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+          <div>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-400">
+              Bicep Curl Tracker
+            </h1>
+            <p className="text-xs sm:text-sm text-gray-400 mt-1">Real-time elbow flexion & range of motion tracking</p>
+          </div>
+          <Link to="/" className="inline-flex items-center justify-center bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-lg font-medium transition-colors w-fit text-sm">
+            Back to Menu
+          </Link>
+        </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="bg-gray-800 rounded-xl p-4 shadow-lg">
+          <div className="order-2 lg:order-1 bg-gray-800 rounded-xl p-4 shadow-lg">
             <div className="mb-6">
               <h2 className="text-xl font-bold mb-3">Your Progress</h2>
               <div className="bg-gray-700 rounded-lg p-6 text-center">
                 <p className="text-sm text-gray-400 mb-2">Bicep Curls Completed</p>
-                <p className="text-5xl font-bold text-blue-400">{curlCount}</p>
+                <p className="text-4xl sm:text-5xl font-bold text-blue-400">{curlCount}</p>
               </div>
             </div>
             
             <div className="mb-6">
               <h2 className="text-xl font-bold mb-3">Controls</h2>
               
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col sm:flex-row lg:flex-col gap-3">
                 <button 
                   onClick={toggleTracking}
                   className={`${isTracking 
                     ? 'bg-red-600 hover:bg-red-700' 
                     : 'bg-green-600 hover:bg-green-700'} 
-                    px-4 py-3 rounded-lg font-bold transition-colors text-lg`}
+                    px-4 py-3 rounded-lg font-bold transition-colors text-base sm:text-lg cursor-pointer flex-1`}
                   disabled={loadingState !== 'ready'}
                 >
                   {isTracking ? 'Stop Tracking' : 'Start Tracking'}
@@ -387,7 +396,7 @@ const BicepCurl = () => {
                 
                 <button 
                   onClick={resetCounter}
-                  className="bg-gray-700 hover:bg-gray-600 px-4 py-3 rounded-lg font-bold transition-colors"
+                  className="bg-gray-700 hover:bg-gray-600 px-4 py-3 rounded-lg font-bold transition-colors cursor-pointer flex-1"
                 >
                   Reset Counter
                 </button>
@@ -395,14 +404,14 @@ const BicepCurl = () => {
                 {showManualMode && (
                   <button 
                     onClick={handleManualCount}
-                    className="bg-blue-600 hover:bg-blue-700 px-4 py-3 rounded-lg font-bold transition-colors mt-4"
+                    className="bg-blue-600 hover:bg-blue-700 px-4 py-3 rounded-lg font-bold transition-colors mt-2 sm:mt-0 lg:mt-4 cursor-pointer flex-1"
                   >
                     Count Manually
                   </button>
                 )}
               </div>
               <div>
-                <img src={bcp} alt="" className='rounded-xl mt-4'  />
+                <img src={bcp} alt="" className='rounded-xl mt-4 max-h-60 object-contain mx-auto' />
               </div>
             </div>
             
@@ -419,7 +428,7 @@ const BicepCurl = () => {
           </div>
           
           {/* Camera/Canvas */}
-          <div className="lg:col-span-2">
+          <div className="order-1 lg:order-2 lg:col-span-2">
             <div className="bg-gray-800 rounded-xl p-4 shadow-lg">
               <div className="relative aspect-video bg-black rounded-lg overflow-hidden">
                 <video 

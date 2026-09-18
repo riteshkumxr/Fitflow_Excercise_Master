@@ -759,18 +759,18 @@ const DietPlan = () => {
               </button>
             </div>
             
-            <form onSubmit={saveProfile} className="px-6 py-4">
+            <form onSubmit={saveProfile} className="px-4 sm:px-6 py-4">
               <div className="space-y-5">
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">
                     Target Goal
                   </label>
-                  <div className="grid grid-cols-3 gap-2.5">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                     {['weight-loss', 'maintenance', 'muscle-gain'].map((goal) => (
                       <label 
                         key={goal} 
                         className={`
-                          flex items-center justify-center px-3 py-2 border rounded-xl text-xs font-bold cursor-pointer transition-all
+                          flex items-center justify-center px-3 py-2.5 border rounded-xl text-xs font-bold cursor-pointer transition-all text-center
                           ${userProfile.goal === goal 
                             ? 'bg-indigo-600 border-indigo-500 text-white shadow-xs' 
                             : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700'
@@ -795,12 +795,12 @@ const DietPlan = () => {
                   <label className="block text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">
                     Diet Preference
                   </label>
-                  <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
                     {['balanced', 'keto', 'paleo', 'vegetarian', 'vegan'].map((dietType) => (
                       <label 
                         key={dietType} 
                         className={`
-                          flex items-center justify-center px-2 py-1.5 border rounded-xl text-xs font-bold cursor-pointer transition-all
+                          flex items-center justify-center px-2 py-2 border rounded-xl text-xs font-bold cursor-pointer transition-all text-center
                           ${userProfile.dietType === dietType 
                             ? 'bg-indigo-600 border-indigo-500 text-white shadow-xs' 
                             : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700'

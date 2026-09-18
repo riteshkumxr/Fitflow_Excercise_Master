@@ -111,7 +111,7 @@ const PersonalizedExercise = () => {
             <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-3">
               Muscle Groups
             </h3>
-            <div className="space-y-1.5">
+            <div className="flex lg:flex-col overflow-x-auto lg:overflow-visible gap-2 pb-2 lg:pb-0 scrollbar-none">
               {Object.keys(exercisesMapping).map((bodyPart) => {
                 const info = bodyPartLabels[bodyPart];
                 const isSelected = selectedBodyPart === bodyPart;
@@ -119,16 +119,16 @@ const PersonalizedExercise = () => {
                   <button
                     key={bodyPart}
                     onClick={() => setSelectedBodyPart(bodyPart)}
-                    className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
+                    className={`flex shrink-0 lg:w-full items-center justify-between gap-2 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer whitespace-nowrap lg:whitespace-normal ${
                       isSelected
                         ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-sm shadow-indigo-500/20'
-                        : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
+                        : 'text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/60 lg:bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800'
                     }`}
                   >
                     <span>{info.label}</span>
                     <span
                       className={`text-xs px-2 py-0.5 rounded-full font-bold ${
-                        isSelected ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
+                        isSelected ? 'bg-white/20 text-white' : 'bg-slate-200/70 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
                       }`}
                     >
                       {info.count}

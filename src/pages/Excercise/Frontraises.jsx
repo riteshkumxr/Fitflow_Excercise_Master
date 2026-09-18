@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import * as tf from '@tensorflow/tfjs';
 import * as poseDetection from '@tensorflow-models/pose-detection';
 const frnt = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/front.gif`;
@@ -336,22 +337,30 @@ const Frontraises = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-4">
+    <div className="min-h-screen bg-gray-900 text-white p-3 sm:p-4 md:p-6">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-[#48c4a4] mb-6">
-        Front-Raises Tracker
-        </h1>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+          <div>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-[#48c4a4] mb-0">
+              Front-Raises Tracker
+            </h1>
+            <p className="text-xs sm:text-sm text-gray-400 mt-1">Real-time anterior deltoid elevation analysis</p>
+          </div>
+          <Link to="/" className="inline-flex items-center justify-center bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-lg font-medium transition-colors w-fit text-sm">
+            Back to Menu
+          </Link>
+        </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left Column - Stats & Controls */}
-          <div className="bg-gray-800 rounded-xl p-4 shadow-lg">
+          {/* Controls & Stats Column */}
+          <div className="order-2 lg:order-1 bg-gray-800 rounded-xl p-4 shadow-lg">
             <div className="mb-6">
               <h2 className="text-xl font-bold mb-3">Your Workout</h2>
               
               <div className="grid grid-cols-2 gap-3">
                 <div className="bg-gray-700 rounded-lg p-3 text-center">
                   <p className="text-sm text-gray-400">Exercise</p>
-                  <p className="text-xl font-bold text-blue-400">Front-Raises</p>
+                  <p className="text-lg sm:text-xl font-bold text-blue-400">Front-Raises</p>
                 </div>
                 
                 <div className="bg-gray-700 rounded-lg p-3 text-center">
@@ -364,13 +373,13 @@ const Frontraises = () => {
             <div className="mb-6">
               <h2 className="text-xl font-bold mb-3">Controls</h2>
               
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col sm:flex-row lg:flex-col gap-3">
                 <button 
                   onClick={toggleTracking}
                   className={`${isTracking 
                     ? 'bg-red-600 hover:bg-red-700' 
                     : 'bg-green-600 hover:bg-green-700'} 
-                    px-4 py-2 rounded-lg font-bold transition-colors`}
+                    px-4 py-2.5 rounded-lg font-bold transition-colors cursor-pointer text-sm sm:text-base flex-1`}
                   disabled={loadingState !== 'ready'}
                 >
                   {isTracking ? 'Stop Tracking' : 'Start Tracking'}
@@ -378,7 +387,7 @@ const Frontraises = () => {
                 
                 <button 
                   onClick={resetStats}
-                  className="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg font-bold transition-colors"
+                  className="bg-gray-700 hover:bg-gray-600 px-4 py-2.5 rounded-lg font-bold transition-colors cursor-pointer text-sm sm:text-base flex-1"
                 >
                   Reset Counter
                 </button>
@@ -386,31 +395,31 @@ const Frontraises = () => {
                 {showManualMode && (
                   <button 
                     onClick={handleManualCount}
-                    className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg font-bold transition-colors mt-4"
+                    className="bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-lg font-bold transition-colors mt-2 sm:mt-0 lg:mt-4 cursor-pointer text-sm sm:text-base flex-1"
                   >
                     Count Front-Raises Manually
                   </button>
                 )}
               </div>
               <div className='flex items-center justify-center'>
-                <img src={frnt} alt="" className='mt-4 rounded-xl' />
+                <img src={frnt} alt="" className='mt-4 rounded-xl max-h-60 object-contain mx-auto' />
               </div>
             </div>
             
             <div>
               <h2 className="text-xl font-bold mb-3">Tips</h2>
               <ul className="list-disc pl-5 space-y-2 text-gray-300">
-                <li>Face the camera from the side view</li>
-                <li>Make sure your upper body is visible</li>
-                <li>Pull yourself up until your chin is above the bar</li>
-                <li>Lower yourself fully before the next rep</li>
-                <li>Maintain a steady pace</li>
+                <li>Face the camera from the side or front view</li>
+                <li>Make sure your upper body and arms are visible</li>
+                <li>Raise weights up to shoulder height with control</li>
+                <li>Avoid swinging your torso or leaning back</li>
+                <li>Maintain a steady, controlled descent</li>
               </ul>
             </div>
           </div>
           
           {/* Middle & Right Column - Camera/Canvas */}
-          <div className="lg:col-span-2">
+          <div className="order-1 lg:order-2 lg:col-span-2">
             <div className="bg-gray-800 rounded-xl p-4 shadow-lg">
               <div className="relative aspect-video bg-black rounded-lg overflow-hidden">
                 <video 

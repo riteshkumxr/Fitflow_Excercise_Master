@@ -51,7 +51,7 @@ const ExerciseDropdown = ({ mobile = false, onItemClick }) => {
           <Dumbbell size={14} className="text-indigo-500" />
           AI Pose Exercises
         </div>
-        <div className="grid grid-cols-2 gap-1 px-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 px-3">
           {[...upperBody, ...lowerBody].map((ex) => (
             <Link
               key={ex.path}

@@ -323,7 +323,7 @@ const Dashboard = () => {
       </div>
 
       {/* Tabs Navigation */}
-      <div className="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 mb-6 overflow-x-auto pb-1">
+      <div className="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 mb-6 overflow-x-auto pb-1 scrollbar-none">
         {[
           { id: 'overview', label: 'Overview', icon: HeartPulse },
           { id: 'activities', label: 'Recent Activities', icon: Activity },

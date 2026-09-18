@@ -309,7 +309,7 @@ const Workout = () => {
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex items-center gap-2 mb-8 overflow-x-auto pb-2">
+      <div className="flex items-center gap-2 mb-8 overflow-x-auto pb-2 scrollbar-none">
         {[
           { id: 'all', label: 'All Workouts', count: workouts.length, icon: Layers },
           { id: 'upper', label: 'Upper Body', count: workouts.filter((w) => w.category === 'upper').length, icon: Dumbbell },
