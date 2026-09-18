@@ -3,6 +3,8 @@ import * as tf from '@tensorflow/tfjs';
 import * as poseDetection from '@tensorflow-models/pose-detection';
 import { Link } from 'react-router-dom';
 
+const morningGif = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/squat.gif`;
+
 const Morning = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
@@ -439,6 +441,11 @@ const Morning = () => {
                   </button>
                 )}
               </div>
+            </div>
+
+            <div className="mb-6">
+              <h2 className="text-xl font-bold mb-3">Form Demonstration</h2>
+              <img src={morningGif} alt="Morning March demo" className="rounded-xl w-full object-cover shadow-md" />
             </div>
             
             <div>

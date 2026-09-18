@@ -3,6 +3,8 @@ import * as tf from '@tensorflow/tfjs';
 import * as poseDetection from '@tensorflow-models/pose-detection';
 import { Link } from 'react-router-dom';
 
+const curlsGif = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/bicep.gif`;
+
 const Deskcurls = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
@@ -470,6 +472,11 @@ const Deskcurls = () => {
                   </button>
                 )}
               </div>
+            </div>
+
+            <div className="mb-6">
+              <h2 className="text-xl font-bold mb-3">Form Demonstration</h2>
+              <img src={curlsGif} alt="Desk curls demo" className="rounded-xl w-full object-cover shadow-md" />
             </div>
             
             <div>

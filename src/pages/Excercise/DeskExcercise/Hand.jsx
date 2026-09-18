@@ -2,6 +2,8 @@ import React, { useRef, useState, useEffect } from 'react';
 import * as tf from '@tensorflow/tfjs';
 import * as poseDetection from '@tensorflow-models/pose-detection';
 
+const handGif = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/front.gif`;
+
 const Handraises = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
@@ -391,6 +393,11 @@ const Handraises = () => {
                   </button>
                 )}
               </div>
+            </div>
+
+            <div className="mb-6">
+              <h2 className="text-xl font-bold mb-3">Form Demonstration</h2>
+              <img src={handGif} alt="Hand raises demo" className="rounded-xl w-full object-cover shadow-md" />
             </div>
             
             <div>

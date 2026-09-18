@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useAuth } from '../context/AuthContext';
 
 const DietPlan = () => {
@@ -6,7 +6,7 @@ const DietPlan = () => {
   const [userProfile, setUserProfile] = useState(() => ({
     goal: currentUser?.targetGoal || 'weight-loss',
     dietType: 'balanced',
-    calorieGoal: 2000,
+    manualCalorieGoal: null,
     weight: currentUser?.weight ? parseInt(currentUser.weight) : 75,
     height: currentUser?.height ? parseInt(currentUser.height) : 175,
     age: currentUser?.age || 23,
@@ -24,7 +24,7 @@ const DietPlan = () => {
         goal: currentUser.targetGoal || prev.goal,
       }));
     }
-  }, [currentUser]);
+  }, [currentUser?.weight, currentUser?.height, currentUser?.age, currentUser?.targetGoal]);
 
   const [meals, setMeals] = useState([
     { id: 'breakfast', name: 'Breakfast', foods: [], expanded: true },
@@ -33,14 +33,6 @@ const DietPlan = () => {
     { id: 'snacks', name: 'Snacks', foods: [], expanded: true },
   ]);
 
-  const [dailyTotals, setDailyTotals] = useState({
-    calories: 0,
-    protein: 0,
-    carbs: 0,
-    fat: 0,
-  });
-
-  const [recommendations, setRecommendations] = useState([]);
   const [waterIntake, setWaterIntake] = useState(0);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [newFood, setNewFood] = useState({
@@ -69,50 +61,15 @@ const DietPlan = () => {
     { name: 'Sweet Potato (100g)', calories: 86, protein: 1.6, carbs: 20, fat: 0.1 },
   ];
 
-  useEffect(() => {
-    calculateRecommendedMacros();
-  }, [userProfile]);
-
-  useEffect(() => {
-    calculateDailyTotals();
-  }, [meals]);
-
-  useEffect(() => {
-    generateMealRecommendations();
-  }, [userProfile, dailyTotals]);
-
-  const calculateDailyTotals = () => {
-    const totals = {
-      calories: 0,
-      protein: 0,
-      carbs: 0,
-      fat: 0,
-    };
-
-    meals.forEach(meal => {
-      meal.foods.forEach(food => {
-        totals.calories += food.calories * food.quantity;
-        totals.protein += food.protein * food.quantity;
-        totals.carbs += food.carbs * food.quantity;
-        totals.fat += food.fat * food.quantity;
-      });
-    });
-
-    setDailyTotals({
-      calories: Math.round(totals.calories),
-      protein: Math.round(totals.protein),
-      carbs: Math.round(totals.carbs),
-      fat: Math.round(totals.fat),
-    });
-  };
-
-  const calculateRecommendedMacros = () => {
-    let bmr;
-    if (userProfile.gender === 'male') {
-      bmr = 10 * userProfile.weight + 6.25 * userProfile.height - 5 * userProfile.age + 5;
-    } else {
-      bmr = 10 * userProfile.weight + 6.25 * userProfile.height - 5 * userProfile.age - 161;
+  // Pure derived calculations: zero cascading effects, zero re-render loops
+  const calorieGoal = useMemo(() => {
+    if (userProfile.manualCalorieGoal) {
+      return Number(userProfile.manualCalorieGoal);
     }
+    const bmr =
+      userProfile.gender === 'male'
+        ? 10 * userProfile.weight + 6.25 * userProfile.height - 5 * userProfile.age + 5
+        : 10 * userProfile.weight + 6.25 * userProfile.height - 5 * userProfile.age - 161;
 
     const activityMultipliers = {
       sedentary: 1.2,
@@ -122,80 +79,114 @@ const DietPlan = () => {
       'very-active': 1.9,
     };
 
-    const tdee = bmr * activityMultipliers[userProfile.activityLevel];
+    const tdee = bmr * (activityMultipliers[userProfile.activityLevel] || 1.55);
 
-    let calorieGoal;
     if (userProfile.goal === 'weight-loss') {
-      calorieGoal = tdee - 500;
+      return Math.round(tdee - 500);
     } else if (userProfile.goal === 'muscle-gain') {
-      calorieGoal = tdee + 300;
-    } else {
-      calorieGoal = tdee;
+      return Math.round(tdee + 300);
     }
+    return Math.round(tdee);
+  }, [
+    userProfile.weight,
+    userProfile.height,
+    userProfile.age,
+    userProfile.gender,
+    userProfile.activityLevel,
+    userProfile.goal,
+    userProfile.manualCalorieGoal,
+  ]);
 
-    setUserProfile(prev => ({
-      ...prev,
-      calorieGoal: Math.round(calorieGoal),
-    }));
-  };
+  const dailyTotals = useMemo(() => {
+    const totals = {
+      calories: 0,
+      protein: 0,
+      carbs: 0,
+      fat: 0,
+    };
 
-  const generateMealRecommendations = () => {
-    let recommendations = [];
+    meals.forEach((meal) => {
+      meal.foods.forEach((food) => {
+        const qty = Number(food.quantity) || 1;
+        totals.calories += (Number(food.calories) || 0) * qty;
+        totals.protein += (Number(food.protein) || 0) * qty;
+        totals.carbs += (Number(food.carbs) || 0) * qty;
+        totals.fat += (Number(food.fat) || 0) * qty;
+      });
+    });
+
+    return {
+      calories: Math.round(totals.calories),
+      protein: Math.round(totals.protein),
+      carbs: Math.round(totals.carbs),
+      fat: Math.round(totals.fat),
+    };
+  }, [meals]);
+
+  const recommendations = useMemo(() => {
+    let recs = [];
 
     if (userProfile.dietType === 'balanced') {
       if (userProfile.goal === 'weight-loss') {
-        recommendations = [
-          "Focus on lean proteins and vegetables",
-          "Limit processed foods and added sugars",
-          "Include healthy fats in moderation",
-          "Aim for 25-30% of calories from protein",
-          "Stay hydrated with at least 2L of water daily"
+        recs = [
+          'Focus on lean proteins and vegetables',
+          'Limit processed foods and added sugars',
+          'Include healthy fats in moderation',
+          'Aim for 25-30% of calories from protein',
+          'Stay hydrated with at least 2L of water daily',
         ];
       } else if (userProfile.goal === 'muscle-gain') {
-        recommendations = [
-          "Increase protein intake to 1.6-2.2g per kg of bodyweight",
-          "Include carbs around workouts for energy",
-          "Don't skimp on healthy fats for hormone production",
-          "Space protein intake evenly throughout the day",
-          "Consider a post-workout shake with protein and carbs"
+        recs = [
+          'Increase protein intake to 1.6-2.2g per kg of bodyweight',
+          'Include carbs around workouts for energy',
+          'Don\'t skimp on healthy fats for hormone production',
+          'Space protein intake evenly throughout the day',
+          'Consider a post-workout shake with protein and carbs',
         ];
       } else {
-        recommendations = [
-          "Maintain balanced macronutrient ratio (40% carbs, 30% protein, 30% fat)",
-          "Focus on whole, nutrient-dense foods",
-          "Include a variety of colorful fruits and vegetables",
-          "Stay consistent with meal timing",
-          "Adjust intake based on training days vs rest days"
+        recs = [
+          'Maintain balanced macronutrient ratio (40% carbs, 30% protein, 30% fat)',
+          'Focus on whole, nutrient-dense foods',
+          'Include a variety of colorful fruits and vegetables',
+          'Stay consistent with meal timing',
+          'Adjust intake based on training days vs rest days',
         ];
       }
     } else if (userProfile.dietType === 'keto') {
-      recommendations = [
-        "Keep carbs under 50g daily, ideally 20-30g",
-        "Get 70-80% of calories from healthy fats",
-        "Moderate protein intake (around 20% of calories)",
-        "Increase sodium intake to 3-5g daily",
-        "Focus on avocados, olive oil, nuts, and fatty fish"
+      recs = [
+        'Keep carbs under 50g daily, ideally 20-30g',
+        'Get 70-80% of calories from healthy fats',
+        'Moderate protein intake (around 20% of calories)',
+        'Increase sodium intake to 3-5g daily',
+        'Focus on avocados, olive oil, nuts, and fatty fish',
       ];
     } else if (userProfile.dietType === 'vegetarian' || userProfile.dietType === 'vegan') {
-      recommendations = [
-        "Combine plant proteins for complete amino acid profiles",
-        "Include legumes, tofu, tempeh, and seitan as protein sources",
-        "Consider B12, iron, zinc, and omega-3 supplements",
-        "Focus on whole grains for complete nutrition",
-        "Include plenty of nuts and seeds for healthy fats"
+      recs = [
+        'Combine plant proteins for complete amino acid profiles',
+        'Include legumes, tofu, tempeh, and seitan as protein sources',
+        'Consider B12, iron, zinc, and omega-3 supplements',
+        'Focus on whole grains for complete nutrition',
+        'Include plenty of nuts and seeds for healthy fats',
       ];
     }
 
     if (dailyTotals.protein < userProfile.weight * 1.6 && userProfile.goal === 'muscle-gain') {
-      recommendations.unshift("⚠️ You're currently under your protein target for muscle gain");
+      recs.unshift("⚠️ You're currently under your protein target for muscle gain");
     }
 
-    if (dailyTotals.calories > userProfile.calorieGoal && userProfile.goal === 'weight-loss') {
-      recommendations.unshift("⚠️ You've exceeded your calorie target for weight loss");
+    if (dailyTotals.calories > calorieGoal && userProfile.goal === 'weight-loss') {
+      recs.unshift("⚠️ You've exceeded your calorie target for weight loss");
     }
 
-    setRecommendations(recommendations);
-  };
+    return recs;
+  }, [
+    userProfile.dietType,
+    userProfile.goal,
+    userProfile.weight,
+    calorieGoal,
+    dailyTotals.calories,
+    dailyTotals.protein,
+  ]);
 
   const handleAddFood = (e) => {
     e.preventDefault();
@@ -368,16 +359,16 @@ const DietPlan = () => {
                 <div className="mb-6">
                   <div className="flex justify-between text-sm mb-1 text-slate-600 dark:text-slate-300">
                     <span>Calories</span>
-                    <span className="font-bold text-slate-900 dark:text-white">{dailyTotals.calories} / {userProfile.calorieGoal}</span>
+                    <span className="font-bold text-slate-900 dark:text-white">{dailyTotals.calories} / {calorieGoal}</span>
                   </div>
                   <div className="h-3 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
                     <div 
                       className={`h-full rounded-full transition-all duration-500 ${
-                        dailyTotals.calories > userProfile.calorieGoal 
+                        dailyTotals.calories > calorieGoal 
                           ? 'bg-rose-500' 
                           : 'bg-indigo-600'
                       }`}
-                      style={{ width: `${Math.min(100, (dailyTotals.calories / userProfile.calorieGoal) * 100)}%` }}
+                      style={{ width: `${Math.min(100, (dailyTotals.calories / calorieGoal) * 100)}%` }}
                     />
                   </div>
                 </div>
@@ -401,7 +392,7 @@ const DietPlan = () => {
                           fill="none" 
                           stroke="#3B82F6" 
                           strokeWidth="4" 
-                          strokeDasharray={`${Math.min(100, (dailyTotals.protein / (userProfile.calorieGoal * 0.25 / 4)) * 100)} 100`}
+                          strokeDasharray={`${Math.min(100, (dailyTotals.protein / (calorieGoal * 0.25 / 4)) * 100)} 100`}
                           strokeLinecap="round"
                           transform="rotate(-90 18 18)"
                         />
@@ -430,7 +421,7 @@ const DietPlan = () => {
                           fill="none" 
                           stroke="#10B981" 
                           strokeWidth="4" 
-                          strokeDasharray={`${Math.min(100, (dailyTotals.carbs / (userProfile.calorieGoal * 0.5 / 4)) * 100)} 100`}
+                          strokeDasharray={`${Math.min(100, (dailyTotals.carbs / (calorieGoal * 0.5 / 4)) * 100)} 100`}
                           strokeLinecap="round"
                           transform="rotate(-90 18 18)"
                         />
@@ -459,7 +450,7 @@ const DietPlan = () => {
                           fill="none" 
                           stroke="#F59E0B" 
                           strokeWidth="4" 
-                          strokeDasharray={`${Math.min(100, (dailyTotals.fat / (userProfile.calorieGoal * 0.25 / 9)) * 100)} 100`}
+                          strokeDasharray={`${Math.min(100, (dailyTotals.fat / (calorieGoal * 0.25 / 9)) * 100)} 100`}
                           strokeLinecap="round"
                           transform="rotate(-90 18 18)"
                         />
@@ -511,7 +502,7 @@ const DietPlan = () => {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-sm text-slate-500 dark:text-slate-400">Daily Calories</span>
-                    <span className="text-sm font-bold text-indigo-600 dark:text-indigo-400">{userProfile.calorieGoal} kcal</span>
+                    <span className="text-sm font-bold text-indigo-600 dark:text-indigo-400">{calorieGoal} kcal</span>
                   </div>
                 </div>
               </div>
@@ -938,7 +929,6 @@ const DietPlan = () => {
                       setUserProfile({
                         ...userProfile, 
                         manualCalorieGoal: value ? Number(value) : null,
-                        calorieGoal: value ? Number(value) : userProfile.calorieGoal,
                       });
                     }}
                     className="w-full px-3 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white shadow-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
