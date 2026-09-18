@@ -126,14 +126,20 @@ const Navbar = () => {
             {/* Theme Toggle Button */}
             <button
               onClick={toggleTheme}
-              title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-              className="p-1.5 sm:p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-all cursor-pointer border border-transparent hover:border-slate-200 dark:hover:border-slate-700 shrink-0"
-              aria-label="Toggle Theme"
+              title={isDark ? 'Switch to Light Mode (Active: Dark)' : 'Switch to Dark Mode (Active: Light)'}
+              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-100 transition-all cursor-pointer shadow-xs shrink-0 group"
+              aria-label="Toggle Dark Mode"
             >
               {isDark ? (
-                <Sun size={18} className="text-amber-400 hover:rotate-45 transition-transform" />
+                <>
+                  <Sun size={15} className="text-amber-400 fill-amber-400 group-hover:rotate-45 transition-transform" />
+                  <span className="text-xs font-bold text-slate-200">Light</span>
+                </>
               ) : (
-                <Moon size={18} className="text-slate-600 hover:-rotate-12 transition-transform" />
+                <>
+                  <Moon size={15} className="text-indigo-600 fill-indigo-500/20 group-hover:-rotate-12 transition-transform" />
+                  <span className="text-xs font-bold text-slate-800">Dark</span>
+                </>
               )}
             </button>
 
@@ -227,10 +233,30 @@ const Navbar = () => {
               </div>
             )}
 
+            {/* Mobile Theme Toggle Button */}
+            <button
+              onClick={toggleTheme}
+              title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+              className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-100 cursor-pointer shadow-xs shrink-0"
+              aria-label="Toggle Dark Mode"
+            >
+              {isDark ? (
+                <>
+                  <Sun size={14} className="text-amber-400 fill-amber-400" />
+                  <span className="text-[11px] font-bold">Light</span>
+                </>
+              ) : (
+                <>
+                  <Moon size={14} className="text-indigo-600 fill-indigo-500/20" />
+                  <span className="text-[11px] font-bold">Dark</span>
+                </>
+              )}
+            </button>
+
             {/* Mobile Token Pill */}
             <button
               onClick={() => openPaymentModal()}
-              className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 text-xs font-extrabold border border-indigo-200 dark:border-indigo-800/60 cursor-pointer"
+              className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 text-xs font-extrabold border border-indigo-200 dark:border-indigo-800/60 cursor-pointer shrink-0"
               title="Token Wallet"
             >
               <Zap size={13} className="text-indigo-600 dark:text-indigo-400 fill-indigo-600" />
@@ -239,7 +265,7 @@ const Navbar = () => {
 
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              className="p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shrink-0"
               aria-label="Toggle Navigation"
             >
               {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
@@ -314,6 +340,31 @@ const Navbar = () => {
               <span>Sign In / Create Profile</span>
             </Link>
           )}
+
+          {/* Mobile Theme Switcher Row */}
+          <div className="pt-2 pb-1 border-t border-slate-200/80 dark:border-slate-800 my-1.5">
+            <button
+              onClick={toggleTheme}
+              className="flex items-center justify-between w-full px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800/80 dark:hover:bg-slate-700/80 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 transition-colors text-left cursor-pointer"
+            >
+              <div className="flex items-center gap-3">
+                {isDark ? (
+                  <Sun size={18} className="text-amber-400 fill-amber-400" />
+                ) : (
+                  <Moon size={18} className="text-indigo-600 fill-indigo-500/20" />
+                )}
+                <div>
+                  <p className="text-sm font-bold">Dark Mode</p>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                    Currently active: <span className="font-semibold text-indigo-600 dark:text-indigo-400">{isDark ? 'Dark Theme' : 'Light Theme'}</span>
+                  </p>
+                </div>
+              </div>
+              <span className="text-xs font-extrabold px-3 py-1 rounded-full bg-indigo-600 text-white shadow-xs">
+                {isDark ? 'Switch Light ☀️' : 'Switch Dark 🌙'}
+              </span>
+            </button>
+          </div>
 
           <ExerciseDropdown mobile onItemClick={() => setIsMobileMenuOpen(false)} />
         </div>

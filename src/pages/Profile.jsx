@@ -28,14 +28,18 @@ import {
   CreditCard,
   Receipt,
   Gift,
+  Sun,
+  Moon,
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTokens, PLANS } from '../context/TokenContext';
+import { useTheme } from '../context/ThemeContext';
 
 const ProfilePage = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const navigate = useNavigate();
+  const { isDark, toggleTheme } = useTheme();
   const { currentUser, logout, updateProfile, switchBackToRitesh } = useAuth();
   const {
     tokens,
@@ -339,6 +343,23 @@ const ProfilePage = () => {
                         <span>Switch to Ritesh</span>
                       </button>
                     )}
+                    <button
+                      onClick={toggleTheme}
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white/15 hover:bg-white/25 border border-white/30 text-white text-xs font-bold transition-colors cursor-pointer shadow-xs"
+                      title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+                    >
+                      {isDark ? (
+                        <>
+                          <Sun size={13} className="text-amber-400 fill-amber-400" />
+                          <span>Light Mode</span>
+                        </>
+                      ) : (
+                        <>
+                          <Moon size={13} className="text-indigo-200 fill-indigo-200/20" />
+                          <span>Dark Mode</span>
+                        </>
+                      )}
+                    </button>
                     <Link
                       to="/login"
                       className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 text-slate-200 text-xs font-semibold transition-colors"
@@ -571,6 +592,46 @@ const ProfilePage = () => {
                     </div>
                   </div>
                 ))}
+              </div>
+            </div>
+
+            {/* Theme & Display Appearance Setting */}
+            <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-xs md:col-span-2 lg:col-span-3">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="h-11 w-11 rounded-2xl bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200/60 dark:border-indigo-800/40 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+                    {isDark ? <Moon size={22} className="text-indigo-400 fill-indigo-400/20" /> : <Sun size={22} className="text-amber-500 fill-amber-400" />}
+                  </div>
+                  <div>
+                    <h3 className="text-base font-bold text-slate-900 dark:text-white">Theme & Display Appearance</h3>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">
+                      Currently using <strong className="text-indigo-600 dark:text-indigo-400 font-semibold">{isDark ? 'Dark Mode (High Contrast)' : 'Light Mode (Clean Bright)'}</strong>. You can toggle anytime across the entire app.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={toggleTheme}
+                    className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold border transition-all cursor-pointer shadow-xs ${
+                      isDark
+                        ? 'bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border-amber-500/30'
+                        : 'bg-indigo-600 hover:bg-indigo-700 text-white border-transparent'
+                    }`}
+                  >
+                    {isDark ? (
+                      <>
+                        <Sun size={15} className="text-amber-400 fill-amber-400" />
+                        <span>Switch to Light Mode</span>
+                      </>
+                    ) : (
+                      <>
+                        <Moon size={15} className="text-white fill-white/20" />
+                        <span>Switch to Dark Mode</span>
+                      </>
+                    )}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
