@@ -14,6 +14,9 @@ import {
   Zap,
 } from 'lucide-react';
 
+const BASE_URL = import.meta.env.BASE_URL || '/';
+const getAsset = (file) => `${BASE_URL.endsWith('/') ? BASE_URL : `${BASE_URL}/`}${file.replace(/^\//, '')}`;
+
 const Workout = () => {
   const [activeCategory, setActiveCategory] = useState('all');
 
@@ -22,7 +25,7 @@ const Workout = () => {
       id: 'squats',
       name: 'Squats Trainer',
       category: 'lower',
-      gif: '/squat.gif',
+      gif: getAsset('squat.gif'),
       difficulty: 'Beginner',
       muscles: ['Quadriceps', 'Glutes', 'Hamstrings'],
       calories: '12-15 kcal/min',
@@ -35,7 +38,7 @@ const Workout = () => {
       id: 'pushup',
       name: 'Pushups Trainer',
       category: 'upper',
-      gif: '/pushup.gif',
+      gif: getAsset('pushup.gif'),
       difficulty: 'Intermediate',
       muscles: ['Pectorals', 'Triceps', 'Core'],
       calories: '10-14 kcal/min',
@@ -48,7 +51,7 @@ const Workout = () => {
       id: 'bicep-curls',
       name: 'Bicep Curls',
       category: 'upper',
-      gif: '/bicep.gif',
+      gif: getAsset('bicep.gif'),
       difficulty: 'Beginner',
       muscles: ['Biceps Brachii', 'Forearms'],
       calories: '8-10 kcal/min',
@@ -61,7 +64,7 @@ const Workout = () => {
       id: 'lunges',
       name: 'Walking Lunges',
       category: 'lower',
-      gif: '/lunges.gif',
+      gif: getAsset('lunges.gif'),
       difficulty: 'Intermediate',
       muscles: ['Quads', 'Hamstrings', 'Calves'],
       calories: '12-16 kcal/min',
@@ -74,7 +77,7 @@ const Workout = () => {
       id: 'shoulder-press',
       name: 'Overhead Shoulder Press',
       category: 'upper',
-      gif: '/shoulder.gif',
+      gif: getAsset('shoulder.gif'),
       difficulty: 'Intermediate',
       muscles: ['Deltoids', 'Trapezius', 'Triceps'],
       calories: '9-12 kcal/min',
@@ -87,7 +90,7 @@ const Workout = () => {
       id: 'front-raises',
       name: 'Front Dumbbell Raises',
       category: 'upper',
-      gif: '/front.gif',
+      gif: getAsset('front.gif'),
       difficulty: 'Beginner',
       muscles: ['Anterior Deltoid', 'Serratus Anterior'],
       calories: '7-10 kcal/min',
@@ -100,7 +103,7 @@ const Workout = () => {
       id: 'pullup',
       name: 'Pullups Trainer',
       category: 'upper',
-      gif: '/pullup.gif',
+      gif: getAsset('pullup.gif'),
       difficulty: 'Advanced',
       muscles: ['Latissimus Dorsi', 'Biceps', 'Upper Back'],
       calories: '14-18 kcal/min',
@@ -113,7 +116,7 @@ const Workout = () => {
       id: 'highknees',
       name: 'High Knees Cardio',
       category: 'lower',
-      gif: '/squat.gif',
+      gif: getAsset('squat.gif'),
       difficulty: 'Intermediate',
       muscles: ['Hip Flexors', 'Quads', 'Cardio Core'],
       calories: '15-20 kcal/min',
@@ -230,12 +233,27 @@ const Workout = () => {
               {/* Media Preview / GIF Container */}
               <div className="relative aspect-video bg-slate-900 overflow-hidden flex items-center justify-center">
                 {workout.gif ? (
-                  <img
-                    src={workout.gif}
-                    alt={workout.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90 group-hover:opacity-100"
-                    loading="lazy"
-                  />
+                  <>
+                    <img
+                      src={workout.gif}
+                      alt={workout.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90 group-hover:opacity-100"
+                      loading="lazy"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                        const fallback = e.currentTarget.nextElementSibling;
+                        if (fallback) fallback.style.display = 'flex';
+                      }}
+                    />
+                    <div
+                      style={{ display: 'none' }}
+                      className="w-full h-full flex-col items-center justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 text-indigo-300 p-6 text-center"
+                    >
+                      <Dumbbell size={36} className="text-indigo-400 mb-2 animate-bounce" />
+                      <span className="text-xs font-bold text-white tracking-wide">{workout.name}</span>
+                      <span className="text-[10px] text-indigo-300/80 mt-1">AI Pose Tracker Ready</span>
+                    </div>
+                  </>
                 ) : (
                   <div className="flex flex-col items-center justify-center text-slate-500 p-6 text-center">
                     <Laptop size={36} className="text-indigo-400 mb-2" />

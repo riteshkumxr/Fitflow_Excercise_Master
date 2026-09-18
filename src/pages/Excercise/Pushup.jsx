@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import * as tf from '@tensorflow/tfjs';
 import * as poseDetection from '@tensorflow-models/pose-detection';
-const pushup = "/pushup.gif";
+const pushup = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/pushup.gif`;
 const Pushup = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);

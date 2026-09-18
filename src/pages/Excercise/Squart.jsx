@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import * as tf from '@tensorflow/tfjs';
 import * as poseDetection from '@tensorflow-models/pose-detection';
 import { Link } from 'react-router-dom';
-const squat = "/squat.gif";
+const squat = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/squat.gif`;
 
 const Squats = () => {
   const videoRef = useRef(null);

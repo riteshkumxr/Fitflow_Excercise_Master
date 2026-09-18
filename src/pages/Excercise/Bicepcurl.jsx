@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import * as tf from '@tensorflow/tfjs';
 import * as poseDetection from '@tensorflow-models/pose-detection';
-const bcp = "/bicep.gif";
+const bcp = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/bicep.gif`;
 
 const BicepCurl = () => {
   const videoRef = useRef(null);

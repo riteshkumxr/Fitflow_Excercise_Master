@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
 import {
   Bot,
   X,
@@ -14,36 +15,24 @@ import {
   MessageSquare,
 } from 'lucide-react';
 
-const INITIAL_MESSAGES = [
-  {
-    id: 1,
-    sender: 'bot',
-    text: "Hey Ritesh! I'm your FitFlow AI Fitness Coach. I can analyze your exercise form, calculate your calories, customize your 75kg → 72kg diet plan, or guide your desk breaks. What's on your workout agenda today?",
-    timestamp: 'Just now',
-  },
-];
-
-const SUGGESTED_PROMPTS = [
-  'How do I perfect my Squat form?',
-  'What should my daily macros be for 75kg to 72kg?',
-  'Give me an Upper Body workout routine',
-  'Quick 3-minute desk posture exercises',
-  'How does AI pose tracking work?',
-];
-
-function generateAIResponse(userText) {
+function generateAIResponse(userText, userInfo = {}) {
   const q = userText.toLowerCase();
+  const name = userInfo.userFirstName || 'Athlete';
+  const weight = userInfo.userWeight || '75 kg';
+  const target = userInfo.targetWeight || '72 kg';
+  const streak = userInfo.streakDays || 1;
+  const points = userInfo.points || 150;
 
   if (q.includes('squat')) {
-    return "🏋️ **Squats Form Checklist for Ritesh:**\n\n1. **Stance:** Feet shoulder-width apart, toes turned slightly outward (15° to 30°).\n2. **Hips & Knees:** Break at hips and knees simultaneously. Push knees outward in line with toes.\n3. **Depth:** Lower until your hip crease is below the top of your knees (parallel or deep squat).\n4. **Torso:** Keep your chest proud, spine neutral, and gaze forward.\n5. **Prescription:** 3 sets × 15 reps with controlled 2-second descent.\n\n*Tip: Use our AI Squat Trainer in the Workout tab for real-time hip-to-knee depth tracking!*";
+    return `🏋️ **Squats Form Checklist for ${name}:**\n\n1. **Stance:** Feet shoulder-width apart, toes turned slightly outward (15° to 30°).\n2. **Hips & Knees:** Break at hips and knees simultaneously. Push knees outward in line with toes.\n3. **Depth:** Lower until your hip crease is below the top of your knees (parallel or deep squat).\n4. **Torso:** Keep your chest proud, spine neutral, and gaze forward.\n5. **Prescription:** 3 sets × 15 reps with controlled 2-second descent.\n\n*Tip: Use our AI Squat Trainer in the Workout tab for real-time hip-to-knee depth tracking!*`;
   }
 
   if (q.includes('pushup') || q.includes('push up') || q.includes('chest')) {
     return "💪 **Push-Up Master Guide:**\n\n1. **Hand Placement:** Slightly wider than shoulder-width, fingers spread.\n2. **Elbow Angle:** Keep elbows tucked at 45° to your torso (avoid flaring them into a 'T' shape).\n3. **Core & Glutes:** Keep your body in a rigid plank from head to heels.\n4. **Full Range:** Lower until chest is 2-3 inches from ground, then push up to full extension.\n5. **Prescription:** 3 sets × 12 reps.\n\n*Tip: Launch our AI Pushups module to track elbow flexion angles in real time!*";
   }
 
-  if (q.includes('diet') || q.includes('macro') || q.includes('calorie') || q.includes('75') || q.includes('72') || q.includes('food') || q.includes('weight')) {
-    return "🥗 **Personalized Nutrition Strategy for Ritesh (75 kg → 72 kg Target):**\n\n• **Daily Calorie Target:** ~1,850 kcal (creates a safe, sustainable ~350 kcal deficit from your 2,200 kcal maintenance).\n• **Protein Target:** 140g - 150g per day (approx. 1.9g per kg of bodyweight to preserve lean muscle).\n• **Carbohydrates:** ~180g (complex carbs: oats, brown rice, sweet potatoes).\n• **Healthy Fats:** ~50g - 55g (avocado, nuts, olive oil).\n• **Hydration:** Aim for 3.0L to 3.5L of water daily.\n\n*Tip: Check your daily macro progress on the FitFlow Diet Plan tab!*";
+  if (q.includes('diet') || q.includes('macro') || q.includes('calorie') || q.includes('food') || q.includes('weight')) {
+    return `🥗 **Personalized Nutrition Strategy for ${name} (${weight} → ${target} Target):**\n\n• **Daily Calorie Target:** ~1,850 kcal (creates a safe, sustainable ~350 kcal deficit from your 2,200 kcal maintenance).\n• **Protein Target:** 140g - 150g per day (approx. 1.9g per kg of bodyweight to preserve lean muscle).\n• **Carbohydrates:** ~180g (complex carbs: oats, brown rice, sweet potatoes).\n• **Healthy Fats:** ~50g - 55g (avocado, nuts, olive oil).\n• **Hydration:** Aim for 3.0L to 3.5L of water daily.\n\n*Tip: Check your daily macro progress on the FitFlow Diet Plan tab!*`;
   }
 
   if (q.includes('pullup') || q.includes('pull up') || q.includes('back')) {
@@ -67,19 +56,56 @@ function generateAIResponse(userText) {
   }
 
   if (q.includes('hello') || q.includes('hi') || q.includes('hey')) {
-    return "Hello Ritesh! Great to see you. You are currently on an active 15-day workout streak with 1,540 points. What would you like to work on today? Try asking about squats form, pushups, your 75kg diet plan, or desk breaks!";
+    return `Hello ${name}! Great to see you. You are currently on an active ${streak}-day workout streak with ${points.toLocaleString()} points. What would you like to work on today? Try asking about squats form, pushups, your ${weight} diet plan, or desk breaks!`;
   }
 
-  return "Great question, Ritesh! To support your fitness progression (current: 75 kg, goal: 72 kg):\n\n1. **Form First:** Use our AI Pose Trainers to ensure full range of motion without compensating.\n2. **Progressive Overload:** Increase reps or resistance each week.\n3. **Recovery & Nutrition:** Maintain your 1,850 kcal target with 140g+ protein for muscle recovery.\n\nFeel free to ask me specifically about any exercise (Squats, Pushups, Curls, Lunges), nutrition goals, or posture corrections!";
+  return `Great question, ${name}! To support your fitness progression (current: ${weight}, goal: ${target}):\n\n1. **Form First:** Use our AI Pose Trainers to ensure full range of motion without compensating.\n2. **Progressive Overload:** Increase reps or resistance each week.\n3. **Recovery & Nutrition:** Maintain your optimal calorie target with adequate protein for muscle recovery.\n\nFeel free to ask me specifically about any exercise (Squats, Pushups, Curls, Lunges), nutrition goals, or posture corrections!`;
 }
 
 export default function FitFlowAIAssistant() {
+  const { currentUser } = useAuth();
+
+  const userFirstName = currentUser?.name ? currentUser.name.trim().split(' ')[0] : 'Athlete';
+  const userFullName = currentUser?.name || 'Athlete';
+  const userInitial = userFirstName.charAt(0).toUpperCase() || 'A';
+  const userWeight = currentUser?.weight ? (String(currentUser.weight).includes('kg') ? currentUser.weight : `${currentUser.weight} kg`) : '75 kg';
+  const targetWeight = currentUser?.targetWeight ? (String(currentUser.targetWeight).includes('kg') ? currentUser.targetWeight : `${currentUser.targetWeight} kg`) : '72 kg';
+  const streakDays = currentUser?.streakDays || 1;
+  const points = currentUser?.points || 150;
+
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState(INITIAL_MESSAGES);
+  const [messages, setMessages] = useState([
+    {
+      id: 1,
+      sender: 'bot',
+      text: `Hey ${userFirstName}! I'm your FitFlow AI Fitness Coach. I can analyze your exercise form, calculate your calories, customize your ${userWeight} → ${targetWeight} diet plan, or guide your desk breaks. What's on your workout agenda today?`,
+      timestamp: 'Just now',
+    },
+  ]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+
+  // Sync greeting when logged-in user changes
+  useEffect(() => {
+    setMessages([
+      {
+        id: 1,
+        sender: 'bot',
+        text: `Hey ${userFirstName}! I'm your FitFlow AI Fitness Coach. I can analyze your exercise form, calculate your calories, customize your ${userWeight} → ${targetWeight} diet plan, or guide your desk breaks. What's on your workout agenda today?`,
+        timestamp: 'Just now',
+      },
+    ]);
+  }, [userFirstName, userWeight, targetWeight]);
+
+  const suggestedPrompts = [
+    'How do I perfect my Squat form?',
+    `What should my daily macros be for ${userWeight} to ${targetWeight}?`,
+    'Give me an Upper Body workout routine',
+    'Quick 3-minute desk posture exercises',
+    'How does AI pose tracking work?',
+  ];
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -108,7 +134,13 @@ export default function FitFlowAIAssistant() {
     setIsTyping(true);
 
     setTimeout(() => {
-      const replyText = generateAIResponse(text);
+      const replyText = generateAIResponse(text, {
+        userFirstName,
+        userWeight,
+        targetWeight,
+        streakDays,
+        points,
+      });
       const botMsg = {
         id: Date.now() + 1,
         sender: 'bot',
@@ -128,7 +160,14 @@ export default function FitFlowAIAssistant() {
   };
 
   const handleResetChat = () => {
-    setMessages(INITIAL_MESSAGES);
+    setMessages([
+      {
+        id: Date.now(),
+        sender: 'bot',
+        text: `Conversation cleared. What else can I assist you with, ${userFirstName}?`,
+        timestamp: 'Just now',
+      },
+    ]);
   };
 
   return (
@@ -167,7 +206,7 @@ export default function FitFlowAIAssistant() {
                   <div className="flex items-center gap-1.5">
                     <h3 className="text-sm font-extrabold tracking-tight">FitFlow AI Coach</h3>
                     <span className="text-[10px] font-bold px-1.5 py-0.2 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
-                      Ritesh Pro
+                      {userFirstName} Pro
                     </span>
                   </div>
                   <p className="text-[11px] text-slate-300 flex items-center gap-1">
@@ -199,7 +238,7 @@ export default function FitFlowAIAssistant() {
             <div className="px-4 py-2.5 bg-slate-50 border-b border-slate-100 flex items-center gap-2 overflow-x-auto no-scrollbar">
               <Sparkles size={13} className="text-indigo-600 shrink-0" />
               <div className="flex items-center gap-1.5 whitespace-nowrap">
-                {SUGGESTED_PROMPTS.map((prompt) => (
+                {suggestedPrompts.map((prompt) => (
                   <button
                     key={prompt}
                     onClick={() => handleSendMessage(prompt)}
@@ -238,7 +277,7 @@ export default function FitFlowAIAssistant() {
                     </div>
                     {!isBot && (
                       <div className="w-7 h-7 rounded-lg bg-slate-800 flex items-center justify-center text-white shrink-0 mt-0.5 shadow-xs font-bold text-xs">
-                        R
+                        {userInitial}
                       </div>
                     )}
                   </div>

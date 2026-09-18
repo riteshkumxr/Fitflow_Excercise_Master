@@ -328,8 +328,13 @@ const DietPlan = () => {
               
               <div className="inline-flex text-xs rounded-xl overflow-hidden shadow-xs border border-slate-700 bg-slate-800">
                 <button
-                  onClick={() => setSelectedDate(new Date(selectedDate.setDate(selectedDate.getDate() - 1)))}
+                  onClick={() => {
+                    const prev = new Date(selectedDate);
+                    prev.setDate(prev.getDate() - 1);
+                    setSelectedDate(prev);
+                  }}
                   className="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 border-r border-slate-700 transition-colors cursor-pointer"
+                  title="Previous day"
                 >
                   ←
                 </button>
@@ -337,8 +342,13 @@ const DietPlan = () => {
                   {formatDate(selectedDate)}
                 </button>
                 <button
-                  onClick={() => setSelectedDate(new Date(selectedDate.setDate(selectedDate.getDate() + 1)))}
+                  onClick={() => {
+                    const next = new Date(selectedDate);
+                    next.setDate(next.getDate() + 1);
+                    setSelectedDate(next);
+                  }}
                   className="px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 border-l border-slate-700 transition-colors cursor-pointer"
+                  title="Next day"
                 >
                   →
                 </button>
@@ -545,7 +555,7 @@ const DietPlan = () => {
                       {commonFoods.map((food, index) => (
                         <button
                           key={index}
-                          onClick={() => quickAddFood(food)}
+                          onClick={() => handleQuickAdd(food)}
                           className="text-left p-2 hover:bg-slate-100 dark:hover:bg-slate-700/50 rounded-xl transition-colors border border-slate-100 dark:border-slate-700 cursor-pointer"
                         >
                           <div className="font-medium text-xs text-slate-900 dark:text-white">{food.name}</div>
@@ -558,7 +568,7 @@ const DietPlan = () => {
                   </div>
                 )}
                 
-                <form onSubmit={addFoodEntry}>
+                <form onSubmit={handleAddFood}>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
                     <div className="sm:col-span-2">
                       <label htmlFor="food-name" className="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">
