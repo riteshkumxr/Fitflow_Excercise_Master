@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Sparkles,
   Dumbbell,
@@ -13,12 +13,25 @@ import {
   Layers,
   Zap,
 } from 'lucide-react';
+import { useTokens } from '../context/TokenContext';
 
 const BASE_URL = import.meta.env.BASE_URL || '/';
 const getAsset = (file) => `${BASE_URL.endsWith('/') ? BASE_URL : `${BASE_URL}/`}${file.replace(/^\//, '')}`;
 
 const Workout = () => {
+  const navigate = useNavigate();
+  const { tokens, isUnlimited, consumeTokens, openPaymentModal } = useTokens();
   const [activeCategory, setActiveCategory] = useState('all');
+
+  const handleLaunchWorkout = (e, workout) => {
+    e.preventDefault();
+    if (!isUnlimited && tokens < 2) {
+      openPaymentModal('starter');
+      return;
+    }
+    consumeTokens(2, `AI Pose Workout: ${workout.name}`);
+    navigate(workout.path);
+  };
 
   const workouts = [
     {
@@ -305,6 +318,21 @@ const Workout = () => {
           <p className="mt-2 text-sm sm:text-base text-slate-300 leading-relaxed">
             Position your camera, step into the frame, and let real-time AI computer vision count your repetitions, analyze joint angles, and guide your form.
           </p>
+
+          <div className="mt-4 flex flex-wrap items-center gap-3">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 text-white text-xs font-bold backdrop-blur-sm border border-white/10">
+              <Zap size={14} className="text-amber-400 fill-amber-400" />
+              <span>Wallet: {isUnlimited ? 'Unlimited VIP' : `${tokens} Tokens Available`}</span>
+              <span className="text-slate-400">• 2 tokens / session</span>
+            </span>
+            <button
+              type="button"
+              onClick={() => openPaymentModal('starter')}
+              className="px-3 py-1.5 rounded-full bg-indigo-500 hover:bg-indigo-400 text-white text-xs font-bold shadow-xs transition-colors cursor-pointer"
+            >
+              + Top Up Tokens
+            </button>
+          </div>
         </div>
       </div>
 
@@ -394,6 +422,13 @@ const Workout = () => {
                   </span>
                 </div>
 
+                <div className="absolute top-3 right-3">
+                  <span className="px-2.5 py-1 rounded-full bg-indigo-950/85 text-amber-300 border border-amber-400/30 text-[10px] font-extrabold backdrop-blur-md flex items-center gap-1">
+                    <Zap size={10} className="fill-amber-400 text-amber-400" />
+                    2 Tokens
+                  </span>
+                </div>
+
                 <div className="absolute bottom-3 right-3">
                   <span className="px-2.5 py-1 rounded-full bg-black/60 text-white text-[11px] font-medium backdrop-blur-md">
                     {workout.calories}
@@ -434,14 +469,15 @@ const Workout = () => {
 
             {/* Bottom Action */}
             <div className="p-6 pt-0">
-              <Link
-                to={workout.path}
+              <button
+                type="button"
+                onClick={(e) => handleLaunchWorkout(e, workout)}
                 className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-slate-900 hover:bg-gradient-to-r hover:from-indigo-600 hover:to-violet-600 dark:bg-slate-800 dark:hover:from-indigo-600 dark:hover:to-violet-600 text-white text-xs font-bold transition-all shadow-sm group-hover:shadow-md cursor-pointer"
               >
                 <Play size={14} className="fill-white" />
                 <span>Launch AI Pose Trainer</span>
                 <ArrowUpRight size={14} className="opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </Link>
+              </button>
             </div>
           </div>
         ))}

@@ -14,16 +14,20 @@ import {
   Moon,
   LogIn,
   LogOut,
+  Zap,
+  CreditCard,
 } from 'lucide-react';
 import ExerciseDropdown from './ExerciseDropdown';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
+import { useTokens } from '../context/TokenContext';
 
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { isDark, toggleTheme } = useTheme();
   const { currentUser, isAuthenticated, logout } = useAuth();
+  const { tokens, isUnlimited, openPaymentModal } = useTokens();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState(() => {
     return localStorage.getItem('fitflow_user_avatar') || null;
@@ -48,6 +52,7 @@ const Navbar = () => {
     { name: 'Workouts', path: '/workout', icon: Dumbbell },
     { name: 'Diet Plan', path: '/diet-plan', icon: Apple },
     { name: 'Profile', path: '/profile', icon: User },
+    { name: 'Pricing', path: '/pricing', icon: Zap },
     { name: 'Body Focus', path: '/tutorials', icon: Sparkles },
   ];
 
@@ -132,6 +137,19 @@ const Navbar = () => {
               </div>
             )}
 
+            {/* Token Wallet Pill */}
+            <button
+              onClick={() => openPaymentModal()}
+              title="FitFlow AI Tokens • Click to Top Up"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-indigo-50 to-violet-50 dark:from-indigo-950/60 dark:to-violet-950/60 border border-indigo-200/80 dark:border-indigo-800/80 text-indigo-700 dark:text-indigo-300 text-xs font-extrabold shadow-xs hover:border-indigo-400 dark:hover:border-indigo-600 hover:shadow-indigo-500/10 transition-all cursor-pointer group"
+            >
+              <Zap size={14} className="text-indigo-600 dark:text-indigo-400 fill-indigo-600 dark:fill-indigo-400 group-hover:scale-110 transition-transform" />
+              <span>{isUnlimited ? 'VIP' : `${tokens} Tokens`}</span>
+              <span className="w-4 h-4 rounded-full bg-indigo-600 text-white flex items-center justify-center text-[10px] font-black group-hover:bg-indigo-500 transition-colors">
+                +
+              </span>
+            </button>
+
             {/* Profile or Sign In Button */}
             {isAuthenticated && currentUser ? (
               <div className="flex items-center gap-1.5">
@@ -199,6 +217,16 @@ const Navbar = () => {
                 <span>{currentUser.streakDays || 1}d</span>
               </div>
             )}
+
+            {/* Mobile Token Pill */}
+            <button
+              onClick={() => openPaymentModal()}
+              className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 text-xs font-extrabold border border-indigo-200 dark:border-indigo-800/60 cursor-pointer"
+              title="Token Wallet"
+            >
+              <Zap size={13} className="text-indigo-600 dark:text-indigo-400 fill-indigo-600" />
+              <span>{isUnlimited ? 'VIP' : tokens}</span>
+            </button>
 
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}

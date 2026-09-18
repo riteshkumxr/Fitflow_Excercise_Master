@@ -25,14 +25,27 @@ import {
   LogIn,
   LogOut,
   UserPlus,
+  CreditCard,
+  Receipt,
+  Gift,
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useTokens, PLANS } from '../context/TokenContext';
 
 const ProfilePage = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const navigate = useNavigate();
   const { currentUser, logout, updateProfile, switchBackToRitesh } = useAuth();
+  const {
+    tokens,
+    plan,
+    isUnlimited,
+    transactions,
+    openPaymentModal,
+    claimDailyTrialBonus,
+    isDailyClaimAvailable,
+  } = useTokens();
   const fileInputRef = React.useRef(null);
   const [avatarUrl, setAvatarUrl] = useState(() => {
     return currentUser?.avatar || localStorage.getItem('fitflow_user_avatar') || null;
@@ -398,6 +411,20 @@ const ProfilePage = () => {
                   <p className="text-xl font-extrabold text-white">#{userData.rank}</p>
                 </div>
               </div>
+
+              <div
+                onClick={() => openPaymentModal()}
+                className="bg-white/10 hover:bg-white/20 rounded-2xl p-3.5 backdrop-blur-sm border border-white/10 flex items-center gap-3 cursor-pointer transition-all"
+                title="Click to view tokens & top up"
+              >
+                <div className="h-11 w-11 rounded-xl bg-gradient-to-tr from-cyan-400 to-indigo-500 flex items-center justify-center text-white shadow-xs">
+                  <Zap size={22} className="fill-white" />
+                </div>
+                <div>
+                  <p className="text-[11px] text-slate-300 font-medium">AI Tokens</p>
+                  <p className="text-xl font-extrabold text-white">{isUnlimited ? 'VIP Pass' : tokens}</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -409,6 +436,7 @@ const ProfilePage = () => {
           <div className="flex space-x-2 sm:space-x-4 overflow-x-auto py-2">
             {[
               { id: 'overview', label: 'Overview' },
+              { id: 'tokens', label: 'Tokens & Billing' },
               { id: 'badges', label: 'Badges & Achievements' },
               { id: 'consult', label: 'Doctor Consultations' },
               { id: 'insurance', label: 'Health Insurance' },
@@ -544,6 +572,215 @@ const ProfilePage = () => {
                   </div>
                 ))}
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* Tokens & Billing Tab */}
+        {activeTab === 'tokens' && (
+          <div className="space-y-6 animate-in fade-in duration-200">
+            {/* Wallet Overview Hero */}
+            <div className="rounded-3xl p-6 sm:p-8 bg-gradient-to-r from-indigo-950 via-slate-900 to-violet-950 text-white shadow-xl border border-indigo-900/40 relative overflow-hidden">
+              <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div className="space-y-3">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 text-xs font-bold flex items-center gap-1.5">
+                      <Sparkles size={12} className="text-emerald-400" />
+                      Active Tier: {plan}
+                    </span>
+                    <span className="px-2.5 py-0.5 rounded-full bg-white/10 text-slate-300 text-xs font-semibold">
+                      {isUnlimited ? '30-Day VIP Pass Active' : 'Free Trial Wallet'}
+                    </span>
+                  </div>
+
+                  <div>
+                    <p className="text-xs font-bold text-indigo-300 uppercase tracking-wider">
+                      Current FitFlow Token Balance
+                    </p>
+                    <div className="flex items-baseline gap-2 mt-1">
+                      <span className="text-4xl sm:text-5xl font-black tracking-tight">
+                        {isUnlimited ? 'Unlimited' : tokens}
+                      </span>
+                      <span className="text-sm font-semibold text-indigo-200">
+                        {isUnlimited ? 'VIP Pass' : 'Tokens'}
+                      </span>
+                    </div>
+                  </div>
+
+                  <p className="text-xs text-indigo-200/80 max-w-lg leading-relaxed">
+                    Tokens power your AI Fitness Coach questions (1 token), pose-tracking workouts (2 tokens), and custom diet generator (3 tokens).
+                  </p>
+
+                  {/* Daily Trial Bonus Action */}
+                  <div className="pt-2 flex flex-wrap items-center gap-3">
+                    {isDailyClaimAvailable() ? (
+                      <button
+                        onClick={() => {
+                          const res = claimDailyTrialBonus();
+                          alert(res.message);
+                        }}
+                        className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-xs font-extrabold shadow-md flex items-center gap-2 transition-all cursor-pointer"
+                      >
+                        <Gift size={16} />
+                        <span>Claim +5 Free Daily Streak Bonus</span>
+                      </button>
+                    ) : (
+                      <span className="px-3.5 py-2 rounded-xl bg-white/10 border border-white/15 text-slate-300 text-xs font-semibold flex items-center gap-1.5">
+                        <CheckCircle2 size={14} className="text-emerald-400" />
+                        Today's +5 Free Daily Bonus Claimed
+                      </span>
+                    )}
+
+                    <Link
+                      to="/pricing"
+                      className="text-xs text-indigo-300 hover:text-white underline font-semibold flex items-center gap-1"
+                    >
+                      <span>Explore all token benefits & plans</span>
+                      <ChevronRight size={13} />
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Direct Top-Up Action Box */}
+                <div className="bg-white/10 p-5 rounded-2xl backdrop-blur-sm border border-white/15 text-center md:text-right space-y-3 shrink-0">
+                  <div>
+                    <p className="text-xs text-indigo-200 font-medium">Need more tokens?</p>
+                    <p className="text-base font-black text-white">Starter from ₹99 • Pro for ₹299</p>
+                  </div>
+                  <button
+                    onClick={() => openPaymentModal()}
+                    className="w-full py-3 px-5 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-500 hover:from-indigo-400 hover:to-violet-400 text-white font-black text-xs sm:text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  >
+                    <Zap size={16} className="fill-white" />
+                    <span>Instant Payment Gateway</span>
+                  </button>
+                  <p className="text-[10px] text-slate-300">
+                    UPI, Google Pay, PhonePe, Cards & Net Banking
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Quick Purchase Packs */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {PLANS.map((p) => (
+                <div
+                  key={p.id}
+                  className="bg-white dark:bg-slate-900 rounded-2xl p-5 border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col justify-between hover:border-indigo-300 dark:hover:border-indigo-700 transition-all"
+                >
+                  <div>
+                    <div className="flex justify-between items-start">
+                      <h4 className="font-extrabold text-slate-900 dark:text-white text-sm">
+                        {p.name}
+                      </h4>
+                      {p.popular && (
+                        <span className="text-[9px] font-black uppercase px-2 py-0.5 rounded-full bg-amber-500 text-white">
+                          Best Value
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex items-baseline gap-1 my-2">
+                      <span className="text-2xl font-black text-slate-900 dark:text-white">
+                        ₹{p.priceInr}
+                      </span>
+                      <span className="text-[10px] text-slate-400">
+                        / {p.isUnlimited ? '30 Days VIP' : `${p.tokens} Tokens`}
+                      </span>
+                    </div>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 min-h-[32px]">
+                      {p.description}
+                    </p>
+                  </div>
+
+                  <button
+                    onClick={() => openPaymentModal(p)}
+                    className="mt-4 w-full py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/60 text-slate-800 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400 text-xs font-bold transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                  >
+                    <Zap size={14} />
+                    <span>Pay ₹{p.priceInr} via Gateway</span>
+                  </button>
+                </div>
+              ))}
+            </div>
+
+            {/* Transaction & Billing Ledger */}
+            <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-xs">
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h3 className="text-base font-extrabold text-slate-900 dark:text-white">
+                    Wallet Transactions & Billing Ledger
+                  </h3>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                    Record of trial allotments, daily rewards, and payment receipts
+                  </p>
+                </div>
+                <span className="text-xs font-semibold text-slate-400">
+                  {transactions.length} Total Records
+                </span>
+              </div>
+
+              {transactions.length === 0 ? (
+                <div className="text-center py-8 text-slate-400 text-xs">
+                  No transactions recorded yet.
+                </div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-xs">
+                    <thead>
+                      <tr className="border-b border-slate-200 dark:border-slate-800 text-slate-400 font-semibold uppercase text-[10px] tracking-wider">
+                        <th className="pb-3 pr-4">Date & Time</th>
+                        <th className="pb-3 px-4">Description</th>
+                        <th className="pb-3 px-4">Tokens</th>
+                        <th className="pb-3 px-4">Amount / Fee</th>
+                        <th className="pb-3 px-4">Method / Ref</th>
+                        <th className="pb-3 pl-4 text-right">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                      {transactions.map((t) => {
+                        const isCredit = t.type === 'CREDIT' || t.type === 'DAILY_BONUS';
+                        return (
+                          <tr key={t.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/30">
+                            <td className="py-3 pr-4 text-slate-500 whitespace-nowrap">
+                              {new Date(t.date).toLocaleDateString([], {
+                                month: 'short',
+                                day: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit',
+                              })}
+                            </td>
+                            <td className="py-3 px-4 font-medium text-slate-800 dark:text-slate-200">
+                              {t.description}
+                            </td>
+                            <td className="py-3 px-4 whitespace-nowrap">
+                              <span
+                                className={`font-bold ${
+                                  isCredit
+                                    ? 'text-emerald-600 dark:text-emerald-400'
+                                    : 'text-slate-600 dark:text-slate-400'
+                                }`}
+                              >
+                                {isCredit ? `+${t.amountTokens}` : t.amountTokens} Tokens
+                              </span>
+                            </td>
+                            <td className="py-3 px-4 font-semibold text-slate-700 dark:text-slate-300 whitespace-nowrap">
+                              {t.cost}
+                            </td>
+                            <td className="py-3 px-4 text-slate-400 font-mono text-[11px] whitespace-nowrap">
+                              {t.paymentMethod || t.id}
+                            </td>
+                            <td className="py-3 pl-4 text-right">
+                              <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800">
+                                {t.status}
+                              </span>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </div>
           </div>
         )}

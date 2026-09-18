@@ -13,16 +13,26 @@ import {
   Flame,
   Shield,
   MessageSquare,
+  Zap,
+  Gift,
 } from 'lucide-react';
 import { processFitnessQuery } from '../services/fitnessAIEngine';
+import { useTokens } from '../context/TokenContext';
 
 function generateAIResponse(userText, userInfo = {}) {
   return processFitnessQuery(userText, userInfo);
 }
 
-
 export default function FitFlowAIAssistant() {
   const { currentUser } = useAuth();
+  const {
+    tokens,
+    isUnlimited,
+    consumeTokens,
+    openPaymentModal,
+    claimDailyTrialBonus,
+    isDailyClaimAvailable,
+  } = useTokens();
 
   const userFirstName = currentUser?.name ? currentUser.name.trim().split(' ')[0] : 'Athlete';
   const userFullName = currentUser?.name || 'Athlete';
@@ -80,6 +90,23 @@ export default function FitFlowAIAssistant() {
   const handleSendMessage = (textToSend) => {
     const text = (textToSend || inputValue).trim();
     if (!text) return;
+
+    // Check token balance
+    if (!isUnlimited && tokens <= 0) {
+      const alertMsg = {
+        id: Date.now(),
+        sender: 'bot',
+        text: `⚠️ **Free Trial Tokens Depleted!**\n\nYou've used all your trial tokens. To keep asking questions and analyzing workout nutrition:\n\n• **Claim Daily Bonus:** Claim +5 Free Tokens if available today!\n• **Top Up Wallet:** Get 100 or 600 tokens via our instant UPI/Card payment gateway.\n\nChoose an option below to proceed:`,
+        isOutOfTokens: true,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      };
+      setMessages((prev) => [...prev, alertMsg]);
+      setInputValue('');
+      return;
+    }
+
+    // Deduct 1 token for AI Coach query
+    consumeTokens(1, 'FitFlow AI Coach Question');
 
     const userMsg = {
       id: Date.now(),
@@ -175,7 +202,15 @@ export default function FitFlowAIAssistant() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-1.5">
+                <button
+                  onClick={() => openPaymentModal()}
+                  className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-indigo-500/20 hover:bg-indigo-500/30 border border-indigo-400/30 text-[10px] font-extrabold text-indigo-200 transition-colors cursor-pointer"
+                  title="Click to view plans & top up tokens"
+                >
+                  <Zap size={11} className="text-amber-400 fill-amber-400" />
+                  <span>{isUnlimited ? 'VIP' : `${tokens} Tokens`}</span>
+                </button>
                 <button
                   onClick={handleResetChat}
                   title="Clear conversation"
@@ -230,6 +265,31 @@ export default function FitFlowAIAssistant() {
                           : "bg-gradient-to-r from-indigo-600 to-violet-600 text-white rounded-tr-sm shadow-indigo-600/10")}
                     >
                       <div className="whitespace-pre-wrap">{msg.text}</div>
+                      {msg.isOutOfTokens && (
+                        <div className="mt-3 flex flex-wrap gap-2 pt-2.5 border-t border-slate-200">
+                          <button
+                            type="button"
+                            onClick={() => openPaymentModal()}
+                            className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold text-xs shadow-xs flex items-center gap-1.5 cursor-pointer"
+                          >
+                            <Zap size={13} />
+                            <span>Top Up Tokens / View Plans</span>
+                          </button>
+                          {isDailyClaimAvailable() && (
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const res = claimDailyTrialBonus();
+                                alert(res.message);
+                              }}
+                              className="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs shadow-xs flex items-center gap-1.5 cursor-pointer"
+                            >
+                              <Gift size={13} />
+                              <span>Claim +5 Free Daily Bonus</span>
+                            </button>
+                          )}
+                        </div>
+                      )}
                       <div className={"mt-1.5 text-[10px] text-right " + (isBot ? "text-slate-400" : "text-indigo-100")}>
                         {msg.timestamp}
                       </div>
@@ -279,11 +339,17 @@ export default function FitFlowAIAssistant() {
                 </button>
               </div>
               <div className="mt-2 flex items-center justify-between px-1 text-[10px] text-slate-400">
-                <span className="flex items-center gap-1">
-                  <Shield size={11} className="text-indigo-600" />
-                  Local AI Engine • Active 24/7
+                <span className="flex items-center gap-1 font-medium">
+                  <Zap size={11} className="text-amber-500 fill-amber-500" />
+                  1 Token / query • {isUnlimited ? 'Unlimited VIP' : `${tokens} Tokens remaining`}
                 </span>
-                <span>Powered by FitFlow AI</span>
+                <button
+                  type="button"
+                  onClick={() => openPaymentModal()}
+                  className="text-indigo-600 font-bold hover:underline cursor-pointer"
+                >
+                  + Top Up
+                </button>
               </div>
             </div>
           </div>

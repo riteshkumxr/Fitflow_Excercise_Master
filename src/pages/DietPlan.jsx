@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useTokens } from '../context/TokenContext';
 
 const DietPlan = () => {
   const { currentUser } = useAuth();
+  const { tokens, isUnlimited, openPaymentModal } = useTokens();
   const [userProfile, setUserProfile] = useState(() => ({
     goal: currentUser?.targetGoal || 'weight-loss',
     dietType: 'balanced',
@@ -310,6 +312,15 @@ const DietPlan = () => {
             </div>
             
             <div className="mt-2 md:mt-0 flex flex-wrap items-center gap-3">
+              <button
+                onClick={() => openPaymentModal('starter')}
+                title="View FitFlow AI Token Balance"
+                className="px-3.5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 text-white text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer"
+              >
+                <span>⚡</span>
+                <span>{isUnlimited ? 'VIP Pass' : `${tokens} Tokens`}</span>
+              </button>
+
               <button 
                 onClick={() => setShowProfileModal(true)}
                 className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold text-xs shadow-sm transition-all cursor-pointer"

@@ -20,6 +20,8 @@ const DEFAULT_RITESH = {
   streakDays: 15,
   avatar: null,
   password: 'password123',
+  plan: 'Free Trial',
+  trialActive: true,
 };
 
 export const AuthProvider = ({ children }) => {
@@ -142,6 +144,8 @@ export const AuthProvider = ({ children }) => {
       rank: users.length + 1,
       streakDays: 1,
       avatar: null,
+      plan: 'Free Trial',
+      trialActive: true,
     };
 
     const updatedUsers = [...users, newUser];
