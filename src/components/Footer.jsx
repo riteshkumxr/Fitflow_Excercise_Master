@@ -81,6 +81,18 @@ const Footer = () => {
                   Profile & Badges
                 </Link>
               </li>
+              <li>
+                <a
+                  href="/FitFlow_Excercise.zip"
+                  download="FitFlow_Excercise.zip"
+                  className="inline-flex items-center gap-1.5 font-semibold text-emerald-600 dark:text-emerald-400 hover:text-emerald-500 transition-colors"
+                >
+                  <span>Download Code (.zip)</span>
+                  <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
+                    ZIP
+                  </span>
+                </a>
+              </li>
             </ul>
           </div>
 

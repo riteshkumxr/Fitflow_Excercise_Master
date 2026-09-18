@@ -14,6 +14,7 @@ import {
   Moon,
   LogIn,
   LogOut,
+  Download,
 } from 'lucide-react';
 import ExerciseDropdown from './ExerciseDropdown';
 import { useTheme } from '../context/ThemeContext';
@@ -123,6 +124,17 @@ const Navbar = () => {
                 <Moon size={19} className="text-slate-600 hover:-rotate-12 transition-transform" />
               )}
             </button>
+
+            {/* Download Code Button */}
+            <a
+              href="/FitFlow_Excercise.zip"
+              download="FitFlow_Excercise.zip"
+              title="Download Full Project Source Code (.zip)"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-700 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 bg-slate-100/80 dark:bg-slate-800/80 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 border border-slate-200 dark:border-slate-700 transition-all cursor-pointer shadow-2xs"
+            >
+              <Download size={14} className="text-emerald-500" />
+              <span className="hidden lg:inline">Download Code</span>
+            </a>
 
             {/* Streak Badge */}
             <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-50 dark:bg-amber-950/40 border border-amber-200/60 dark:border-amber-800/40 text-amber-700 dark:text-amber-300 text-xs font-bold shadow-xs">
@@ -275,6 +287,16 @@ const Navbar = () => {
           )}
 
           <ExerciseDropdown mobile onItemClick={() => setIsMobileMenuOpen(false)} />
+
+          <a
+            href="/FitFlow_Excercise.zip"
+            download="FitFlow_Excercise.zip"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="flex items-center gap-3 w-full px-3.5 py-2.5 rounded-xl text-sm font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/50 transition-colors text-left mt-2"
+          >
+            <Download size={18} />
+            <span>Download Project Code (.zip)</span>
+          </a>
         </div>
       )}
     </nav>
